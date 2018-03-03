@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.raindus.raydo.activity.MainActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:alpha="0.5"
+        android:background="@drawable/background_top_shadow"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageButton
+            android:id="@+id/main_action_plan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:background="@null"
+            android:src="@drawable/ic_action_plan_active" />
+
+        <ImageButton
+            android:id="@+id/main_action_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:src="@drawable/ic_action_view_inactive" />
+
+        <ImageButton
+            android:id="@+id/main_action_new"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="5dp"
+            android:layout_weight="1.5"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_icon" />
+
+        <ImageButton
+            android:id="@+id/main_action_clock"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:src="@drawable/ic_action_clock_inactive" />
+
+        <ImageButton
+            android:id="@+id/main_action_user"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:background="@null"
+            android:src="@drawable/ic_action_user_inactive" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

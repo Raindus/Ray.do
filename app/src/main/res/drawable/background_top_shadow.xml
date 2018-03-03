@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:gravity="top">
+        <shape>
+            <size android:height="3dp"/>
+            <padding android:top="3dp"/>
+            <gradient
+                android:angle="90"
+                android:startColor="@color/qianzonghui"
+                android:endColor="@android:color/transparent">
+            </gradient>
+        </shape>
+    </item>
+
+</layer-list>

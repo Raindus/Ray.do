@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- 主亮色调-丹东石 -->
+    <color name="dandongshi">#d7c16b</color>
+    <!-- 主暗色调-承德灰 -->
+    <color name="chengdehui">#757570</color>
+    <!-- 分割线色调-浅棕灰 -->
+    <color name="qianzonghui">#e1dbcd</color>
+
+
 </resources>
