@@ -1,5 +1,6 @@
 package com.raindus.raydo.activity;
 
+import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +8,12 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.raindus.raydo.R;
+import com.raindus.raydo.fragment.ClockFragment;
+import com.raindus.raydo.fragment.PlanFragment;
+import com.raindus.raydo.fragment.UserFragment;
+import com.raindus.raydo.fragment.ViewFragment;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,View.OnLongClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
     private ImageButton mIBtnPlan;
     private ImageButton mIBtnView;
@@ -18,9 +23,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int mActiveIndex = R.id.main_action_plan;
     private int[] mActiveRes = {R.drawable.ic_action_plan_active, R.drawable.ic_action_view_active,
-            R.drawable.ic_action_clock_active,R.drawable.ic_action_user_active};
+            R.drawable.ic_action_clock_active, R.drawable.ic_action_user_active};
     private int[] mInActiveRes = {R.drawable.ic_action_plan_inactive, R.drawable.ic_action_view_inactive,
-            R.drawable.ic_action_clock_inactive,R.drawable.ic_action_user_inactive};
+            R.drawable.ic_action_clock_inactive, R.drawable.ic_action_user_inactive};
+
+    //---
+    private Fragment mFmPlan;
+    private Fragment mFmView;
+    private Fragment mFmClock;
+    private Fragment mFmUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
     }
 
-    private void initView(){
-
+    private void initView() {
         mIBtnPlan = findViewById(R.id.main_action_plan);
         mIBtnPlan.setOnClickListener(this);
         mIBtnView = findViewById(R.id.main_action_view);
@@ -44,6 +54,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mIBtnClock.setOnClickListener(this);
         mIBtnUser = findViewById(R.id.main_action_user);
         mIBtnUser.setOnClickListener(this);
+
+        mFmPlan = new PlanFragment();
+        mFmView = new ViewFragment();
+        mFmClock = new ClockFragment();
+        mFmUser = new UserFragment();
+        getFragmentManager().beginTransaction()
+                .add(R.id.main_content, mFmPlan)
+                .add(R.id.main_content, mFmView)
+                .add(R.id.main_content, mFmClock)
+                .add(R.id.main_content, mFmUser)
+                .hide(mFmView)
+                .hide(mFmClock)
+                .hide(mFmUser)
+                .show(mFmPlan)
+                .commit();
+    }
+
+    private void switchFragment(int id) {
+        switch (id) {
+            case R.id.main_action_plan:
+                getFragmentManager().beginTransaction().show(mFmPlan).hide(curShowFragment()).commit();
+                break;
+            case R.id.main_action_view:
+                getFragmentManager().beginTransaction().show(mFmView).hide(curShowFragment()).commit();
+                break;
+            case R.id.main_action_clock:
+                getFragmentManager().beginTransaction().show(mFmClock).hide(curShowFragment()).commit();
+                break;
+            case R.id.main_action_user:
+                getFragmentManager().beginTransaction().show(mFmUser).hide(curShowFragment()).commit();
+                break;
+        }
+    }
+
+    private Fragment curShowFragment(){
+        switch (mActiveIndex) {
+            case R.id.main_action_plan:
+                return mFmPlan;
+            case R.id.main_action_view:
+                return mFmView;
+            case R.id.main_action_clock:
+                return mFmClock;
+            case R.id.main_action_user:
+                return mFmUser;
+        }
+        return null;
     }
 
     @Override
@@ -51,13 +107,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mActiveIndex == view.getId())
             return;
 
-        if (view.getId() == R.id.main_action_new){
+        if (view.getId() == R.id.main_action_new) {
             // Add
             return;
         }
 
         changeNavBarRes();
-        switch (view.getId()){
+        switchFragment(view.getId());
+        switch (view.getId()) {
             case R.id.main_action_plan:
                 mIBtnPlan.setImageResource(mActiveRes[0]);
                 break;
@@ -74,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mActiveIndex = view.getId();
     }
 
-    private void changeNavBarRes(){
-        switch (mActiveIndex){
+    private void changeNavBarRes() {
+        switch (mActiveIndex) {
             case R.id.main_action_plan:
                 mIBtnPlan.setImageResource(mInActiveRes[0]);
                 break;
@@ -93,16 +150,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onLongClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.main_action_plan:
                 break;
             case R.id.main_action_view:
                 if (mActiveIndex != view.getId())
                     break;
-                Toast.makeText(this,"change view",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "change view", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.main_action_new:
-                Toast.makeText(this,"yuyin",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "yuyin", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.main_action_clock:
                 break;
