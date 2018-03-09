@@ -1,6 +1,12 @@
 package com.raindus.raydo.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +21,16 @@ import com.raindus.raydo.fragment.ViewFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
+    //---
+    private final int PERMISSION_CODE_STORAGE = 1;
+    private final String[] PERMISSION_STORAGE = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,};
+    private final int PERMISSION_CODE_LOCATION = 1<<1;
+    private final String[] PERMISSION_LOCATION = {Manifest.permission.ACCESS_COARSE_LOCATION};
+    private final int PERMISSION_CODE_PHONE = 1<<2;
+    private final String[] PERMISSION_PHONE = {Manifest.permission.READ_PHONE_STATE};
+
+    //---
     private ImageButton mIBtnPlan;
     private ImageButton mIBtnView;
     private ImageButton mIBtnNew;
@@ -39,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         initView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            requestPermission();
+        }
     }
 
     private void initView() {
@@ -167,5 +186,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         return false;
+    }
+
+    @TargetApi(23)
+    private void requestPermission(){
+        if (ContextCompat.checkSelfPermission(this, PERMISSION_STORAGE[0]) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, PERMISSION_STORAGE,PERMISSION_CODE_STORAGE);
+        }else if (ContextCompat.checkSelfPermission(this, PERMISSION_LOCATION[0]) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, PERMISSION_LOCATION,PERMISSION_CODE_LOCATION);
+        }else if (ContextCompat.checkSelfPermission(this, PERMISSION_PHONE[0]) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, PERMISSION_PHONE,PERMISSION_CODE_PHONE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] != PackageManager.PERMISSION_GRANTED){
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
+        switch (requestCode){
+            case PERMISSION_CODE_STORAGE:
+                ActivityCompat.requestPermissions(this, PERMISSION_LOCATION,PERMISSION_CODE_LOCATION);
+                break;
+            case PERMISSION_CODE_LOCATION:
+                ActivityCompat.requestPermissions(this, PERMISSION_PHONE,PERMISSION_CODE_PHONE);
+                break;
+            case PERMISSION_CODE_PHONE:
+                break;
+        }
     }
 }
