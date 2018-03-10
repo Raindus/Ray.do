@@ -78,7 +78,13 @@ public class ShadeRelativeLayout extends RelativeLayout {
     }
 
     public void setColorEnd(int color) {
-        mColorEnd = color;
-        invalidate();
+        color = getResources().getColor(color);
+        if (mColorEnd != color) {
+            mColorEnd = color;
+            RadialGradient gradient = new RadialGradient(
+                    0, 0, mWidth, new int[]{mColorStart, mColorEnd}, null, Shader.TileMode.CLAMP);
+            mPaint.setShader(gradient);
+            invalidate();
+        }
     }
 }
