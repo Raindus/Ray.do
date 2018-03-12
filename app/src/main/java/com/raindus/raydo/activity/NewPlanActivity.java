@@ -8,7 +8,9 @@ import android.widget.ImageButton;
 
 import com.raindus.raydo.R;
 import com.raindus.raydo.dialog.PlanPriorityDialog;
+import com.raindus.raydo.dialog.PlanTagDialog;
 import com.raindus.raydo.plan.entity.PlanPriority;
+import com.raindus.raydo.plan.entity.PlanTag;
 
 public class NewPlanActivity extends BaseActivity {
 
@@ -17,9 +19,10 @@ public class NewPlanActivity extends BaseActivity {
     private ImageButton mIBtnNegative;
     private ImageButton mIBtnPositive;
 
+    private ImageButton mIBtnTag;
     private ImageButton mIBtnPriority;
 
-
+    private PlanTag mTag = PlanTag.getDefault();
     private PlanPriority mPriority = PlanPriority.getDefault();
 
     @Override
@@ -38,6 +41,8 @@ public class NewPlanActivity extends BaseActivity {
         mIBtnPositive = findViewById(R.id.new_plan_positive);
         mIBtnPositive.setOnClickListener(this);
 
+        mIBtnTag = findViewById(R.id.new_plan_tag);
+        mIBtnTag.setOnClickListener(this);
         mIBtnPriority = findViewById(R.id.new_plan_priority);
         mIBtnPriority.setOnClickListener(this);
     }
@@ -66,17 +71,34 @@ public class NewPlanActivity extends BaseActivity {
                 break;
             case R.id.new_plan_positive:
                 break;
+            case R.id.new_plan_tag:
+                setPlanTag();
+                break;
             case R.id.new_plan_priority:
                 setPlanPriority();
                 break;
         }
     }
 
+    private void setPlanTag() {
+        PlanTagDialog tagDialog = new PlanTagDialog(this, mTag);
+        tagDialog.setOnTagCallback(new PlanTagDialog.OnTagCallback() {
+            @Override
+            public void onCallback(PlanTag tag) {
+                if (mTag != tag) {
+                    mTag = tag;
+                    mIBtnTag.setImageResource(mTag.getIcon());
+                }
+            }
+        });
+        tagDialog.show();
+    }
+
     private void setPlanPriority() {
         PlanPriorityDialog priorityDialog = new PlanPriorityDialog(this, mPriority);
-        priorityDialog.setOnPriorityCallBack(new PlanPriorityDialog.OnPriorityCallBack() {
+        priorityDialog.setOnPriorityCallback(new PlanPriorityDialog.OnPriorityCallback() {
             @Override
-            public void onCallBack(PlanPriority priority) {
+            public void onCallback(PlanPriority priority) {
                 if (mPriority != priority) {
                     mPriority = priority;
                     mIBtnPriority.setImageResource(mPriority.getIcon());

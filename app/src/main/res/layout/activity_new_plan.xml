@@ -60,6 +60,7 @@
             android:clickable="true" />
 
         <ImageButton
+            android:id="@+id/new_plan_tag"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"

@@ -1,27 +1,39 @@
 package com.raindus.raydo.plan.entity;
 
+import com.raindus.raydo.R;
+
 /**
  * Created by Raindus on 2018/3/11.
  */
 
 public enum PlanTag {
-    Work(7),
-    Study(6),
-    Entertainment(5),
-    Sport(4),
-    Life(3),
-    Tourism(2),
-    Shopping(1),
-    None(0);
+    Work(7, R.drawable.plan_tag_work),
+    Study(6, R.drawable.plan_tag_study),
+    Entertainment(5, R.drawable.plan_tag_entertainment),
+    Sport(4, R.drawable.plan_tag_sport),
+    Life(3, R.drawable.plan_tag_life),
+    Tourism(2, R.drawable.plan_tag_tourism),
+    Shopping(1, R.drawable.plan_tag_shopping),
+    None(0, R.drawable.plan_tag_none);
 
-    private int mType;
+    private final int mType;
+    private final int mIcon;
 
-    PlanTag(int type){
+    PlanTag(int type, int icon) {
         mType = type;
+        mIcon = icon;
     }
 
-    public static PlanTag getTag(int type){
-        switch (type){
+    public int getType() {
+        return mType;
+    }
+
+    public int getIcon() {
+        return mIcon;
+    }
+
+    public static PlanTag getTag(int type) {
+        switch (type) {
             case 7:
                 return Work;
             case 6:
@@ -42,7 +54,7 @@ public enum PlanTag {
         }
     }
 
-    public static PlanTag getDefault(){
+    public static PlanTag getDefault() {
         return None;
     }
 }
