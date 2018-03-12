@@ -18,9 +18,13 @@ public class DateUtils {
         return format.format(date);
     }
 
+    /**
+     * @return eg.星期X
+     */
     public static String getTodayWeek() {
         SimpleDateFormat format = new SimpleDateFormat("EEEE");
         Date date = new Date();
         return format.format(date);
     }
+
 }
