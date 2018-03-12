@@ -25,7 +25,7 @@ import com.raindus.raydo.common.DateUtils;
  * Created by Raindus on 2018/3/4.
  */
 
-public class PlanFragment extends Fragment implements View.OnClickListener {
+public class PlanFragment extends BaseFragment {
 
     // TitleBar
     private ImageButton mIBtnSearch;

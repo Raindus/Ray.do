@@ -12,7 +12,7 @@ import com.raindus.raydo.R;
  * Created by Raindus on 2018/3/4.
  */
 
-public class ClockFragment extends Fragment {
+public class ClockFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

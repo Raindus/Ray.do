@@ -44,6 +44,9 @@ public class LocationHelper {
             mLocationClient.setLocationOption(mLocationOption);
             mLocationClient.setLocationListener(mLocationListener);
             mLocationClient.startLocation();
+        } else {
+            mLocationClient.stopLocation();
+            mLocationClient.startLocation();
         }
     }
 

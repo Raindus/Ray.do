@@ -7,13 +7,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/background_bottom_shadow">
+        android:background="@drawable/titlebar_bottom_shadow">
 
         <ImageButton
             android:id="@+id/plan_search"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@null"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
             android:scaleX="0.5"
             android:scaleY="0.5"
@@ -38,7 +38,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
-            android:background="@null"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
             android:scaleX="0.6"
             android:scaleY="0.6"

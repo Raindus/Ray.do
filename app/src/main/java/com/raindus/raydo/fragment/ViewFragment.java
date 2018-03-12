@@ -12,7 +12,7 @@ import com.raindus.raydo.R;
  * Created by Raindus on 2018/3/4.
  */
 
-public class ViewFragment extends Fragment {
+public class ViewFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

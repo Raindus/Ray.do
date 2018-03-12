@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -20,7 +19,7 @@ import com.raindus.raydo.fragment.PlanFragment;
 import com.raindus.raydo.fragment.UserFragment;
 import com.raindus.raydo.fragment.ViewFragment;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
+public class MainActivity extends BaseActivity{
 
     //---
     private final int PERMISSION_CODE_STORAGE = 1;
@@ -128,8 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
 
         if (view.getId() == R.id.main_action_new) {
-            Intent intent = new Intent(this, NewPlanActivity.class);
-            startActivity(intent);
+            overlay(NewPlanActivity.class);
             return;
         }
 
@@ -177,10 +175,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main_action_view:
                 if (mActiveIndex != view.getId())
                     break;
-                Toast.makeText(this, "change view", Toast.LENGTH_SHORT).show();
+                toast("change view");
                 break;
             case R.id.main_action_new:
-                Toast.makeText(this, "voice", Toast.LENGTH_SHORT).show();
+                toast("voice");
                 break;
             case R.id.main_action_clock:
                 break;
