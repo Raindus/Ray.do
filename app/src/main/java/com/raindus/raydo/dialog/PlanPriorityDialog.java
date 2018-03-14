@@ -14,7 +14,7 @@ import com.raindus.raydo.plan.entity.PlanPriority;
  * Created by Raindus on 2018/3/12.
  */
 
-public class PlanPriorityDialog extends Dialog implements View.OnClickListener {
+public class PlanPriorityDialog extends BaseDialog {
 
     private PlanPriority mInitPriority;
     private OnPriorityCallback mOnPriorityCallback;

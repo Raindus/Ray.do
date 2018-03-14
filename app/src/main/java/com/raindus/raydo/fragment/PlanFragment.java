@@ -28,8 +28,6 @@ import com.raindus.raydo.common.DateUtils;
 public class PlanFragment extends BaseFragment {
 
     // TitleBar
-    private ImageButton mIBtnSearch;
-    private ImageButton mIBtnMore;
     private TextView mTvDate;
 
     // 天气--
@@ -94,10 +92,8 @@ public class PlanFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        mIBtnSearch = view.findViewById(R.id.plan_search);
-        mIBtnSearch.setOnClickListener(this);
-        mIBtnMore = view.findViewById(R.id.plan_more);
-        mIBtnMore.setOnClickListener(this);
+        view.findViewById(R.id.plan_search).setOnClickListener(this);
+        view.findViewById(R.id.plan_more).setOnClickListener(this);
         mTvDate = view.findViewById(R.id.plan_date);
         mTvDate.setText(DateUtils.getTodayDate());
 

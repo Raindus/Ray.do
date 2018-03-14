@@ -4,6 +4,7 @@
     <!-- 主亮色调-丹东石 -->
     <color name="dandongshi">#d7c16b</color>
     <color name="dandongshi_dark">#d0d7c16b</color>
+    <color name="dandongshi_light">#50d7c16b</color>
     <!-- 主暗色调-承德灰 -->
     <color name="chengdehui">#757570</color>
     <!-- 分割线色调-浅棕灰 -->

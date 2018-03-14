@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="330dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/background_bottom_shadow">
+
+        <ImageButton
+            android:id="@+id/time_negative"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/ic_action_negative2" />
+
+        <TextView
+            android:id="@+id/time_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="60dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="2018 3月"
+            android:textColor="@color/dandongshi"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+
+        <ImageButton
+            android:id="@+id/time_positive"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:src="@drawable/ic_action_positive2" />
+
+    </RelativeLayout>
+
+    <com.haibin.calendarview.CalendarView
+        android:id="@+id/time_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:calendar_height="40dp"
+        app:current_day_text_color="@color/dandongshi"
+        app:day_text_size="14dp"
+        app:month_view="com.raindus.raydo.calendar.SimpleMonthView"
+        app:month_view_show_mode="mode_all"
+        app:scheme_text_color="@android:color/black"
+        app:scheme_theme_color="@color/dandongshi_light"
+        app:selected_text_color="@android:color/white"
+        app:selected_theme_color="@color/dandongshi"
+        app:week_background="@color/dandongshi_light"
+        app:week_bar_height="25dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/time_ll_time"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/time_iv_time"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:scaleX="1.1"
+                android:scaleY="1.1"
+                android:src="@drawable/time_inactive" />
+
+            <TextView
+                android:id="@+id/time_tv_time"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:hint="设置时间"
+                android:paddingHorizontal="5dp"
+                android:textColor="@color/dandongshi"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/time_btn_time"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_action_negative3"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_ll_remind"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/time_iv_remind"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:scaleX="1.1"
+                android:scaleY="1.1"
+                android:src="@drawable/time_remind_inactive" />
+
+            <TextView
+                android:id="@+id/time_tv_remind"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:hint="设置提醒"
+                android:paddingHorizontal="5dp"
+                android:textColor="@color/dandongshi"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/time_btn_remind"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_action_negative3"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_ll_repeat"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/time_iv_repeat"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:scaleX="1.1"
+                android:scaleY="1.1"
+                android:src="@drawable/time_repeat_inactive" />
+
+            <TextView
+                android:id="@+id/time_tv_repeat"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:hint="设置重复"
+                android:paddingHorizontal="5dp"
+                android:textColor="@color/dandongshi"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/time_btn_repeat"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_action_negative3"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_ll_end"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/time_tv_end"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="50dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="5dp"
+                android:text="永不结束"
+                android:textColor="@android:color/black"
+                android:textSize="15dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

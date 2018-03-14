@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TimePicker
+        android:id="@+id/choose_time_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="clock"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/choose_time_negative"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/choose_time_positive"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/dandongshi"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/choose_time_positive"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/dandongshi"
+            android:textSize="14dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -32,4 +32,7 @@ dependencies {
 
     compile 'com.amap.api:search:latest.integration'
     compile 'com.amap.api:location:latest.integration'
+
+    compile 'com.haibin:calendarview:3.2.7'
 }
+

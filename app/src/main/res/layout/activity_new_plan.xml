@@ -48,16 +48,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_bottom_shadow"
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/new_plan_time"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true" />
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:hint="选择时间"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="14dp"
+            android:textColor="@color/dandongshi"
+            android:textSize="16dp" />
 
         <ImageButton
             android:id="@+id/new_plan_tag"
@@ -75,13 +82,24 @@
 
     </LinearLayout>
 
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@null"
-        android:hint="准备做什么？"
-        android:paddingHorizontal="20dp"
-        android:textColor="@android:color/white"
-        android:textSize="18dp" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@null"
+                android:hint="准备做什么？"
+                android:paddingHorizontal="20dp"
+                android:textColor="@android:color/white"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

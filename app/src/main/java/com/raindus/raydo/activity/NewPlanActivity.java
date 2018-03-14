@@ -5,10 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.raindus.raydo.R;
 import com.raindus.raydo.dialog.PlanPriorityDialog;
 import com.raindus.raydo.dialog.PlanTagDialog;
+import com.raindus.raydo.dialog.PlanTimeDialog;
 import com.raindus.raydo.plan.entity.PlanPriority;
 import com.raindus.raydo.plan.entity.PlanTag;
 
@@ -16,9 +18,7 @@ public class NewPlanActivity extends BaseActivity {
 
     private int activityCloseExitAnimation;
 
-    private ImageButton mIBtnNegative;
-    private ImageButton mIBtnPositive;
-
+    private TextView mTvTime;
     private ImageButton mIBtnTag;
     private ImageButton mIBtnPriority;
 
@@ -36,11 +36,11 @@ public class NewPlanActivity extends BaseActivity {
 
     private void initView() {
 
-        mIBtnNegative = findViewById(R.id.new_plan_negative);
-        mIBtnNegative.setOnClickListener(this);
-        mIBtnPositive = findViewById(R.id.new_plan_positive);
-        mIBtnPositive.setOnClickListener(this);
+        findViewById(R.id.new_plan_negative).setOnClickListener(this);
+        findViewById(R.id.new_plan_positive).setOnClickListener(this);
 
+        mTvTime = findViewById(R.id.new_plan_time);
+        mTvTime.setOnClickListener(this);
         mIBtnTag = findViewById(R.id.new_plan_tag);
         mIBtnTag.setOnClickListener(this);
         mIBtnPriority = findViewById(R.id.new_plan_priority);
@@ -71,6 +71,9 @@ public class NewPlanActivity extends BaseActivity {
                 break;
             case R.id.new_plan_positive:
                 break;
+            case R.id.new_plan_time:
+                setPlanTime();
+                break;
             case R.id.new_plan_tag:
                 setPlanTag();
                 break;
@@ -78,6 +81,11 @@ public class NewPlanActivity extends BaseActivity {
                 setPlanPriority();
                 break;
         }
+    }
+
+    private void setPlanTime() {
+        PlanTimeDialog timeDialog = new PlanTimeDialog(this);
+        timeDialog.show();
     }
 
     private void setPlanTag() {

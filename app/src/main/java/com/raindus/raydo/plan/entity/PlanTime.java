@@ -8,37 +8,65 @@ import java.util.Date;
 
 public class PlanTime {
 
-    public class Remind {
-        public static final int NONE = 0;
-        public static final int FIVE_IN_MINUTE = 1;
-        public static final int THIRD_IN_MINUTE = 2;
-        public static final int ONE_IN_HOUR = 3;
-        public static final int ONE_IN_DAY = 4;
-        public static final int ONE_IN_WEEK = 5;
+    public enum Remind {
+        NONE(0),
+        FIVE_IN_MINUTE(1),
+        THIRD_IN_MINUTE(2),
+        ONE_IN_HOUR(3),
+        ONE_IN_DAY(4),
+        ONE_IN_WEEK(5);// 9点
+
+        private final int mType;
+
+        Remind(int type) {
+            mType = type;
+        }
+
+        public int getType() {
+            return mType;
+        }
+
+        public static Remind getDefault() {
+            return NONE;
+        }
     }
 
-    public class Repeat {
-        public static final int NONE = 0;
-        public static final int EVERY_DAY = 1;
+    public enum Repeat {
+        NONE(0),
+        EVERY_DAY(1),
         /**
          * e.g. 0_1_2_3_4_5_6
          * 每周1-6天：必须有一天包含当前计划的开始星期X
          */
-        public static final int EVERY_WEEK = 2;
+        EVERY_WEEK(2),
         /**
          * e.g. 1_2_3_4_5 ...
          * 每月1-[(28-31)-1]天：必须包含当前计划的X号
          */
-        public static final int EVERY_MONTH = 3;
+        EVERY_MONTH(3),
         /**
          * 每年公历这一天
          */
-        public static final int EVERY_YEAR = 4;
+        EVERY_YEAR(4),
         /**
          * 间隔X天/周/月
          * e.g. day/week/month_x
          */
-        public static final int EVERY_INTERVAL = 5;
+        EVERY_INTERVAL(5);
+
+        private final int mType;
+
+        Repeat(int type) {
+            mType = type;
+        }
+
+        public int getType() {
+            return mType;
+        }
+
+        public static Repeat getDefault(){
+            return NONE;
+        }
     }
 
     // 时间点-开始时间

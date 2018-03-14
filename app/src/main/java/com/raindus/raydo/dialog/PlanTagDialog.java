@@ -14,7 +14,7 @@ import com.raindus.raydo.plan.entity.PlanTag;
  * Created by Raindus on 2018/3/12.
  */
 
-public class PlanTagDialog extends Dialog implements View.OnClickListener {
+public class PlanTagDialog extends BaseDialog {
 
     private PlanTag mInitTag;
     private OnTagCallback mOnTagCallback;

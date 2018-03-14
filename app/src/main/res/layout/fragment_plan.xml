@@ -140,6 +140,4 @@
             android:src="@drawable/w_default" />
 
     </com.raindus.raydo.ui.ShadeRelativeLayout>
-
-
 </LinearLayout>
