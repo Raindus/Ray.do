@@ -8,67 +8,6 @@ import java.util.Date;
 
 public class PlanTime {
 
-    public enum Remind {
-        NONE(0),
-        FIVE_IN_MINUTE(1),
-        THIRD_IN_MINUTE(2),
-        ONE_IN_HOUR(3),
-        ONE_IN_DAY(4),
-        ONE_IN_WEEK(5);// 9点
-
-        private final int mType;
-
-        Remind(int type) {
-            mType = type;
-        }
-
-        public int getType() {
-            return mType;
-        }
-
-        public static Remind getDefault() {
-            return NONE;
-        }
-    }
-
-    public enum Repeat {
-        NONE(0),
-        EVERY_DAY(1),
-        /**
-         * e.g. 0_1_2_3_4_5_6
-         * 每周1-6天：必须有一天包含当前计划的开始星期X
-         */
-        EVERY_WEEK(2),
-        /**
-         * e.g. 1_2_3_4_5 ...
-         * 每月1-[(28-31)-1]天：必须包含当前计划的X号
-         */
-        EVERY_MONTH(3),
-        /**
-         * 每年公历这一天
-         */
-        EVERY_YEAR(4),
-        /**
-         * 间隔X天/周/月
-         * e.g. day/week/month_x
-         */
-        EVERY_INTERVAL(5);
-
-        private final int mType;
-
-        Repeat(int type) {
-            mType = type;
-        }
-
-        public int getType() {
-            return mType;
-        }
-
-        public static Repeat getDefault(){
-            return NONE;
-        }
-    }
-
     // 时间点-开始时间
     private Date mStartTime;
     // 提醒方式

@@ -12,9 +12,12 @@ import android.widget.TextView;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.raindus.raydo.R;
+import com.raindus.raydo.plan.entity.PlanRemind;
+import com.raindus.raydo.plan.entity.PlanRepeat;
 import com.raindus.raydo.plan.entity.PlanTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -112,6 +115,7 @@ public class PlanTimeDialog extends BaseDialog {
                 planRemind();
                 break;
             case R.id.time_ll_repeat:
+                planRepeat();
                 break;
             case R.id.time_ll_end:
                 chooseEndDate();
@@ -140,11 +144,23 @@ public class PlanTimeDialog extends BaseDialog {
         PlanRemindDialog remindDialog = new PlanRemindDialog(getContext(), null);
         remindDialog.setOnRemindCallback(new PlanRemindDialog.OnRemindCallback() {
             @Override
-            public void onRemind(PlanTime.Remind remind) {
+            public void onRemind(PlanRemind remind) {
                 //TODO
             }
         });
         remindDialog.show();
+    }
+
+    private void planRepeat() {
+        PlanRepeatDialog repeatDialog = new PlanRepeatDialog(getContext(), null, new Date());
+        repeatDialog.setOnRepeatCallback(new PlanRepeatDialog.OnRepeatCallback() {
+            @Override
+            public void onRepeat(PlanRepeat repeat) {
+                toast(repeat.getContent());
+                //TODO
+            }
+        });
+        repeatDialog.show();
     }
 
     private void chooseEndDate() {

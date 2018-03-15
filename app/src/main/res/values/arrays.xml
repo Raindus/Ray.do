@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="custom_repeat">
+        <item>周</item>
+        <item>月</item>
+    </string-array>
+
+    <string-array name="custom_interval">
+        <item>日</item>
+        <item>周</item>
+        <item>月</item>
+    </string-array>
+
+
+</resources>

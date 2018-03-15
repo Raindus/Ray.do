@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.raindus.raydo.R;
-import com.raindus.raydo.plan.entity.PlanTime;
+import com.raindus.raydo.plan.entity.PlanRemind;
 
 /**
  * Created by Raindus on 2018/3/13.
@@ -22,10 +22,10 @@ public class PlanRemindDialog extends BaseDialog {
     private CheckBox mCbOneDay;
     private CheckBox mCbOneWeek;
 
-    private PlanTime.Remind mRemind;
+    private PlanRemind mRemind;
     private OnRemindCallback mOnRemindCallback;
 
-    public PlanRemindDialog(@NonNull Context context, PlanTime.Remind remind) {
+    public PlanRemindDialog(@NonNull Context context, PlanRemind remind) {
         super(context);
         mRemind = remind;
     }
@@ -37,7 +37,7 @@ public class PlanRemindDialog extends BaseDialog {
 
         initView();
         if (mRemind == null)
-            mRemind = PlanTime.Remind.getDefault();
+            mRemind = PlanRemind.getDefault();
         checkRemind(mRemind, true);
     }
 
@@ -58,7 +58,7 @@ public class PlanRemindDialog extends BaseDialog {
         mCbOneWeek = findViewById(R.id.remind_cb_one_week);
     }
 
-    private void checkRemind(PlanTime.Remind remind, boolean checked) {
+    private void checkRemind(PlanRemind remind, boolean checked) {
         switch (remind) {
             case NONE:
                 mCbNone.setChecked(checked);
@@ -85,45 +85,45 @@ public class PlanRemindDialog extends BaseDialog {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.remind_ll_none:
-                if (mRemind != PlanTime.Remind.NONE) {
+                if (mRemind != PlanRemind.NONE) {
                     checkRemind(mRemind, false);
-                    mRemind = PlanTime.Remind.NONE;
-                    checkRemind(PlanTime.Remind.NONE, true);
+                    mRemind = PlanRemind.NONE;
+                    checkRemind(PlanRemind.NONE, true);
                 }
                 break;
             case R.id.remind_ll_five_min:
-                if (mRemind != PlanTime.Remind.FIVE_IN_MINUTE) {
+                if (mRemind != PlanRemind.FIVE_IN_MINUTE) {
                     checkRemind(mRemind, false);
-                    mRemind = PlanTime.Remind.FIVE_IN_MINUTE;
-                    checkRemind(PlanTime.Remind.FIVE_IN_MINUTE, true);
+                    mRemind = PlanRemind.FIVE_IN_MINUTE;
+                    checkRemind(PlanRemind.FIVE_IN_MINUTE, true);
                 }
                 break;
             case R.id.remind_ll_third_min:
-                if (mRemind != PlanTime.Remind.THIRD_IN_MINUTE) {
+                if (mRemind != PlanRemind.THIRD_IN_MINUTE) {
                     checkRemind(mRemind, false);
-                    mRemind = PlanTime.Remind.THIRD_IN_MINUTE;
-                    checkRemind(PlanTime.Remind.THIRD_IN_MINUTE, true);
+                    mRemind = PlanRemind.THIRD_IN_MINUTE;
+                    checkRemind(PlanRemind.THIRD_IN_MINUTE, true);
                 }
                 break;
             case R.id.remind_ll_one_hour:
-                if (mRemind != PlanTime.Remind.ONE_IN_HOUR) {
+                if (mRemind != PlanRemind.ONE_IN_HOUR) {
                     checkRemind(mRemind, false);
-                    mRemind = PlanTime.Remind.ONE_IN_HOUR;
-                    checkRemind(PlanTime.Remind.ONE_IN_HOUR, true);
+                    mRemind = PlanRemind.ONE_IN_HOUR;
+                    checkRemind(PlanRemind.ONE_IN_HOUR, true);
                 }
                 break;
             case R.id.remind_ll_one_day:
-                if (mRemind != PlanTime.Remind.ONE_IN_DAY) {
+                if (mRemind != PlanRemind.ONE_IN_DAY) {
                     checkRemind(mRemind, false);
-                    mRemind = PlanTime.Remind.ONE_IN_DAY;
-                    checkRemind(PlanTime.Remind.ONE_IN_DAY, true);
+                    mRemind = PlanRemind.ONE_IN_DAY;
+                    checkRemind(PlanRemind.ONE_IN_DAY, true);
                 }
                 break;
             case R.id.remind_ll_one_week:
-                if (mRemind != PlanTime.Remind.ONE_IN_WEEK) {
+                if (mRemind != PlanRemind.ONE_IN_WEEK) {
                     checkRemind(mRemind, false);
-                    mRemind = PlanTime.Remind.ONE_IN_WEEK;
-                    checkRemind(PlanTime.Remind.ONE_IN_WEEK, true);
+                    mRemind = PlanRemind.ONE_IN_WEEK;
+                    checkRemind(PlanRemind.ONE_IN_WEEK, true);
                 }
                 break;
             case R.id.remind_positive:
@@ -139,6 +139,6 @@ public class PlanRemindDialog extends BaseDialog {
     }
 
     public interface OnRemindCallback {
-        void onRemind(PlanTime.Remind remind);
+        void onRemind(PlanRemind remind);
     }
 }

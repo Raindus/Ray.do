@@ -27,4 +27,14 @@ public class DateUtils {
         return format.format(date);
     }
 
+    /**
+     * @return eg.周X
+     */
+    public static String getDateWeek(Date date){
+        if (date == null)
+            date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("EE");
+        return format.format(date);
+    }
+
 }

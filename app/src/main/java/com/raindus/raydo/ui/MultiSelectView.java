@@ -21,9 +21,9 @@ import java.util.Set;
  * Created by Raindus on 2018/3/14.
  */
 
-public class MultiselectView extends View implements GestureDetector.OnGestureListener {
+public class MultiSelectView extends View implements GestureDetector.OnGestureListener {
 
-    private static final String[] WEEK = {"日", "一", "二", "三", "四", "五", "六"};
+    public static final String[] WEEK = {"日", "一", "二", "三", "四", "五", "六"};
 
     public static final int MODE_WEEK = 1;
     public static final int MODE_MONTH = 2;
@@ -55,7 +55,7 @@ public class MultiselectView extends View implements GestureDetector.OnGestureLi
 
     private OnItemSelectedListener mOnItemSelectedListener;
 
-    public MultiselectView(Context context, @Nullable AttributeSet attrs) {
+    public MultiSelectView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initPaint();
         mDefaultItemSize = (int) (getResources().getDisplayMetrics().density * 50f);
@@ -260,11 +260,20 @@ public class MultiselectView extends View implements GestureDetector.OnGestureLi
         return mMode;
     }
 
-    public boolean[] getCurSelectedArray() {
-        if (mMode == MODE_WEEK)
-            return mWeekSelected;
-        else
-            return mMonthSelected;
+    public Set<Integer> getCurSelectedArray() {
+        Set<Integer> select = new ArraySet<>();
+        if (mMode == MODE_WEEK) {
+            for (int i = 0; i < mWeekSelected.length; i++) {
+                if (mWeekSelected[i])
+                    select.add(i);
+            }
+        } else {
+            for (int i = 0; i < mMonthSelected.length; i++) {
+                if (mMonthSelected[i])
+                    select.add(i);
+            }
+        }
+        return select;
     }
 
     public void setOnItemSelectedListener(OnItemSelectedListener listener) {
