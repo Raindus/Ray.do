@@ -3,6 +3,7 @@ package com.raindus.raydo.calendar;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.View;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.MonthView;
@@ -14,6 +15,19 @@ import com.haibin.calendarview.MonthView;
 public class SimpleMonthView extends MonthView {
 
     private int mRadius;
+
+    private static boolean isStartDate = false;
+    private static int startYear;
+    private static int startMonth;
+    private static int startDay;
+
+    // 在这之前的日期不可点击，且变灰
+    public static void setStartDate(boolean start, int year, int month, int day) {
+        isStartDate = start;
+        startYear = year;
+        startMonth = month;
+        startDay = day;
+    }
 
     public SimpleMonthView(Context context) {
         super(context);
@@ -63,6 +77,15 @@ public class SimpleMonthView extends MonthView {
                     calendar.isCurrentDay() ? mCurDayTextPaint :
                             calendar.isCurrentMonth() ? mSchemeTextPaint : mOtherMonthTextPaint);
 
+        } else if (isStartDate && calendar.getYear() <= startYear
+                && calendar.getMonth() <= startMonth
+                && calendar.getDay() < startDay) {
+
+            canvas.drawText(String.valueOf(calendar.getDay()),
+                    cx,
+                    baselineY,
+                    mOtherMonthTextPaint);
+
         } else {
             canvas.drawText(String.valueOf(calendar.getDay()),
                     cx,
@@ -71,4 +94,19 @@ public class SimpleMonthView extends MonthView {
                             calendar.isCurrentMonth() ? mCurMonthTextPaint : mOtherMonthTextPaint);
         }
     }
+
+    @Override
+    public void onClick(View v) {
+        if (isStartDate) {// 在这之前的日期不可点击
+            Calendar calendar = getIndex();
+            if (calendar != null) {
+                if (calendar.getYear() <= startYear
+                        && calendar.getMonth() <= startMonth
+                        && calendar.getDay() < startDay)
+                    return;
+            }
+        }
+        super.onClick(v);
+    }
+
 }

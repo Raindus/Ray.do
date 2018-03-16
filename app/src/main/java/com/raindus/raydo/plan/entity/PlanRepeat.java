@@ -3,6 +3,11 @@ package com.raindus.raydo.plan.entity;
 import android.text.TextUtils;
 import android.util.ArraySet;
 
+import com.raindus.raydo.common.DateUtils;
+import com.raindus.raydo.ui.MultiSelectView;
+
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -113,6 +118,75 @@ public enum PlanRepeat {
                 break;
         }
         mContent = builder.toString();
+    }
+
+    public String getDescribe(Date date) {
+        switch (this) {
+            case NONE:
+                return "永不";
+            case EVERY_DAY:
+                return "每天";
+            case EVERY_WEEK://begin-0,end-6
+                if (isOnlyOneDay())
+                    return "每周（" + DateUtils.getDateWeek(date) + "）";
+                else {
+                    return getCustomRepeatText();
+                }
+            case EVERY_MONTH://begin-1,end-31
+                if (isOnlyOneDay())
+                    return "每月（" + date.getDate() + "日）";
+                else {
+                    return getCustomRepeatText();
+                }
+            case EVERY_YEAR:
+                return "每年（" + (date.getMonth() + 1) + "月" + date.getDate() + "日）";
+            case EVERY_INTERVAL:
+                return getCustomIntervalText();
+        }
+        return "";
+    }
+
+    private String getCustomIntervalText() {
+        String[] split = mContent.split("_");
+        if (split != null && split[0].equals("interval") && split.length == 3) {
+            int t = Integer.parseInt(split[2]);
+            String s = "";
+            if (t == PlanRepeat.INTERVAL_TYPE_DAY)
+                s = "天";
+            else if (t == PlanRepeat.INTERVAL_TYPE_WEEK)
+                s = "周";
+            else if (t == PlanRepeat.INTERVAL_TYPE_MONTH)
+                s = "月";
+            return ("自定义（每隔" + split[1] + s + "）");
+        }
+        return "";
+    }
+
+    private String getCustomRepeatText() {
+        StringBuilder builder = new StringBuilder();
+        Set<Integer> select = getSetFromContent();
+        if (select.size() == 0)
+            return "";
+
+        builder.append("自定义（");
+        Iterator<Integer> it = select.iterator();
+        if (getType() == 2) {
+            builder.append("每周的");
+            while (it.hasNext()) {
+                builder.append("周").append(MultiSelectView.WEEK[it.next()]);
+                if (it.hasNext())
+                    builder.append(",");
+            }
+        } else if (getType() == 3) {
+            builder.append("每月的");
+            while (it.hasNext()) {
+                builder.append(it.next()).append("日");
+                if (it.hasNext())
+                    builder.append(",");
+            }
+        }
+        builder.append("）");
+        return builder.toString();
     }
 
     //TODO

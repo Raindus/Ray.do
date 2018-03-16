@@ -8,11 +8,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.raindus.raydo.R;
+import com.raindus.raydo.common.DateUtils;
 import com.raindus.raydo.dialog.PlanPriorityDialog;
 import com.raindus.raydo.dialog.PlanTagDialog;
 import com.raindus.raydo.dialog.PlanTimeDialog;
 import com.raindus.raydo.plan.entity.PlanPriority;
 import com.raindus.raydo.plan.entity.PlanTag;
+import com.raindus.raydo.plan.entity.PlanTime;
+
+import java.util.Date;
 
 public class NewPlanActivity extends BaseActivity {
 
@@ -24,6 +28,8 @@ public class NewPlanActivity extends BaseActivity {
 
     private PlanTag mTag = PlanTag.getDefault();
     private PlanPriority mPriority = PlanPriority.getDefault();
+
+    private PlanTime mPlanTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +90,14 @@ public class NewPlanActivity extends BaseActivity {
     }
 
     private void setPlanTime() {
-        PlanTimeDialog timeDialog = new PlanTimeDialog(this);
+        PlanTimeDialog timeDialog = new PlanTimeDialog(this, mPlanTime);
+        timeDialog.setOnPlanTimeCallback(new PlanTimeDialog.OnPlanTimeCallback() {
+            @Override
+            public void onPlanTime(PlanTime planTime) {
+                mPlanTime = planTime;
+                mTvTime.setText(DateUtils.getNewPlanTimeDescribed(planTime.getStartTime()));
+            }
+        });
         timeDialog.show();
     }
 

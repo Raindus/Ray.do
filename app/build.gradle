@@ -22,6 +22,12 @@ android {
     }
 }
 
+repositories{
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -33,6 +39,7 @@ dependencies {
     compile 'com.amap.api:search:latest.integration'
     compile 'com.amap.api:location:latest.integration'
 
-    compile 'com.haibin:calendarview:3.2.7'
+    compile(name:'calendarview-release',ext:'aar')
+    //compile 'com.haibin:calendarview:3.2.7'
 }
 

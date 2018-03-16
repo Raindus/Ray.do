@@ -44,7 +44,7 @@ public class ChooseDateDialog extends BaseDialog {
             case R.id.choose_date_positive:
                 if (mOnChooseDateCallback != null)
                     mOnChooseDateCallback.onChooseDate(mDatePicker.getYear(),
-                            mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
+                            mDatePicker.getMonth()+1, mDatePicker.getDayOfMonth());
                 break;
         }
         dismiss();
