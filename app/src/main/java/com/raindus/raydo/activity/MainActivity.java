@@ -19,7 +19,7 @@ import com.raindus.raydo.fragment.PlanFragment;
 import com.raindus.raydo.fragment.UserFragment;
 import com.raindus.raydo.fragment.ViewFragment;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
     //---
     private final int PERMISSION_CODE_STORAGE = 1;

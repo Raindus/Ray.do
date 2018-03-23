@@ -9,7 +9,7 @@ import com.amap.api.services.weather.LocalWeatherLive;
 
 public interface WeatherListener {
 
-    void  onLocation(AMapLocation aMapLocation);
+    void onLocation(AMapLocation aMapLocation);
 
     void onWeatherLive(LocalWeatherLive weatherLive);
 }

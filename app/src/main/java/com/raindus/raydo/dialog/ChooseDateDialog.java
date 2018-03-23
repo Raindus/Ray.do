@@ -40,11 +40,13 @@ public class ChooseDateDialog extends BaseDialog {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.choose_date_negative:
+                if (mOnChooseDateCallback != null)
+                    mOnChooseDateCallback.onChooseDate(-1, -1, -1);
                 break;
             case R.id.choose_date_positive:
                 if (mOnChooseDateCallback != null)
                     mOnChooseDateCallback.onChooseDate(mDatePicker.getYear(),
-                            mDatePicker.getMonth()+1, mDatePicker.getDayOfMonth());
+                            mDatePicker.getMonth() + 1, mDatePicker.getDayOfMonth());
                 break;
         }
         dismiss();

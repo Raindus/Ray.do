@@ -41,5 +41,7 @@ dependencies {
 
     compile(name:'calendarview-release',ext:'aar')
     //compile 'com.haibin:calendarview:3.2.7'
+
+    compile 'com.evernote:android-job:1.2.5'
 }
 

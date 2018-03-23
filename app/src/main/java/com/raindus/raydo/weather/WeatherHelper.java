@@ -22,11 +22,11 @@ public class WeatherHelper {
     private WeatherSearch.OnWeatherSearchListener mListener = new WeatherSearch.OnWeatherSearchListener() {
         @Override
         public void onWeatherLiveSearched(LocalWeatherLiveResult weatherLiveResult, int i) {
-            if (i== 1000) {
-                if (weatherLiveResult != null&&weatherLiveResult.getLiveResult() != null) {
+            if (i == 1000) {
+                if (weatherLiveResult != null && weatherLiveResult.getLiveResult() != null) {
                     mWeather = weatherLiveResult.getLiveResult();
                 }
-                if (mWeatherListener != null){
+                if (mWeatherListener != null) {
                     mWeatherListener.onWeatherLive(weatherLiveResult.getLiveResult());
                 }
             }
@@ -38,23 +38,23 @@ public class WeatherHelper {
         }
     };
 
-    public WeatherHelper(WeatherListener listener){
+    public WeatherHelper(WeatherListener listener) {
         this.mWeatherListener = listener;
     }
 
-    public void activateWeather(Context context,String city){
+    public void activateWeather(Context context, String city) {
         if (mSearch == null) {
             mQuery = new WeatherSearchQuery(city, WeatherSearchQuery.WEATHER_TYPE_LIVE);
             mSearch = new WeatherSearch(context);
             mSearch.setOnWeatherSearchListener(mListener);
             mSearch.setQuery(mQuery);
             mSearch.searchWeatherAsyn();
-        }else {
+        } else {
             mSearch.searchWeatherAsyn();
         }
     }
 
-    public LocalWeatherLive getWeather(){
+    public LocalWeatherLive getWeather() {
         return mWeather;
     }
 

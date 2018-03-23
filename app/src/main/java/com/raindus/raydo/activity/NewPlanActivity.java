@@ -26,6 +26,9 @@ public class NewPlanActivity extends BaseActivity {
     private ImageButton mIBtnTag;
     private ImageButton mIBtnPriority;
 
+    private TextView mTvTitle;
+    private TextView mTvDetail;
+
     private PlanTag mTag = PlanTag.getDefault();
     private PlanPriority mPriority = PlanPriority.getDefault();
 
@@ -51,6 +54,9 @@ public class NewPlanActivity extends BaseActivity {
         mIBtnTag.setOnClickListener(this);
         mIBtnPriority = findViewById(R.id.new_plan_priority);
         mIBtnPriority.setOnClickListener(this);
+
+        mTvTitle = findViewById(R.id.new_plan_title);
+        mTvDetail = findViewById(R.id.new_plan_detail);
     }
 
     // 有些设备退出无效，激活退出动画
@@ -76,6 +82,8 @@ public class NewPlanActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.new_plan_positive:
+                newPlan();
+                finish();
                 break;
             case R.id.new_plan_time:
                 setPlanTime();
@@ -89,13 +97,18 @@ public class NewPlanActivity extends BaseActivity {
         }
     }
 
+    private void newPlan() {
+        // TODO
+    }
+
     private void setPlanTime() {
         PlanTimeDialog timeDialog = new PlanTimeDialog(this, mPlanTime);
         timeDialog.setOnPlanTimeCallback(new PlanTimeDialog.OnPlanTimeCallback() {
             @Override
             public void onPlanTime(PlanTime planTime) {
                 mPlanTime = planTime;
-                mTvTime.setText(DateUtils.getNewPlanTimeDescribed(planTime.getStartTime()));
+                //TODO
+                //mTvTime.setText(DateUtils.getNewPlanTimeDescribed(planTime.getStartTime()));
             }
         });
         timeDialog.show();

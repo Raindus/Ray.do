@@ -15,10 +15,11 @@ public class RaydoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-       // mBoxStore = MyObjectBox.builder().androidContext(this).build();
+        // TODO
+        // mBoxStore = MyObjectBox.builder().androidContext(this).build();
     }
 
-    public BoxStore getBoxStore(){
+    public BoxStore getBoxStore() {
         return mBoxStore;
     }
 }

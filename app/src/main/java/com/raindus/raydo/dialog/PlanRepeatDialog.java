@@ -23,6 +23,8 @@ import java.util.Set;
 
 public class PlanRepeatDialog extends BaseDialog {
 
+    private static final String CUSTOM_TEXT = "自定义（%s）";
+
     private RadioButton mRbNone;
     private RadioButton mRbEveryDay;
     private RadioButton mRbEveryWeek;
@@ -78,7 +80,7 @@ public class PlanRepeatDialog extends BaseDialog {
         mRbIntervalCustom = findViewById(R.id.repeat_rb_interval_custom);
 
         ((TextView) findViewById(R.id.repeat_tv_every_week))
-                .setText("每周（" + DateUtils.getDateWeek(mDate) + "）");
+                .setText("每周（" + DateUtils.formatDay(mDate) + "）");
         ((TextView) findViewById(R.id.repeat_tv_every_month))
                 .setText("每月（" + mDate.getDate() + "日）");
         ((TextView) findViewById(R.id.repeat_tv_every_year))
@@ -95,12 +97,12 @@ public class PlanRepeatDialog extends BaseDialog {
             case EVERY_DAY:
                 return 1;
             case EVERY_WEEK:
-                if (repeat.isOnlyOneDay())
+                if (repeat.isOneDay())
                     return 2;
                 else
                     return 6;
             case EVERY_MONTH:
-                if (repeat.isOnlyOneDay())
+                if (repeat.isOneDay())
                     return 3;
                 else
                     return 6;
@@ -133,68 +135,17 @@ public class PlanRepeatDialog extends BaseDialog {
                 mRbIntervalCustom.setChecked(checked);
                 if (!checked)
                     mTvIntervalCustom.setText("自定义间隔");
-                else {
-                    setCustomIntervalText();
-                }
+                else
+                    mTvIntervalCustom.setText(String.format(CUSTOM_TEXT, mRepeat.getContentDescribe(mDate)));
                 break;
             case 6:// 自定义重复
                 mRbEveryCustom.setChecked(checked);
                 if (!checked)
                     mTvEveryCustom.setText("自定义重复");
                 else
-                    setCustomRepeatText();
+                    mTvEveryCustom.setText(String.format(CUSTOM_TEXT, mRepeat.getContentDescribe(mDate)));
                 break;
         }
-    }
-
-    private void setCustomIntervalText() {
-        String[] split = mRepeat.getContent().split("_");
-        if (split != null && split[0].equals("interval") && split.length == 3) {
-            int t = Integer.parseInt(split[2]);
-            String s = "";
-            if (t == PlanRepeat.INTERVAL_TYPE_DAY)
-                s = "天";
-            else if (t == PlanRepeat.INTERVAL_TYPE_WEEK)
-                s = "周";
-            else if (t == PlanRepeat.INTERVAL_TYPE_MONTH)
-                s = "月";
-            mTvIntervalCustom.setText("自定义（每隔" + split[1] + s + "）");
-        }
-    }
-
-    private void setCustomRepeatText() {
-        StringBuilder builder = new StringBuilder();
-        Set<Integer> select = mRepeat.getSetFromContent();
-        if (select.size() == 0)
-            return;
-
-        builder.append("自定义（");
-        Iterator<Integer> it = select.iterator();
-        if (mRepeat.getType() == 2) {
-            if (select.size() == 7) {
-                mTvEveryCustom.setText("自定义（每天）");
-                return;
-            }
-            builder.append("每周的");
-            while (it.hasNext()) {
-                builder.append("周").append(MultiSelectView.WEEK[it.next()]);
-                if (it.hasNext())
-                    builder.append(",");
-            }
-        } else if (mRepeat.getType() == 3) {
-            if (select.size() == 31) {
-                mTvEveryCustom.setText("自定义（每天）");
-                return;
-            }
-            builder.append("每月的");
-            while (it.hasNext()) {
-                builder.append(it.next()).append("日");
-                if (it.hasNext())
-                    builder.append(",");
-            }
-        }
-        builder.append("）");
-        mTvEveryCustom.setText(builder.toString());
     }
 
     @Override
@@ -269,7 +220,7 @@ public class PlanRepeatDialog extends BaseDialog {
     }
 
     public void customRepeat() {
-        PlanCustomRepeatDialog dialog = new PlanCustomRepeatDialog(getContext(), 1, 14);
+        PlanCustomRepeatDialog dialog = new PlanCustomRepeatDialog(getContext(), mDate.getDay(), mDate.getDate());
         dialog.setOnCustomRepeatCallback(new PlanCustomRepeatDialog.OnCustomRepeatCallback() {
             @Override
             public void onCustomRepeat(Set<Integer> set, int type) {

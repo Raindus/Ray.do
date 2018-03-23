@@ -9,16 +9,13 @@ import java.util.Date;
 
 public class DateUtils {
 
-    public static String getNewPlanTimeDescribed(long time){
-        SimpleDateFormat format = new SimpleDateFormat("MM月dd日 yyyy EE");
-        Date date = new Date(time);
-        return format.format(date);
-    }
+    public static final long ONE_DAY = 24 * 60 * 60 * 1000;
+    public static final long ONE_WEEK = ONE_DAY * 7;
 
     /**
      * @return eg.2018.03.03
      */
-    public static String getTodayDate() {
+    public static String formatDate() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
         Date date = new Date();
         return format.format(date);
@@ -27,7 +24,7 @@ public class DateUtils {
     /**
      * @return eg.星期X
      */
-    public static String getTodayWeek() {
+    public static String formatDay() {
         SimpleDateFormat format = new SimpleDateFormat("EEEE");
         Date date = new Date();
         return format.format(date);
@@ -36,47 +33,57 @@ public class DateUtils {
     /**
      * @return eg.周X
      */
-    public static String getDateWeek(Date date) {
+    public static String formatDay(Date date) {
         if (date == null)
             date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("EE");
         return format.format(date);
     }
 
-    public static final long ONE_DAY = 24 * 60 * 60 * 1000;
-
-    public static int intervalDay(Date start, Date test) {
-        long interval = test.getTime() - start.getTime();
-        int day = (int) (interval / ONE_DAY);
-        return day >= 0 ? day : -1;
+    /**
+     * @return 间隔的天数
+     */
+    public static int intervalDate(Date start, Date end) {
+        long interval = end.getTime() - start.getTime();
+        int date = (int) (interval / ONE_DAY);
+        return date >= 0 ? date : -1;
     }
 
-    public static int intervalWeek(Date start, Date test) {
-        if (test.getDay() != start.getDay())
+    /**
+     * @return 间隔的周数，需要相同星期X
+     */
+    public static int intervalWeek(Date start, Date end) {
+        if (end.getDay() != start.getDay())
             return -1;
 
-        long interval = test.getTime() - start.getTime();
-        int week = (int) (interval / ONE_DAY / 7);
+        long interval = end.getTime() - start.getTime();
+        int week = (int) (interval / ONE_WEEK);
         return week >= 0 ? week : -1;
     }
 
-    public static int intervalMonth(Date start, Date test) {
-        if (test.getDate() != start.getDate())
+    /**
+     * @return 间隔的月数，需要相同日期
+     */
+    public static int intervalMonth(Date start, Date end) {
+        if (end.getDate() != start.getDate())
             return -1;
 
         int month = -1;
-        if (start.getYear() < test.getYear()) {
+        if (start.getYear() < end.getYear()) {
             int sm = start.getMonth();
-            int em = 12 * (test.getYear() - start.getYear()) + test.getMonth();
+            int em = 12 * (end.getYear() - start.getYear()) + end.getMonth();
             month = em - sm;
-        } else if (start.getYear() == test.getYear())
-            month = test.getMonth() - start.getMonth();
+        } else if (start.getYear() == end.getYear())
+            month = end.getMonth() - start.getMonth();
 
         return month >= 0 ? month : -1;
     }
 
-    public static int getDateNumber(int year, int month) {
-        boolean isRun = ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
+    /**
+     * @return 返回该月份的天数
+     */
+    public static int getDaysOfMonth(int year, int month) {
+        boolean isLeapYear = ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
         switch (month) {
             case 1:
             case 3:
@@ -92,9 +99,9 @@ public class DateUtils {
             case 11:
                 return 30;
             case 2:
-                return isRun ? 29 : 28;
+                return isLeapYear ? 29 : 28;
         }
-        return 30;
+        return -1;
     }
 
 }

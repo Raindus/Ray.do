@@ -14,7 +14,6 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.raindus.raydo.R;
 import com.raindus.raydo.calendar.SimpleMonthView;
-import com.raindus.raydo.common.DateUtils;
 import com.raindus.raydo.plan.entity.PlanRemind;
 import com.raindus.raydo.plan.entity.PlanRepeat;
 import com.raindus.raydo.plan.entity.PlanTime;
@@ -46,13 +45,16 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
     private ImageButton mIBtnRepeat;
 
     private PlanTime mPlanTime;
+
+    // 日历展示的最大和最小范围
     private final int mMinYear;
     private final int mMinMonth;
     private final int mMaxYear;
     private final int mMaxMonth;
 
-
+    // 重复的日期
     private List<Calendar> mSchemes;
+    // 当前选择的时间
     private int mYear = -1, mMonth = -1, mDay = -1, mHour = -1, mMin = -1;
 
     public OnPlanTimeCallback mOnPlanTimeCallback;
@@ -61,12 +63,13 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
         super(context);
 
         Date TODAY = new Date();
+        // 今日之前的日期不可点击
         SimpleMonthView.setStartDate(true, TODAY.getYear() + 1900, TODAY.getMonth() + 1, TODAY.getDate());
-        mMaxYear = TODAY.getYear() + 1901;
-        mMaxMonth = TODAY.getMonth() + 1;
 
         mPlanTime = planTime == null ? new PlanTime() : planTime;
-        if (mPlanTime.getStartTime() == -1) {
+
+        if (mPlanTime.getStartTime() == -1 || TODAY.getTime() <= mPlanTime.getStartTime()) {
+            // 默认显示范围为当前至一年后
             mMinYear = TODAY.getYear() + 1900;
             mMinMonth = TODAY.getMonth() + 1;
         } else {
@@ -74,33 +77,22 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
             mMinYear = temp.getYear() + 1900;
             mMinMonth = temp.getMonth() + 1;
         }
+        mMaxYear = TODAY.getYear() + 1901;
+        mMaxMonth = TODAY.getMonth() + 1;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_plan_time);
+
         initView();
+        initPlanTime();
     }
 
     private void initView() {
-        mCalendarView = findViewById(R.id.time_calendar);
-        mCalendarView.setRange(mMinYear, mMinMonth, mMaxYear, mMaxMonth);
-        if (mPlanTime.getStartTime() == -1) {
-            mCalendarView.scrollToCurrent();
-        } else {
-            Date temp = new Date(mPlanTime.getStartTime());
-            mCalendarView.scrollToCalendar(temp.getYear() + 1900, temp.getMonth() + 1, temp.getDate());
-        }
-        mCalendarView.setOnDateSelectedListener(this);
-        mCalendarView.setOnMonthChangeListener(this);
-
         findViewById(R.id.time_negative).setOnClickListener(this);
         findViewById(R.id.time_positive).setOnClickListener(this);
-
-        mTvTitle = findViewById(R.id.time_title);
-        mTvTitle.setOnClickListener(this);
-        mTvTitle.setText(mCalendarView.getSelectedCalendar().getYear() + " " + mCalendarView.getSelectedCalendar().getMonth() + "月");
 
         findViewById(R.id.time_ll_time).setOnClickListener(this);
         findViewById(R.id.time_ll_remind).setOnClickListener(this);
@@ -121,6 +113,48 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
         mIBtnRemind.setOnClickListener(this);
         mIBtnRepeat = findViewById(R.id.time_btn_repeat);
         mIBtnRepeat.setOnClickListener(this);
+
+
+        mCalendarView = findViewById(R.id.time_calendar);
+        // 设置显示范围
+        mCalendarView.setRange(mMinYear, mMinMonth, mMaxYear, mMaxMonth);
+        mCalendarView.setOnMonthChangeListener(this);
+
+        mTvTitle = findViewById(R.id.time_title);
+        mTvTitle.setOnClickListener(this);
+    }
+
+    private void initPlanTime() {
+        // 展示选定时间
+        if (mPlanTime.getStartTime() == -1) {
+            mCalendarView.scrollToCurrent();
+        } else {
+            Date temp = new Date(mPlanTime.getStartTime());
+            mYear = temp.getYear() + 1900;
+            mMonth = temp.getMonth() + 1;
+            mDay = temp.getDate();
+            mHour = temp.getHours();
+            mMin = temp.getMinutes();
+
+            mCalendarView.scrollToCalendar(mYear, mMonth, mDay);
+            showTimeText(mHour, mMin);
+        }
+        // 提前日历展示会错
+        mCalendarView.setOnDateSelectedListener(this);
+
+        // 展示提醒
+        if (mPlanTime.getRemind() != PlanRemind.NONE) {
+            showRemind(true);
+        }
+
+        // 展示重复
+        if (mPlanTime.getRepeat() != PlanRepeat.NONE) {
+            showRepeat(true);
+            if (mPlanTime.getRepeat().getCloseRepeatTime() != -1) {
+                Date end = new Date(mPlanTime.getRepeat().getCloseRepeatTime());
+                mTvEnd.setText((end.getYear() + 1900) + "-" + (end.getMonth() + 1) + "-" + end.getDate() + " 结束");
+            }
+        }
     }
 
     @Override
@@ -129,27 +163,13 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
         mMonth = calendar.getMonth();
         mDay = calendar.getDay();
 
-        if (mPlanTime.getRepeat() != PlanRepeat.NONE)
-            mTvRepeat.setText(mPlanTime.getRepeat().getDescribe(new Date(mYear - 1900, mMonth - 1, mDay)));
-
         if (mHour == -1 && mMin == -1)
             mPlanTime.setStartTime(mYear, mMonth, mDay, 0, 0);
         else
             mPlanTime.setStartTime(mYear, mMonth, mDay, mHour, mMin);
 
-        computerSchemes();
-    }
-
-    // TODO test
-    private void computerSchemes() {
-//        mSchemes = new ArrayList<>();
-//        int days = DateUtils.getDateNumber(mYear, mMonth);
-//        for (int i = mDay + 1; i <= days; i++) {
-//            if (mPlanTime.isRepeatDay(mYear, mMonth, i))
-//                mSchemes.add(getSchemeCalendar(mYear, mMonth, i));
-//        }
-//        mCalendarView.setSchemeDate(mSchemes);
-//        mCalendarView.update();
+        if (mPlanTime.getRepeat() != PlanRepeat.NONE)
+            mTvRepeat.setText(mPlanTime.getRepeat().getContentDescribe(new Date(mPlanTime.getStartTime())));
     }
 
     @Override
@@ -184,7 +204,7 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
                     mCalendarView.scrollToCurrent();
                 break;
             case R.id.time_ll_time:
-                chooseTime();
+                chooseTimeDialog();
                 break;
             case R.id.time_ll_remind:
                 planRemind();
@@ -197,19 +217,11 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
                 break;
             case R.id.time_btn_remind:
                 mPlanTime.setRemind(PlanRemind.NONE);
-                mIvRemind.setImageResource(R.drawable.time_remind_inactive);
-                mTvRemind.setText("");
-                mIBtnRemind.setVisibility(View.INVISIBLE);
+                showRemind(false);
                 break;
             case R.id.time_btn_repeat:
                 mPlanTime.setRepeat(PlanRepeat.NONE);
-                mIvRepeat.setImageResource(R.drawable.time_repeat_inactive);
-                mTvRepeat.setText("");
-                mIBtnRepeat.setVisibility(View.INVISIBLE);
-                mLlEnd.setVisibility(View.GONE);
-                mTvEnd.setText("永不结束");
-                mPlanTime.getRepeat().setCloseRepeatTime(-1);
-                computerSchemes();
+                showRepeat(false);
                 break;
         }
     }
@@ -227,39 +239,42 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
         dismiss();
     }
 
-    private void chooseTime() {
+    private void chooseTimeDialog() {
         ChooseTimeDialog dialog = new ChooseTimeDialog(getContext());
         dialog.setOnChooseTimeCallback(new ChooseTimeDialog.OnChooseTimeCallback() {
             @Override
             public void onChooseTime(int hour, int min) {
-                if (mHour == -1 && mMin == -1)
-                    mIvTime.setImageResource(R.drawable.time_active);
-                StringBuilder builder = new StringBuilder();
-                if (hour > 11) {
-                    builder.append("下午 ");
-                    if (hour < 22)
-                        builder.append("0");
-                    builder.append(hour - 12).append(":");
-                    if (min < 10)
-                        builder.append("0");
-                    builder.append(min);
-                } else {
-                    builder.append("上午 ");
-                    if (hour < 10)
-                        builder.append("0");
-                    builder.append(hour).append(":");
-                    if (min < 10)
-                        builder.append("0");
-                    builder.append(min);
-                }
-                mTvTime.setText(builder.toString());
+                showTimeText(hour, min);
                 mHour = hour;
                 mMin = min;
+                mPlanTime.setStartTime(mYear, mMonth, mDay, mHour, mMin);
             }
         });
         dialog.show();
     }
 
+    private void showTimeText(int hour, int min) {
+        mIvTime.setImageResource(R.drawable.time_active);
+        StringBuilder builder = new StringBuilder();
+        if (hour > 11) {
+            builder.append("下午 ");
+            if (hour < 22)
+                builder.append("0");
+            builder.append(hour - 12).append(":");
+            if (min < 10)
+                builder.append("0");
+            builder.append(min);
+        } else {
+            builder.append("上午 ");
+            if (hour < 10)
+                builder.append("0");
+            builder.append(hour).append(":");
+            if (min < 10)
+                builder.append("0");
+            builder.append(min);
+        }
+        mTvTime.setText(builder.toString());
+    }
 
     private void planRemind() {
         PlanRemindDialog remindDialog = new PlanRemindDialog(getContext(), mPlanTime.getRemind());
@@ -267,18 +282,22 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
             @Override
             public void onRemind(PlanRemind remind) {
                 mPlanTime.setRemind(remind);
-                if (remind == PlanRemind.NONE) {
-                    mIvRemind.setImageResource(R.drawable.time_remind_inactive);
-                    mTvRemind.setText("");
-                    mIBtnRemind.setVisibility(View.INVISIBLE);
-                } else {
-                    mIvRemind.setImageResource(R.drawable.time_remind_active);
-                    mTvRemind.setText(remind.getContent());
-                    mIBtnRemind.setVisibility(View.VISIBLE);
-                }
+                showRemind(remind != PlanRemind.NONE);
             }
         });
         remindDialog.show();
+    }
+
+    private void showRemind(boolean isShow) {
+        if (isShow) {
+            mIvRemind.setImageResource(R.drawable.time_remind_active);
+            mTvRemind.setText(mPlanTime.getRemind().getContent());
+            mIBtnRemind.setVisibility(View.VISIBLE);
+        } else {
+            mIvRemind.setImageResource(R.drawable.time_remind_inactive);
+            mTvRemind.setText("");
+            mIBtnRemind.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void planRepeat() {
@@ -288,21 +307,25 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
             @Override
             public void onRepeat(PlanRepeat repeat) {
                 mPlanTime.setRepeat(repeat);
-                if (repeat == PlanRepeat.NONE) {
-                    mIvRepeat.setImageResource(R.drawable.time_repeat_inactive);
-                    mTvRepeat.setText("");
-                    mIBtnRepeat.setVisibility(View.INVISIBLE);
-                    mLlEnd.setVisibility(View.GONE);
-                } else {
-                    mIvRepeat.setImageResource(R.drawable.time_repeat_active);
-                    mTvRepeat.setText(repeat.getDescribe(date));
-                    mIBtnRepeat.setVisibility(View.VISIBLE);
-                    mLlEnd.setVisibility(View.VISIBLE);
-                }
-                computerSchemes();
+                showRepeat(repeat != PlanRepeat.NONE);
             }
         });
         repeatDialog.show();
+    }
+
+    private void showRepeat(boolean isShow) {
+        if (isShow) {
+            mIvRepeat.setImageResource(R.drawable.time_repeat_active);
+            mTvRepeat.setText(mPlanTime.getRepeat().getContentDescribe(new Date(mPlanTime.getStartTime())));
+            mIBtnRepeat.setVisibility(View.VISIBLE);
+            mLlEnd.setVisibility(View.VISIBLE);
+        } else {
+            mIvRepeat.setImageResource(R.drawable.time_repeat_inactive);
+            mTvRepeat.setText("");
+            mIBtnRepeat.setVisibility(View.INVISIBLE);
+            mLlEnd.setVisibility(View.GONE);
+            showEndDate(-1, -1, -1);
+        }
     }
 
     private void chooseEndDate() {
@@ -310,19 +333,20 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
         dateDialog.setOnChooseDateCallback(new ChooseDateDialog.OnChooseDateCallback() {
             @Override
             public void onChooseDate(int year, int month, int day) {
-                mTvEnd.setText(year + "-" + month + "-" + day + " 结束");
-                mPlanTime.getRepeat().setCloseRepeatTime(new Date(year - 1900, month - 1, day).getTime());
+                showEndDate(year, month, day);
             }
         });
         dateDialog.show();
     }
 
-    private Calendar getSchemeCalendar(int year, int month, int day) {
-        Calendar calendar = new Calendar();
-        calendar.setYear(year);
-        calendar.setMonth(month);
-        calendar.setDay(day);
-        return calendar;
+    private void showEndDate(int year, int month, int day) {
+        if (year == -1 && month == -1 && day == -1) {
+            mTvEnd.setText("永不结束");
+            mPlanTime.getRepeat().setCloseRepeatTime(-1);
+            return;
+        }
+        mTvEnd.setText(year + " - " + month + " - " + day + " 结束");
+        mPlanTime.getRepeat().setCloseRepeatTime(new Date(year - 1900, month - 1, day).getTime());
     }
 
     public void setOnPlanTimeCallback(OnPlanTimeCallback callback) {

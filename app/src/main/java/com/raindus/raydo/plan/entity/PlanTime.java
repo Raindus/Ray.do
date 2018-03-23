@@ -81,7 +81,7 @@ public class PlanTime {
             case EVERY_DAY:
                 return true;
             case EVERY_WEEK:
-                if (mRepeat.isOnlyOneDay() && mStartTime.getDay() == date.getDay())
+                if (mRepeat.isOneDay() && mStartTime.getDay() == date.getDay())
                     return true;
                 else {
                     for (int i : mRepeat.getSetFromContent()) {
@@ -91,7 +91,7 @@ public class PlanTime {
                 }
                 break;
             case EVERY_MONTH:
-                if (mRepeat.isOnlyOneDay() && mStartTime.getDate() == day)
+                if (mRepeat.isOneDay() && mStartTime.getDate() == day)
                     return true;
                 else {
                     for (int i : mRepeat.getSetFromContent()) {
@@ -109,7 +109,7 @@ public class PlanTime {
                     int interval = Integer.parseInt(split[1]);
                     int t = Integer.parseInt(split[2]);
                     if (t == PlanRepeat.INTERVAL_TYPE_DAY) {
-                        int d = DateUtils.intervalDay(start, date);
+                        int d = DateUtils.intervalDate(start, date);
                         if (d % interval == 0)
                             return true;
                     } else if (t == PlanRepeat.INTERVAL_TYPE_WEEK) {

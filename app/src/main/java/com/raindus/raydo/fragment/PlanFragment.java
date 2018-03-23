@@ -58,7 +58,7 @@ public class PlanFragment extends BaseFragment {
                 mWeatherTemperature.setText(weather.getTemperature() + "°");
                 mWeatherType.setText(weather.getWeather());
                 mWeatherWind.setText(weather.getWindDirection() + "风" + weather.getWindPower() + "级");
-                mWeatherWeek.setText(DateUtils.getTodayWeek());
+                mWeatherWeek.setText(DateUtils.formatDay());
                 mWeatherHumidity.setText("湿度" + weather.getHumidity() + "%");
                 mWeatherCity.setText(weather.getCity());
             } else {
@@ -68,7 +68,7 @@ public class PlanFragment extends BaseFragment {
                 mWeatherTemperature.setText("XX°");
                 mWeatherType.setText("XX");
                 mWeatherWind.setText("X风x级");
-                mWeatherWeek.setText(DateUtils.getTodayWeek());
+                mWeatherWeek.setText(DateUtils.formatDay());
                 mWeatherHumidity.setText("湿度xx%");
                 mWeatherCity.setText("XXX");
             }
@@ -95,7 +95,7 @@ public class PlanFragment extends BaseFragment {
         view.findViewById(R.id.plan_search).setOnClickListener(this);
         view.findViewById(R.id.plan_more).setOnClickListener(this);
         mTvDate = view.findViewById(R.id.plan_date);
-        mTvDate.setText(DateUtils.getTodayDate());
+        mTvDate.setText(DateUtils.formatDate());
 
         mWeatherPanel = view.findViewById(R.id.weather_panel);
         mWeatherIcon = view.findViewById(R.id.weather_panel_icon);

@@ -27,9 +27,9 @@ public enum WeatherInfo {
     BLOWING_SAND("扬沙", R.drawable.w_blowing_sand, R.color.w_sand),
     DEFAULT("默认", R.drawable.w_default, R.color.dandongshi);
 
-    private String mType;
-    private int mIcon;
-    private int mColor;
+    private final String mType;
+    private final int mIcon;
+    private final int mColor;
 
     WeatherInfo(String type, int icon, int color) {
         mType = type;

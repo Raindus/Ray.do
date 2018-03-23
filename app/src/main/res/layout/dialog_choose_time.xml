@@ -8,7 +8,7 @@
         android:id="@+id/choose_time_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:timePickerMode="clock"/>
+        android:timePickerMode="clock" />
 
     <RelativeLayout
         android:layout_width="match_parent"

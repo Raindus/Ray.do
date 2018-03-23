@@ -92,6 +92,7 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/new_plan_title"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@null"
@@ -103,11 +104,12 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="0.3dp"
                 android:layout_marginLeft="20dp"
                 android:background="@color/chengdehui" />
 
             <EditText
+                android:id="@+id/new_plan_detail"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@null"

@@ -20,7 +20,7 @@
             android:layout_toLeftOf="@id/choose_date_positive"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:text="取消"
+            android:text="清除"
             android:textColor="@color/dandongshi"
             android:textSize="14dp" />
 
