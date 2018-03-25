@@ -12,17 +12,17 @@ import io.objectbox.annotation.Transient;
 public class PlanEntity {
 
     @Id
-    long id;
+    public long id;
 
     /**
      * 标题
      */
-    String title;
+    public String title;
 
     /**
      * 详细
      */
-    String detail;
+    public String detail;
 
     /**
      * 优先级 {@link PlanPriority}
@@ -30,7 +30,7 @@ public class PlanEntity {
     int priority;
 
     @Transient
-    PlanPriority mPriority;
+    public PlanPriority mPriority;
 
     /**
      * 完成状态 {@link PlanStatus}
@@ -38,7 +38,7 @@ public class PlanEntity {
     int status;
 
     @Transient
-    PlanStatus mStatus;
+    public PlanStatus mStatus;
 
     /**
      * 标签 {@link PlanTag}
@@ -46,7 +46,7 @@ public class PlanEntity {
     int tag;
 
     @Transient
-    PlanTag mTag;
+    public PlanTag mTag;
 
     /**
      * 开始时间 {@link PlanTime}
@@ -83,5 +83,43 @@ public class PlanEntity {
      * 集合时间-重复-提醒 功能
      */
     @Transient
-    PlanTime mTime;
+    public PlanTime mTime;
+
+    public PlanEntity() {
+
+    }
+
+    // 新建计划。
+    public PlanEntity(String title, String detail, PlanPriority priority, PlanTag tag, PlanStatus status, PlanTime time) {
+        this.title = title;
+        this.detail = title;
+        mPriority = priority;
+        mTag = tag;
+        mStatus = status;
+        mTime = time;
+    }
+
+    // 导入数据库
+    public void refresh() {
+        priority = mPriority.getLevel();
+        status = mStatus.getType();
+        tag = mTag.getType();
+        startTime = mTime.getStartTime();
+        remindType = mTime.getRemind().getType();
+        lastRemindTime = mTime.getLastRemindTime();
+        repeatType = mTime.getRepeat().getType();
+        repeatContent = mTime.getRepeat().getContent();
+        lastRepeatTime = mTime.getLastRepeatTime();
+        closeRepeatTime = mTime.getRepeat().getCloseRepeatTime();
+    }
+
+    // 数据库导出
+    public void parse() {
+        mPriority = PlanPriority.getPriority(priority);
+        mStatus = PlanStatus.getStatus(status);
+        mTag = PlanTag.getTag(tag);
+        mTime = new PlanTime(startTime, remindType, lastRemindTime,
+                repeatType, lastRepeatTime, repeatContent, closeRepeatTime);
+    }
+
 }

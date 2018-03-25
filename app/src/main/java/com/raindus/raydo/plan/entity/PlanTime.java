@@ -3,6 +3,7 @@ package com.raindus.raydo.plan.entity;
 import com.raindus.raydo.common.DateUtils;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Raindus on 2018/3/11.
@@ -16,15 +17,24 @@ public class PlanTime {
     // 提醒方式
     private PlanRemind mRemind;
     //最近一次提醒时间
-    private long mLastRemindTime;
+    private long mLastRemindTime = -1;
 
     // 重复方式 + 具体重复内容 +重复结束日
     private PlanRepeat mRepeat;
     // 最近一次重复时间
-    private long mLastRepeatTime;
+    private long mLastRepeatTime = -1;
 
     public PlanTime() {
 
+    }
+
+    public PlanTime(long startTime, int remindType, long lastRemindTime,
+                    int repeatType, long lastRepeatTime, String repeatContent, long closeRepeatTime) {
+        mStartTime = new Date(startTime);
+        mRemind = PlanRemind.getRemind(remindType);
+        mLastRemindTime = lastRemindTime;
+        mRepeat = PlanRepeat.getRepeat(repeatType, repeatContent, closeRepeatTime);
+        mLastRepeatTime = lastRepeatTime;
     }
 
     /**
@@ -62,81 +72,119 @@ public class PlanTime {
         this.mRepeat = mRepeat;
     }
 
-    public boolean isRepeatDay(int year, int month, int day) {
-        Date date = new Date(year - 1900, month - 1, day);
+    public long getLastRemindTime() {
+        if (mRemind != PlanRemind.NONE && mLastRemindTime == -1)
+            calculateLastRemindTime();
+        return mLastRemindTime;
+    }
 
-        Date start = (Date) mStartTime.clone();
-        start.setHours(0);
-        start.setMinutes(0);
-        if (start.getTime() + DateUtils.ONE_DAY > date.getTime())
-            return false;
+    public void setLastRemindTime(long mLastRemindTime) {
+        this.mLastRemindTime = mLastRemindTime;
+    }
 
-        if (mRepeat.getCloseRepeatTime() != -1) {
-            Date end = new Date(mRepeat.getCloseRepeatTime());
-            if (end.getTime() + DateUtils.ONE_DAY < date.getTime())
-                return false;
-        }
-
-        switch (mRepeat) {
-            case EVERY_DAY:
-                return true;
-            case EVERY_WEEK:
-                if (mRepeat.isOneDay() && mStartTime.getDay() == date.getDay())
-                    return true;
-                else {
-                    for (int i : mRepeat.getSetFromContent()) {
-                        if (i == date.getDay())
-                            return true;
-                    }
-                }
+    private void calculateLastRemindTime() {
+        long nextTime = mLastRepeatTime == -1 ? mStartTime.getTime() : mLastRepeatTime;
+        switch (mRemind) {
+            case NONE:
+                mLastRemindTime = -1;
                 break;
-            case EVERY_MONTH:
-                if (mRepeat.isOneDay() && mStartTime.getDate() == day)
-                    return true;
-                else {
-                    for (int i : mRepeat.getSetFromContent()) {
-                        if (i == day)
-                            return true;
-                    }
-                }
+            case FIVE_IN_MINUTE:
+                mLastRemindTime = nextTime - (DateUtils.ONE_MINUTE * 5);
                 break;
-            case EVERY_YEAR:
-                if (mStartTime.getMonth() + 1 == month && mStartTime.getDate() == day)
-                    return true;
-            case EVERY_INTERVAL:
-                String[] split = mRepeat.getContent().split("_");
-                if (split != null && split[0].equals("interval") && split.length == 3) {
-                    int interval = Integer.parseInt(split[1]);
-                    int t = Integer.parseInt(split[2]);
-                    if (t == PlanRepeat.INTERVAL_TYPE_DAY) {
-                        int d = DateUtils.intervalDate(start, date);
-                        if (d % interval == 0)
-                            return true;
-                    } else if (t == PlanRepeat.INTERVAL_TYPE_WEEK) {
-                        if (mStartTime.getDay() == date.getDay()) {
-                            int w = DateUtils.intervalWeek(start, date);
-                            if (w % interval == 0)
-                                return true;
-                        }
-                    } else if (t == PlanRepeat.INTERVAL_TYPE_MONTH) {
-                        if (mStartTime.getDate() == day) {
-                            int m = DateUtils.intervalMonth(start, date);
-                            if (m % interval == 0)
-                                return true;
+            case THIRD_IN_MINUTE:
+                mLastRemindTime = nextTime - (DateUtils.ONE_MINUTE * 30);
+                break;
+            case ONE_IN_HOUR:
+                mLastRemindTime = nextTime - (DateUtils.ONE_HOUR);
+                break;
+            case ONE_IN_DAY:
+                mLastRemindTime = nextTime - (DateUtils.ONE_DAY);
+                break;
+            case ONE_IN_WEEK://9点
+                mLastRemindTime = nextTime - (DateUtils.ONE_WEEK);
+                Date temp = new Date(mLastRemindTime);
+                temp.setHours(9);
+                temp.setMinutes(0);
+                mLastRemindTime = temp.getTime();
+                break;
+        }
+    }
+
+    public long getLastRepeatTime() {
+        if (mRepeat != PlanRepeat.NONE && mLastRepeatTime == -1)
+            calculateLastRepeatTime();
+        return mLastRepeatTime;
+    }
+
+    public void setLastRepeatTime(long mLastRepeatTime) {
+        this.mLastRepeatTime = mLastRepeatTime;
+    }
+
+    private void calculateLastRepeatTime() {
+        Date cur = new Date();
+
+        // 已经计算过，不再计算
+        if (mLastRepeatTime != -1 && cur.getTime() > mLastRepeatTime)
+            return;
+
+        if (cur.before(mStartTime))
+            mLastRepeatTime = mStartTime.getTime();
+        else {
+            switch (mRepeat) {
+                case NONE:
+                    mLastRepeatTime = -1;
+                    break;
+                case EVERY_DAY:
+                    mLastRepeatTime = new Date(cur.getYear(), cur.getMonth(), cur.getDate(),
+                            mStartTime.getHours(), mStartTime.getMinutes()).getTime();
+                    if (cur.getHours() < mStartTime.getHours() ||
+                            (cur.getHours() == mStartTime.getHours()
+                                    && cur.getMinutes() < mStartTime.getMinutes()))
+                        mLastRepeatTime += DateUtils.ONE_DAY;
+                    break;
+                case EVERY_WEEK:
+                    mLastRepeatTime = DateUtils.jumpToEveryWeek(mStartTime, cur, mRepeat.getSetFromContent());
+                    break;
+                case EVERY_MONTH:
+                    mLastRepeatTime = DateUtils.jumpToEveryMonth(mStartTime, cur, mRepeat.getSetFromContent());
+                    break;
+                case EVERY_YEAR:
+                    mLastRepeatTime = new Date(mStartTime.getYear() + 1, mStartTime.getMonth(), mStartTime.getDate(),
+                            mStartTime.getHours(), mStartTime.getMinutes()).getTime();
+                    break;
+                case EVERY_INTERVAL:
+                    String[] split = mRepeat.getContent().split("_");
+                    if (split != null && split[0].equals("interval") && split.length == 3) {
+                        int interval = Integer.parseInt(split[1]);
+                        int t = Integer.parseInt(split[2]);
+                        if (t == PlanRepeat.INTERVAL_TYPE_DAY) {
+                            int iDate = DateUtils.intervalDate(mStartTime, cur);
+                            mLastRepeatTime = (iDate + 1) * interval * DateUtils.ONE_DAY + mStartTime.getTime();
+                            if (cur.getTime() > mLastRepeatTime)
+                                mLastRepeatTime += interval * DateUtils.ONE_DAY;
+                        } else if (t == PlanRepeat.INTERVAL_TYPE_WEEK) {
+                            int iWeek = DateUtils.intervalWeek(mStartTime, cur);
+                            mLastRepeatTime = (iWeek + 1) * interval * DateUtils.ONE_WEEK + mStartTime.getTime();
+                            if (cur.getTime() > mLastRepeatTime)
+                                mLastRepeatTime += interval * DateUtils.ONE_WEEK;
+                        } else if (t == PlanRepeat.INTERVAL_TYPE_MONTH) {
+                            int iMonth = DateUtils.intervalMonth(mStartTime, cur);
+                            mLastRepeatTime = DateUtils.jumpToIntervalMonth((iMonth + 1) * interval, mStartTime);
+                            if (cur.getTime() > mLastRepeatTime)
+                                mLastRepeatTime = DateUtils.jumpToIntervalMonth((iMonth + 2) * interval, mStartTime);
                         }
                     }
-                }
+                    break;
+            }
         }
-        return false;
+        // 结束日
+        if (mRepeat.getCloseRepeatTime() != -1 && mLastRepeatTime >= mRepeat.getCloseRepeatTime()) {
+            mLastRepeatTime = -1;
+        }
     }
 
     // utils...
     private Date getDate(int year, int month, int day, int hour, int min) {
         return new Date(year - 1900, month - 1, day, hour, min);
     }
-
-//    private long calculationRemindTime(){
-//        long cur = System.currentTimeMillis();
-//
-//    }
 }

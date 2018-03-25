@@ -289,7 +289,7 @@ public enum PlanRepeat {
         }
     }
 
-    public static PlanRepeat getRepeat(int type, String content, int endTime) {
+    public static PlanRepeat getRepeat(int type, String content, long endTime) {
         PlanRepeat repeat;
         switch (type) {
             case 0:

@@ -14,12 +14,16 @@ import android.widget.Toast;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.raindus.raydo.R;
+import com.raindus.raydo.dao.ObjectBox;
+import com.raindus.raydo.plan.entity.PlanEntity;
 import com.raindus.raydo.ui.ShadeRelativeLayout;
 import com.raindus.raydo.weather.LocationHelper;
 import com.raindus.raydo.weather.WeatherHelper;
 import com.raindus.raydo.weather.WeatherInfo;
 import com.raindus.raydo.weather.WeatherListener;
 import com.raindus.raydo.common.DateUtils;
+
+import java.util.List;
 
 /**
  * Created by Raindus on 2018/3/4.
@@ -108,10 +112,13 @@ public class PlanFragment extends BaseFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
 
         mLocation.activateLocation(getActivity().getApplicationContext());
+
+        //TODO
+        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryAll(getActivity().getApplication());
     }
 
     @Override

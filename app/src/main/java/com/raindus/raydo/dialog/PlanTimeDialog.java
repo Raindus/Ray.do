@@ -14,6 +14,7 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.raindus.raydo.R;
 import com.raindus.raydo.calendar.SimpleMonthView;
+import com.raindus.raydo.common.DateUtils;
 import com.raindus.raydo.plan.entity.PlanRemind;
 import com.raindus.raydo.plan.entity.PlanRepeat;
 import com.raindus.raydo.plan.entity.PlanTime;
@@ -255,25 +256,7 @@ public class PlanTimeDialog extends BaseDialog implements CalendarView.OnMonthCh
 
     private void showTimeText(int hour, int min) {
         mIvTime.setImageResource(R.drawable.time_active);
-        StringBuilder builder = new StringBuilder();
-        if (hour > 11) {
-            builder.append("下午 ");
-            if (hour < 22)
-                builder.append("0");
-            builder.append(hour - 12).append(":");
-            if (min < 10)
-                builder.append("0");
-            builder.append(min);
-        } else {
-            builder.append("上午 ");
-            if (hour < 10)
-                builder.append("0");
-            builder.append(hour).append(":");
-            if (min < 10)
-                builder.append("0");
-            builder.append(min);
-        }
-        mTvTime.setText(builder.toString());
+        mTvTime.setText(DateUtils.describeOfTime(hour, min));
     }
 
     private void planRemind() {

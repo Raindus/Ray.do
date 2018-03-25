@@ -2,6 +2,8 @@ package com.raindus.raydo;
 
 import android.app.Application;
 
+import com.raindus.raydo.plan.entity.MyObjectBox;
+
 import io.objectbox.BoxStore;
 
 /**
@@ -15,8 +17,7 @@ public class RaydoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // TODO
-        // mBoxStore = MyObjectBox.builder().androidContext(this).build();
+        mBoxStore = MyObjectBox.builder().androidContext(this).build();
     }
 
     public BoxStore getBoxStore() {
