@@ -12,8 +12,17 @@
 
     <color name="light_transparent">#30ffffff</color>
 
+    <!-- 优先级 - 高 -->
+    <color name="p_high">#ff2b7c</color>
+    <!-- 优先级 - 中 -->
+    <color name="p_middle">#ffc610</color>
+    <!-- 优先级 - 低 -->
+    <color name="p_low">#6185c9</color>
+    <!-- 优先级 - 无 -->
+    <color name="p_none">#a4acb6</color>
+
     <!--天气图标  背景-->
-    <color name="w_background">#e6ebea</color>
+    <color name="w_background">#80e6ebea</color>
     <!--天气  晴-->
     <color name="w_sunny">#ffa234</color>
     <!--天气  多云-->

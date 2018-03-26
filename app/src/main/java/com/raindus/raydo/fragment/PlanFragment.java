@@ -3,11 +3,14 @@ package com.raindus.raydo.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,8 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.raindus.raydo.R;
 import com.raindus.raydo.dao.ObjectBox;
+import com.raindus.raydo.plan.PlanAdapter;
+import com.raindus.raydo.plan.PlanSort;
 import com.raindus.raydo.plan.entity.PlanEntity;
 import com.raindus.raydo.ui.ShadeRelativeLayout;
 import com.raindus.raydo.weather.LocationHelper;
@@ -29,7 +34,7 @@ import java.util.List;
  * Created by Raindus on 2018/3/4.
  */
 
-public class PlanFragment extends BaseFragment {
+public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapterListener {
 
     // TitleBar
     private TextView mTvDate;
@@ -79,6 +84,12 @@ public class PlanFragment extends BaseFragment {
         }
     };
 
+    // 空任务
+    private RelativeLayout mRlPlanEmpty;
+    private RecyclerView mRvPlan;
+    private PlanAdapter mPlanAdapter;
+    private LinearLayoutManager mLayoutManager;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +120,14 @@ public class PlanFragment extends BaseFragment {
         mWeatherWeek = view.findViewById(R.id.weather_panel_week);
         mWeatherHumidity = view.findViewById(R.id.weather_panel_humidity);
         mWeatherCity = view.findViewById(R.id.weather_panel_city);
+
+        mRlPlanEmpty = view.findViewById(R.id.plan_empty);
+        mRvPlan = view.findViewById(R.id.plan_list);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRvPlan.setLayoutManager(mLayoutManager);
+        mPlanAdapter = new PlanAdapter(getActivity());
+        mPlanAdapter.setPlanAdapterListener(this);
+        mRvPlan.setAdapter(mPlanAdapter);
     }
 
     @Override
@@ -116,9 +135,7 @@ public class PlanFragment extends BaseFragment {
         super.onResume();
 
         mLocation.activateLocation(getActivity().getApplicationContext());
-
-        //TODO
-        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryAll(getActivity().getApplication());
+        refreshPlanData();
     }
 
     @Override
@@ -143,5 +160,28 @@ public class PlanFragment extends BaseFragment {
                 Toast.makeText(getActivity(), "more", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    private void refreshPlanData() {
+        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryAll(getActivity().getApplication(), true);
+        mPlanAdapter.setPlanData(PlanSort.sortByTime(list));
+    }
+
+    @Override
+    public void onDataChanged(int itemCount) {
+        if (itemCount == 0)
+            mRlPlanEmpty.setVisibility(View.VISIBLE);
+        else
+            mRlPlanEmpty.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onPlanItemClick(View view, int position) {
+        toast(position + "");
+    }
+
+    @Override
+    public void onPlanItemLongClick(View view, int position) {
+        toast(position + "");
     }
 }

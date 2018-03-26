@@ -18,6 +18,15 @@ public class DateUtils {
     public static final long ONE_WEEK = 7 * ONE_DAY;
 
     /**
+     * @return eg. 12 : 30
+     */
+    public static String formatTime(long time) {
+        SimpleDateFormat format = new SimpleDateFormat("hh : mm");
+        Date date = new Date(time);
+        return format.format(date);
+    }
+
+    /**
      * @return eg.2018.03.03
      */
     public static String formatDate() {
@@ -290,6 +299,43 @@ public class DateUtils {
                 return isLeapYear ? 29 : 28;
         }
         return -1;
+    }
+
+    // true = begin; false = end
+    public static long getTodayTime(boolean beginOrEnd) {
+        Date cur = new Date();
+        long time = new Date(cur.getYear(), cur.getMonth(), cur.getDate()).getTime();
+        return beginOrEnd ? time : time + ONE_DAY - 1;
+    }
+
+    /**
+     * 深夜 0-3点
+     * 凌晨 3-5点
+     * 早晨 5-8点
+     * 上午 8-12点
+     * 中午 12-14点
+     * 下午 14-17点
+     * 傍晚 17-19点
+     * 晚上 19-23点
+     */
+    public static int getTimeState(long time) {
+        int hour = new Date(time).getHours();
+        if (hour < 3)
+            return 0;
+        else if (hour < 5)
+            return 1;
+        else if (hour < 8)
+            return 2;
+        else if (hour < 12)
+            return 3;
+        else if (hour < 14)
+            return 4;
+        else if (hour < 17)
+            return 5;
+        else if (hour < 19)
+            return 6;
+        else
+            return 7;
     }
 
 }

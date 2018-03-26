@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.raindus.raydo.RaydoApplication;
+import com.raindus.raydo.common.DateUtils;
 import com.raindus.raydo.plan.entity.PlanEntity;
+import com.raindus.raydo.plan.entity.PlanEntity_;
 
+import java.util.Date;
 import java.util.List;
 
 import io.objectbox.Box;
@@ -29,8 +32,18 @@ public class ObjectBox {
             return getBox(application).put(entity);
         }
 
-        public static List<PlanEntity> queryAll(Application application) {
-            return getBox(application).query().build().find();
+        public static List<PlanEntity> queryAll(Application application, boolean isToday) {
+            if (!isToday)
+                return getBox(application).query().build().find();
+            else {
+                long startTime = DateUtils.getTodayTime(true);
+                long endTime = DateUtils.getTodayTime(false);
+                return getBox(application).query()
+                        .between(PlanEntity_.startTime, startTime, endTime)
+                        .or()
+                        .between(PlanEntity_.lastRepeatTime, startTime, endTime)
+                        .build().find();
+            }
         }
 
     }

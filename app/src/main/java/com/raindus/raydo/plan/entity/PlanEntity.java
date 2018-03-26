@@ -30,7 +30,7 @@ public class PlanEntity {
     int priority;
 
     @Transient
-    public PlanPriority mPriority;
+    PlanPriority mPriority;
 
     /**
      * 完成状态 {@link PlanStatus}
@@ -38,7 +38,7 @@ public class PlanEntity {
     int status;
 
     @Transient
-    public PlanStatus mStatus;
+    PlanStatus mStatus;
 
     /**
      * 标签 {@link PlanTag}
@@ -46,7 +46,7 @@ public class PlanEntity {
     int tag;
 
     @Transient
-    public PlanTag mTag;
+    PlanTag mTag;
 
     /**
      * 开始时间 {@link PlanTime}
@@ -83,7 +83,7 @@ public class PlanEntity {
      * 集合时间-重复-提醒 功能
      */
     @Transient
-    public PlanTime mTime;
+    PlanTime mTime;
 
     public PlanEntity() {
 
@@ -92,7 +92,7 @@ public class PlanEntity {
     // 新建计划。
     public PlanEntity(String title, String detail, PlanPriority priority, PlanTag tag, PlanStatus status, PlanTime time) {
         this.title = title;
-        this.detail = title;
+        this.detail = detail;
         mPriority = priority;
         mTag = tag;
         mStatus = status;
@@ -113,13 +113,29 @@ public class PlanEntity {
         closeRepeatTime = mTime.getRepeat().getCloseRepeatTime();
     }
 
-    // 数据库导出
-    public void parse() {
-        mPriority = PlanPriority.getPriority(priority);
-        mStatus = PlanStatus.getStatus(status);
-        mTag = PlanTag.getTag(tag);
-        mTime = new PlanTime(startTime, remindType, lastRemindTime,
-                repeatType, lastRepeatTime, repeatContent, closeRepeatTime);
+    public PlanPriority getPriority() {
+        if (mPriority == null)
+            mPriority = PlanPriority.getPriority(priority);
+        return mPriority;
+    }
+
+    public PlanStatus getStatus() {
+        if (mStatus == null)
+            mStatus = PlanStatus.getStatus(status);
+        return mStatus;
+    }
+
+    public PlanTag getTag() {
+        if (mTag == null)
+            mTag = PlanTag.getTag(tag);
+        return mTag;
+    }
+
+    public PlanTime getTime() {
+        if (mTime == null)
+            mTime = new PlanTime(startTime, remindType, lastRemindTime,
+                    repeatType, lastRepeatTime, repeatContent, closeRepeatTime);
+        return mTime;
     }
 
 }

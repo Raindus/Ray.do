@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginBottom="1dp"
+    android:background="@drawable/background_item_plan"
+    android:clickable="true"
+    android:paddingVertical="10dp">
+
+    <ImageView
+        android:id="@+id/item_plan_status"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/plan_status_uncompleted" />
+
+    <TextView
+        android:id="@+id/item_plan_title"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginRight="40dp"
+        android:layout_toRightOf="@id/item_plan_status"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="你想做什么"
+        android:textColor="@android:color/black"
+        android:textSize="16dp" />
+
+    <ImageView
+        android:id="@+id/item_plan_tag"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/plan_tag_none" />
+
+    <TextView
+        android:id="@+id/item_plan_detail"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@id/item_plan_status"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="详细"
+        android:textColor="@color/dandongshi"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/item_plan_time"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:gravity="right"
+        android:text="12 : 30"
+        android:textSize="12dp" />
+
+</RelativeLayout>
