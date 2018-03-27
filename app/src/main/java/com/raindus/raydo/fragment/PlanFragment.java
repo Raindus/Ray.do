@@ -1,14 +1,14 @@
 package com.raindus.raydo.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,18 +17,15 @@ import android.widget.Toast;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.raindus.raydo.R;
-import com.raindus.raydo.dao.ObjectBox;
 import com.raindus.raydo.plan.PlanAdapter;
 import com.raindus.raydo.plan.PlanSort;
-import com.raindus.raydo.plan.entity.PlanEntity;
+import com.raindus.raydo.plan.PlanSortDelegate;
 import com.raindus.raydo.ui.ShadeRelativeLayout;
 import com.raindus.raydo.weather.LocationHelper;
 import com.raindus.raydo.weather.WeatherHelper;
 import com.raindus.raydo.weather.WeatherInfo;
 import com.raindus.raydo.weather.WeatherListener;
 import com.raindus.raydo.common.DateUtils;
-
-import java.util.List;
 
 /**
  * Created by Raindus on 2018/3/4.
@@ -88,12 +85,13 @@ public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapte
     private RelativeLayout mRlPlanEmpty;
     private RecyclerView mRvPlan;
     private PlanAdapter mPlanAdapter;
+    private PlanSortDelegate mPlanSort;
     private LinearLayoutManager mLayoutManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         mLocation = new LocationHelper(mWeatherListener);
         mWeather = new WeatherHelper(mWeatherListener);
     }
@@ -109,6 +107,9 @@ public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapte
 
         view.findViewById(R.id.plan_search).setOnClickListener(this);
         view.findViewById(R.id.plan_more).setOnClickListener(this);
+        view.findViewById(R.id.plan_more).setOnLongClickListener(this);
+        registerForContextMenu(view.findViewById(R.id.plan_more));
+
         mTvDate = view.findViewById(R.id.plan_date);
         mTvDate.setText(DateUtils.formatDate());
 
@@ -128,6 +129,36 @@ public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapte
         mPlanAdapter = new PlanAdapter(getActivity());
         mPlanAdapter.setPlanAdapterListener(this);
         mRvPlan.setAdapter(mPlanAdapter);
+        mPlanSort = new PlanSortDelegate(getActivity().getApplication(), mPlanAdapter);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getActivity().getMenuInflater().inflate(R.menu.menu_plan_fragment, menu);
+        menu.getItem(0).setTitle(mPlanSort.getShowComplectedDescribed());
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_plan_show_status:
+                mPlanSort.switchShowComplected();
+                break;
+            case R.id.menu_plan_sort_time:
+                mPlanSort.setSortType(PlanSort.SORT_BY_TIME);
+                break;
+            case R.id.menu_plan_sort_status:
+                mPlanSort.setSortType(PlanSort.SORT_BY_STATUS);
+                break;
+            case R.id.menu_plan_sort_priority:
+                mPlanSort.setSortType(PlanSort.SORT_BY_PRIORITY);
+                break;
+            case R.id.menu_plan_sort_tag:
+                mPlanSort.setSortType(PlanSort.SORT_BY_TAG);
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -135,7 +166,7 @@ public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapte
         super.onResume();
 
         mLocation.activateLocation(getActivity().getApplicationContext());
-        refreshPlanData();
+        mPlanSort.refresh();
     }
 
     @Override
@@ -157,14 +188,18 @@ public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapte
                 Toast.makeText(getActivity(), "search", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.plan_more:
-                Toast.makeText(getActivity(), "more", Toast.LENGTH_SHORT).show();
+                getView().findViewById(R.id.plan_more).performLongClick();
                 break;
         }
     }
 
-    private void refreshPlanData() {
-        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryAll(getActivity().getApplication(), true);
-        mPlanAdapter.setPlanData(PlanSort.sortByTime(list));
+    @Override
+    public boolean onLongClick(View v) {
+        if (v.getId() == R.id.plan_more) {
+            getView().findViewById(R.id.plan_more).showContextMenu(0f, 100f);//todo DP2PX
+            return true;
+        }
+        return super.onLongClick(v);
     }
 
     @Override

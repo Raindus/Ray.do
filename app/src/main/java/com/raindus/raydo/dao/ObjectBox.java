@@ -7,11 +7,13 @@ import com.raindus.raydo.RaydoApplication;
 import com.raindus.raydo.common.DateUtils;
 import com.raindus.raydo.plan.entity.PlanEntity;
 import com.raindus.raydo.plan.entity.PlanEntity_;
+import com.raindus.raydo.plan.entity.PlanStatus;
 
 import java.util.Date;
 import java.util.List;
 
 import io.objectbox.Box;
+import io.objectbox.query.QueryBuilder;
 
 /**
  * Created by Raindus on 2018/3/25.
@@ -32,17 +34,30 @@ public class ObjectBox {
             return getBox(application).put(entity);
         }
 
-        public static List<PlanEntity> queryAll(Application application, boolean isToday) {
+        public static List<PlanEntity> queryAll(Application application, boolean isToday, boolean showComplected) {
+            QueryBuilder<PlanEntity> query = getBox(application).query();
+            showToday(query, isToday);
+            showComplected(query, showComplected);
+            return query.build().find();
+        }
+
+        private static QueryBuilder<PlanEntity> showComplected(QueryBuilder<PlanEntity> query, boolean showComplected) {
+            if (showComplected)
+                return query;
+            else
+                return query.notEqual(PlanEntity_.status, PlanStatus.Completed.getType());
+        }
+
+        private static QueryBuilder<PlanEntity> showToday(QueryBuilder<PlanEntity> query, boolean isToday) {
             if (!isToday)
-                return getBox(application).query().build().find();
+                return query;
             else {
                 long startTime = DateUtils.getTodayTime(true);
                 long endTime = DateUtils.getTodayTime(false);
-                return getBox(application).query()
-                        .between(PlanEntity_.startTime, startTime, endTime)
+
+                return query.between(PlanEntity_.startTime, startTime, endTime)
                         .or()
-                        .between(PlanEntity_.lastRepeatTime, startTime, endTime)
-                        .build().find();
+                        .between(PlanEntity_.lastRepeatTime, startTime, endTime);
             }
         }
 

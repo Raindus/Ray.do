@@ -21,7 +21,7 @@ public class DateUtils {
      * @return eg. 12 : 30
      */
     public static String formatTime(long time) {
-        SimpleDateFormat format = new SimpleDateFormat("hh : mm");
+        SimpleDateFormat format = new SimpleDateFormat("HH : mm");
         Date date = new Date(time);
         return format.format(date);
     }

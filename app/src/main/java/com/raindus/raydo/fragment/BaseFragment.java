@@ -11,7 +11,7 @@ import android.widget.Toast;
  * Created by Raindus on 2018/3/12.
  */
 
-public class BaseFragment extends Fragment implements View.OnClickListener {
+public class BaseFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 
     // fragment to activity
     public void overlay(Class<?> classObj) {
@@ -37,5 +37,10 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
     }
 }
