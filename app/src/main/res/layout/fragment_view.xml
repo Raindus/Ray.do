@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/titlebar_bottom_shadow">
+
+    </RelativeLayout>
+
+    <com.haibin.calendarview.CalendarLayout
+        android:id="@+id/view_calendar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:calendar_content_view_id="@+id/view_plan_list"
+        app:default_status="expand">
+
+        <com.haibin.calendarview.CalendarView
+            android:id="@+id/view_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingHorizontal="5dp"
+            app:calendar_height="50dp"
+            app:current_day_lunar_text_color="@color/dandongshi"
+            app:current_day_text_color="@color/dandongshi"
+            app:day_text_size="14dp"
+            app:month_view="com.raindus.raydo.calendar.PlanMonthView"
+            app:month_view_show_mode="mode_fix"
+            app:scheme_text_color="@android:color/black"
+            app:scheme_theme_color="@color/dandongshi_light"
+            app:selected_text_color="@android:color/white"
+            app:selected_theme_color="@color/dandongshi"
+            app:week_background="@android:color/white"
+            app:week_bar_height="30dp"
+            app:week_text_color="@color/c_week_bar_color"
+            app:week_view="com.raindus.raydo.calendar.PlanWeekView" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/view_plan_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/w_background"
+            android:overScrollMode="never" />
+
+    </com.haibin.calendarview.CalendarLayout>
 
 </LinearLayout>

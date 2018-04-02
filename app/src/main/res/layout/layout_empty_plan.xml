@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/plan_empty"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:layout_width="145dp"
+        android:layout_height="207dp"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/plan_empty" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="280dp"
+        android:lineSpacingExtra="10dp"
+        android:text="今天还没有计划\n做一个完美的计划吧"
+        android:textColor="@color/qianzonghui"
+        android:textSize="15dp" />
+</RelativeLayout>

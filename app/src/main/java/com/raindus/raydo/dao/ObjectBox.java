@@ -41,6 +41,7 @@ public class ObjectBox {
             return query.build().find();
         }
 
+        // 显示 已完成 状态
         private static QueryBuilder<PlanEntity> showComplected(QueryBuilder<PlanEntity> query, boolean showComplected) {
             if (showComplected)
                 return query;
@@ -48,6 +49,7 @@ public class ObjectBox {
                 return query.notEqual(PlanEntity_.status, PlanStatus.Completed.getType());
         }
 
+        // 只显示 今日的计划
         private static QueryBuilder<PlanEntity> showToday(QueryBuilder<PlanEntity> query, boolean isToday) {
             if (!isToday)
                 return query;

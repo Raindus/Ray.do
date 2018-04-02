@@ -2,7 +2,9 @@ package com.raindus.raydo.plan;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -28,6 +30,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Object> mData;
     private PlanAdapterListener mPlanAdapterListener;
+    private View.OnCreateContextMenuListener mMenuListener;
 
     public PlanAdapter(Context context) {
         mContext = context;
@@ -100,6 +103,10 @@ public class PlanAdapter extends RecyclerView.Adapter {
             return VIEW_TYPE_TITLE_BAR;
         else
             return VIEW_TYPE_PLAN;
+    }
+
+    public void setOnCreateContextMenuListener(View.OnCreateContextMenuListener listener) {
+        mMenuListener = listener;
     }
 
     public void setPlanAdapterListener(PlanAdapterListener listener) {

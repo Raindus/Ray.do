@@ -3,14 +3,31 @@
 
     <!-- 主亮色调-丹东石 -->
     <color name="dandongshi">#d7c16b</color>
-    <color name="dandongshi_dark">#d0d7c16b</color>
-    <color name="dandongshi_light">#50d7c16b</color>
+    <color name="dandongshi_dark">#dbc983</color>
+    <color name="dandongshi_light">#e8e2c7</color>
     <!-- 主暗色调-承德灰 -->
     <color name="chengdehui">#757570</color>
     <!-- 分割线色调-浅棕灰 -->
     <color name="qianzonghui">#e1dbcd</color>
 
     <color name="light_transparent">#30ffffff</color>
+
+    <!-- 标签 - 运动 -->
+    <color name="tag_sport">#fe5756</color>
+    <!-- 标签 - 工作 -->
+    <color name="tag_work">#3594ff</color>
+    <!-- 标签 - 学习 -->
+    <color name="tag_study">#22ba40</color>
+    <!-- 标签 - 娱乐 -->
+    <color name="tag_entertainment">#ffa516</color>
+    <!-- 标签 - 生活 -->
+    <color name="tag_life">#a54358</color>
+    <!-- 标签 - 旅游 -->
+    <color name="tag_tourism">#a9b08f</color>
+    <!-- 标签 - 购物 -->
+    <color name="tag_shopping">#7c72cc</color>
+    <!-- 标签 - 无 -->
+    <color name="tag_none">#a4acb6</color>
 
     <!-- 优先级 - 高 -->
     <color name="p_high">#ff2b7c</color>
@@ -21,8 +38,11 @@
     <!-- 优先级 - 无 -->
     <color name="p_none">#a4acb6</color>
 
+    <!-- 日历 星期栏 -->
+    <color name="c_week_bar_color">#e1e1e1</color>
+
     <!--天气图标  背景-->
-    <color name="w_background">#80e6ebea</color>
+    <color name="w_background">#f0f0f0</color>
     <!--天气  晴-->
     <color name="w_sunny">#ffa234</color>
     <!--天气  多云-->

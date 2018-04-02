@@ -1,7 +1,6 @@
 package com.raindus.raydo.activity;
 
 import android.content.res.TypedArray;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
