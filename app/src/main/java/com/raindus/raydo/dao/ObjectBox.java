@@ -5,6 +5,7 @@ import android.app.Application;
 
 import com.raindus.raydo.RaydoApplication;
 import com.raindus.raydo.common.DateUtils;
+import com.raindus.raydo.plan.PlanSort;
 import com.raindus.raydo.plan.entity.PlanEntity;
 import com.raindus.raydo.plan.entity.PlanEntity_;
 import com.raindus.raydo.plan.entity.PlanStatus;
@@ -34,12 +35,44 @@ public class ObjectBox {
             return getBox(application).put(entity);
         }
 
+        // 指定日期 三个月 用于日历上显示标注
+        // 重复任务没有中间的具体日期
+        public static List<PlanEntity> queryThirdMonth(Application application, int year, int month) {
+            QueryBuilder<PlanEntity> query = getBox(application).query();
+
+            // 指定日期 三个月
+            long startTime = DateUtils.getThirdMonthTime(year, month, true);
+            long endTime = DateUtils.getThirdMonthTime(year, month, false);
+            return query.between(PlanEntity_.startTime, startTime, endTime)
+                    .or()
+                    .between(PlanEntity_.lastRepeatTime, startTime, endTime)
+                    .sort(new PlanSort.PlanSortByDate())
+                    .build().find();
+        }
+
+        // 全部 or 今日
         public static List<PlanEntity> queryAll(Application application, boolean isToday, boolean showComplected) {
             QueryBuilder<PlanEntity> query = getBox(application).query();
             showToday(query, isToday);
             showComplected(query, showComplected);
             return query.build().find();
         }
+
+        // 显示指定日期
+        public static List<PlanEntity> queryDate(Application application, int year, int month, int date, boolean showComplected) {
+            QueryBuilder<PlanEntity> query = getBox(application).query();
+
+            // 指定日期
+            long startTime = DateUtils.getDateTime(year, month, date, true);
+            long endTime = DateUtils.getDateTime(year, month, date, false);
+            query.between(PlanEntity_.startTime, startTime, endTime)
+                    .or()
+                    .between(PlanEntity_.lastRepeatTime, startTime, endTime);
+
+            showComplected(query, showComplected);
+            return query.build().find();
+        }
+
 
         // 显示 已完成 状态
         private static QueryBuilder<PlanEntity> showComplected(QueryBuilder<PlanEntity> query, boolean showComplected) {

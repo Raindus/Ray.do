@@ -308,6 +308,40 @@ public class DateUtils {
         return beginOrEnd ? time : time + ONE_DAY - 1;
     }
 
+    // true = begin; false = end
+    public static long getDateTime(int year, int month, int date, boolean beginOrEnd) {
+        long time = new Date(year - 1900, month - 1, date).getTime();
+        return beginOrEnd ? time : time + ONE_DAY - 1;
+    }
+
+    // true = begin; false = end
+    public static long getThirdMonthTime(int year, int month, boolean beginOrEnd) {
+        int y, m, d;
+        if (beginOrEnd) {
+            if (month == 1) {
+                y = year - 1;
+                m = 12;
+            } else {
+                y = year;
+                m = month - 1;
+            }
+            d = 1;
+        } else {
+            if (month == 12) {
+                y = year + 1;
+                m = 1;
+            } else {
+                y = year;
+                m = month + 1;
+            }
+            d = getDaysOfMonth(y, m);
+        }
+
+        long time = new Date(y - 1900, m - 1, d).getTime();
+        return beginOrEnd ? time : time + ONE_DAY - 1;
+    }
+
+
     /**
      * 深夜 0-3点
      * 凌晨 3-5点

@@ -57,6 +57,34 @@ public class PlanSort {
         return list;
     }
 
+    public static class PlanSortByDate implements Comparator<PlanEntity> {
+
+        // 日期
+        @Override
+        public int compare(PlanEntity o1, PlanEntity o2) {
+            Date cur = new Date();
+            Date olDate;
+            Date o2Date;
+
+            if (o1.getTime().getStartTime() < cur.getTime() || o1.getTime().getLastRepeatTime() == -1)
+                olDate = new Date(o1.getTime().getStartTime());
+            else
+                olDate = new Date(o1.getTime().getLastRepeatTime());
+
+            if (o2.getTime().getStartTime() < cur.getTime() || o2.getTime().getLastRepeatTime() == -1)
+                o2Date = new Date(o2.getTime().getStartTime());
+            else
+                o2Date = new Date(o2.getTime().getLastRepeatTime());
+
+            if (o2Date.getTime() < olDate.getTime())
+                return 1;
+            else if (o2Date.getTime() == olDate.getTime()) {
+                return 0;
+            } else
+                return -1;
+        }
+    }
+
     static class PlanSortByTime implements Comparator<PlanEntity> {
 
         // 时间(不考虑日期) - 优先级 - 完成状态

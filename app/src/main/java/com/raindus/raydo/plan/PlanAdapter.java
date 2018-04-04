@@ -84,9 +84,10 @@ public class PlanAdapter extends RecyclerView.Adapter {
 
     public void setPlanData(List<Object> data) {
         if (data == null)
-            return;
+            mData.clear();
+        else
+            mData = data;
 
-        mData = data;
         if (mPlanAdapterListener != null)
             mPlanAdapterListener.onDataChanged(mData.size());
         notifyDataSetChanged();
