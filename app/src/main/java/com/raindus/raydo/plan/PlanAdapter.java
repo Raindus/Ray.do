@@ -2,9 +2,7 @@ package com.raindus.raydo.plan;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,7 +13,6 @@ import com.raindus.raydo.common.DateUtils;
 import com.raindus.raydo.plan.entity.PlanEntity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -84,12 +81,13 @@ public class PlanAdapter extends RecyclerView.Adapter {
 
     public void setPlanData(List<Object> data) {
         if (data == null)
-            mData.clear();
+            mData = new ArrayList<>();
         else
             mData = data;
 
         if (mPlanAdapterListener != null)
             mPlanAdapterListener.onDataChanged(mData.size());
+
         notifyDataSetChanged();
     }
 

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.raindus.raydo.R;
+import com.raindus.raydo.activity.QueryActivity;
 import com.raindus.raydo.plan.PlanAdapter;
 import com.raindus.raydo.plan.PlanSort;
 import com.raindus.raydo.plan.PlanSortDelegate;
@@ -185,7 +186,7 @@ public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapte
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.plan_search:
-                Toast.makeText(getActivity(), "search", Toast.LENGTH_SHORT).show();
+                overlay(QueryActivity.class);
                 break;
             case R.id.plan_more:
                 getView().findViewById(R.id.plan_more).performLongClick();

@@ -117,6 +117,8 @@ public class PlanWeekView extends WeekView {
         if (isSelected) {
             mPointPaint.setColor(Color.WHITE);
         } else {
+            if (calendar.isCurrentDay())// onDrawText 绘制，防止覆盖
+                return;
             mPointPaint.setColor(getResources().getColor(R.color.dandongshi));
         }
 
@@ -131,6 +133,8 @@ public class PlanWeekView extends WeekView {
 
         if (calendar.isCurrentDay() && !isSelected) {
             canvas.drawCircle(cx, cy, mRadius, mCurrentDayPaint);
+            mPointPaint.setColor(getResources().getColor(R.color.dandongshi));
+            canvas.drawCircle(x + mItemWidth / 2, mItemHeight - 3 * mPadding, mPointRadius, mPointPaint);
         }
 
         if (hasScheme) {

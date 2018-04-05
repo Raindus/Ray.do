@@ -3,7 +3,11 @@ package com.raindus.raydo.calendar;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Xfermode;
 import android.text.TextUtils;
 
 import com.haibin.calendarview.Calendar;
@@ -113,6 +117,8 @@ public class PlanMonthView extends MonthView {
         if (isSelected(calendar)) {
             mPointPaint.setColor(Color.WHITE);
         } else {
+            if (calendar.isCurrentDay())// onDrawText 绘制，防止覆盖
+                return;
             mPointPaint.setColor(getResources().getColor(R.color.dandongshi));
         }
 
@@ -127,6 +133,8 @@ public class PlanMonthView extends MonthView {
 
         if (calendar.isCurrentDay() && !isSelected) {
             canvas.drawCircle(cx, cy, mRadius, mCurrentDayPaint);
+            mPointPaint.setColor(getResources().getColor(R.color.dandongshi));
+            canvas.drawCircle(x + mItemWidth / 2, y + mItemHeight - 3 * mPadding, mPointRadius, mPointPaint);
         }
 
         if (hasScheme) {

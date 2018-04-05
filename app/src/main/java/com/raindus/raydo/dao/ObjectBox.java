@@ -35,6 +35,27 @@ public class ObjectBox {
             return getBox(application).put(entity);
         }
 
+        // 关键字搜索
+        public static List<PlanEntity> queryKeyword(Application application, String... keywords) {
+            QueryBuilder<PlanEntity> query = getBox(application).query();
+
+            boolean addOr = false;
+
+            for (String word : keywords) {
+                if (word.isEmpty())
+                    continue;
+
+                if (addOr)
+                    query.or();
+
+                query.contains(PlanEntity_.title, word).or().contains(PlanEntity_.detail, word);
+                addOr = true;
+            }
+            if (!addOr)
+                return null;
+            return query.sort(new PlanSort.PlanSortByDate()).build().find();
+        }
+
         // 指定日期 三个月 用于日历上显示标注
         // 重复任务没有中间的具体日期
         public static List<PlanEntity> queryThirdMonth(Application application, int year, int month) {

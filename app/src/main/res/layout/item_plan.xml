@@ -5,7 +5,7 @@
     android:layout_marginBottom="1dp"
     android:background="@drawable/background_item_plan"
     android:clickable="true"
-    android:paddingVertical="10dp">
+    android:paddingVertical="8dp">
 
     <ImageView
         android:id="@+id/item_plan_status"
@@ -19,7 +19,7 @@
     <TextView
         android:id="@+id/item_plan_title"
         android:layout_width="match_parent"
-        android:layout_height="18dp"
+        android:layout_height="22dp"
         android:layout_marginRight="40dp"
         android:layout_toRightOf="@id/item_plan_status"
         android:gravity="center_vertical"
@@ -34,14 +34,16 @@
         android:layout_height="18dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
+        android:layout_marginTop="2dp"
         android:src="@drawable/plan_tag_none" />
 
     <TextView
         android:id="@+id/item_plan_detail"
         android:layout_width="match_parent"
         android:layout_height="15dp"
-        android:layout_marginRight="55dp"
-        android:layout_marginTop="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="58dp"
         android:layout_toRightOf="@id/item_plan_status"
         android:gravity="center_vertical"
         android:singleLine="true"
@@ -51,12 +53,13 @@
 
     <TextView
         android:id="@+id/item_plan_time"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_marginBottom="2dp"
         android:layout_marginRight="15dp"
-        android:gravity="right"
+        android:gravity="center_vertical"
         android:text="12 : 30"
         android:textSize="12dp" />
 
