@@ -212,12 +212,8 @@ public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapte
     }
 
     @Override
-    public void onPlanItemClick(View view, int position) {
-        toast(position + "");
-    }
-
-    @Override
-    public void onPlanItemLongClick(View view, int position) {
-        toast(position + "");
+    public void onPlanDeleted() {
+        toast("计划已删除");
+        mPlanSort.refresh();
     }
 }

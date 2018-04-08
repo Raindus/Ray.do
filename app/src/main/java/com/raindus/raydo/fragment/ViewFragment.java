@@ -91,6 +91,8 @@ public class ViewFragment extends BaseFragment implements CalendarView.OnDateSel
         super.onResume();
 
         mPlanSort.refresh();
+        refreshSchemes(mPlanSort.getYear(), mPlanSort.getMonth());
+        mCalendarView.update();
     }
 
     @Override
@@ -237,12 +239,11 @@ public class ViewFragment extends BaseFragment implements CalendarView.OnDateSel
     }
 
     @Override
-    public void onPlanItemClick(View view, int position) {
-        toast(position + "");
+    public void onPlanDeleted() {
+        toast("计划已删除");
+        mPlanSort.refresh();
+        refreshSchemes(mPlanSort.getYear(), mPlanSort.getMonth());
+        mCalendarView.update();
     }
 
-    @Override
-    public void onPlanItemLongClick(View view, int position) {
-        toast(position + "");
-    }
 }

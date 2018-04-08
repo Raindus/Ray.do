@@ -3,6 +3,7 @@ package com.raindus.raydo.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.StyleRes;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -15,6 +16,10 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
 
     public BaseDialog(@NonNull Context context) {
         super(context);
+    }
+
+    public BaseDialog(@NonNull Context context, @StyleRes int themeResId) {
+        super(context, themeResId);
     }
 
     public void debugLog(String log) {

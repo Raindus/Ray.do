@@ -36,6 +36,8 @@ public class QueryActivity extends BaseActivity implements PlanAdapter.PlanAdapt
     private PlanAdapter mPlanAdapter;
     private LinearLayoutManager mLayoutManager;
 
+    private String[] mQuerySplit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +82,8 @@ public class QueryActivity extends BaseActivity implements PlanAdapter.PlanAdapt
                 mBtnClean.setVisibility(View.VISIBLE);
 
             String text = s.toString().trim();
-            String[] split = text.split(" ");
-            List<PlanEntity> list = ObjectBox.PlanEntityBox.queryKeyword(getApplication(), split);
+            mQuerySplit = text.split(" ");
+            List<PlanEntity> list = ObjectBox.PlanEntityBox.queryKeyword(getApplication(), mQuerySplit);
 
             if (list == null)
                 mPlanAdapter.setPlanData(null);
@@ -119,12 +121,12 @@ public class QueryActivity extends BaseActivity implements PlanAdapter.PlanAdapt
     }
 
     @Override
-    public void onPlanItemClick(View view, int position) {
-
-    }
-
-    @Override
-    public void onPlanItemLongClick(View view, int position) {
-
+    public void onPlanDeleted() {
+        toast("计划已删除");
+        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryKeyword(getApplication(), mQuerySplit);
+        if (list == null)
+            mPlanAdapter.setPlanData(null);
+        else
+            mPlanAdapter.setPlanData(Arrays.asList(list.toArray(new Object[0])));
     }
 }

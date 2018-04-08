@@ -63,6 +63,13 @@ public enum PlanRepeat {
         mCloseRepeatTime = time;
     }
 
+    public String getCloseRepeatTimeDescribe() {
+        if (mCloseRepeatTime == -1)
+            return "永不结束";
+        Date close = new Date(mCloseRepeatTime);
+        return (close.getYear() + 1900) + " - " + (close.getMonth() + 1) + " - " + close.getDate() + " 结束";
+    }
+
     public String getContent() {
         if (TextUtils.isEmpty(mContent))
             setContent(null, -1, -1);

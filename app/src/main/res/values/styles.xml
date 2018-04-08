@@ -19,5 +19,16 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_bottom_out</item>
     </style>
 
+    <style name="TransparentDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@style/DialogSlideBottomAnimation</item>
+    </style>
+
+    <style name="DialogSlideBottomAnimation" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slide_bottom_out</item>
+    </style>
 
 </resources>

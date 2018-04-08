@@ -57,6 +57,18 @@ public class PlanSortDelegate {
         refresh();
     }
 
+    public int getYear() {
+        return mYear;
+    }
+
+    public int getMonth() {
+        return mMonth;
+    }
+
+    public int getDate() {
+        return mDate;
+    }
+
     public void setQueryDate(int year, int month, int date) {
         mYear = year;
         mMonth = month;

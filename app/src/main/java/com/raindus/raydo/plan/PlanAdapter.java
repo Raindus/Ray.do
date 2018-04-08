@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.raindus.raydo.R;
+import com.raindus.raydo.RaydoApplication;
 import com.raindus.raydo.common.DateUtils;
+import com.raindus.raydo.dao.ObjectBox;
+import com.raindus.raydo.dialog.PlanDetailDialog;
 import com.raindus.raydo.plan.entity.PlanEntity;
 
 import java.util.ArrayList;
@@ -27,11 +30,12 @@ public class PlanAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Object> mData;
     private PlanAdapterListener mPlanAdapterListener;
-    private View.OnCreateContextMenuListener mMenuListener;
+    private OnPlanItemListener mOnPlanItemListener;
 
     public PlanAdapter(Context context) {
         mContext = context;
         mData = new ArrayList<>();
+        mOnPlanItemListener = mDefaultOnPlanItemListener;
     }
 
     @Override
@@ -63,16 +67,16 @@ public class PlanAdapter extends RecyclerView.Adapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPlanAdapterListener != null)
-                    mPlanAdapterListener.onPlanItemClick(holder.itemView, position);
+                if (mOnPlanItemListener != null)
+                    mOnPlanItemListener.onPlanItemClick(holder.itemView, position);
             }
         });
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (mPlanAdapterListener != null)
-                    mPlanAdapterListener.onPlanItemLongClick(holder.itemView, position);
+                if (mOnPlanItemListener != null)
+                    mOnPlanItemListener.onPlanItemLongClick(holder.itemView, position);
                 return false;
             }
         });
@@ -104,10 +108,6 @@ public class PlanAdapter extends RecyclerView.Adapter {
             return VIEW_TYPE_PLAN;
     }
 
-    public void setOnCreateContextMenuListener(View.OnCreateContextMenuListener listener) {
-        mMenuListener = listener;
-    }
-
     public void setPlanAdapterListener(PlanAdapterListener listener) {
         mPlanAdapterListener = listener;
     }
@@ -115,10 +115,40 @@ public class PlanAdapter extends RecyclerView.Adapter {
     public interface PlanAdapterListener {
         void onDataChanged(int itemCount);
 
+        void onPlanDeleted();
+    }
+
+    public void setOnPlanItemListener(OnPlanItemListener listener) {
+        mOnPlanItemListener = listener;
+    }
+
+    public interface OnPlanItemListener {
         void onPlanItemClick(View view, int position);
 
         void onPlanItemLongClick(View view, int position);
     }
+
+    // 默认实现
+    private OnPlanItemListener mDefaultOnPlanItemListener = new OnPlanItemListener() {
+        @Override
+        public void onPlanItemClick(View view, final int position) {
+            PlanDetailDialog dialog = new PlanDetailDialog(mContext, (PlanEntity) mData.get(position));
+            dialog.setOnPlanDeleteCallback(new PlanDetailDialog.OnPlanDeleteCallback() {
+                @Override
+                public void onDelete() {
+                    ObjectBox.PlanEntityBox.delete(RaydoApplication.get(), (PlanEntity) mData.get(position));
+                    if (mPlanAdapterListener != null)
+                        mPlanAdapterListener.onPlanDeleted();
+                }
+            });
+            dialog.show();
+        }
+
+        @Override
+        public void onPlanItemLongClick(View view, int position) {
+            //TODO
+        }
+    };
 
     class TitleViewHolder extends RecyclerView.ViewHolder {
 

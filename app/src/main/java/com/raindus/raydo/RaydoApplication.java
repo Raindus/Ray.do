@@ -13,14 +13,20 @@ import io.objectbox.BoxStore;
 public class RaydoApplication extends Application {
 
     private static BoxStore mBoxStore;
+    private static Application mApplication;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        mApplication = this;
         mBoxStore = MyObjectBox.builder().androidContext(this).build();
     }
 
     public BoxStore getBoxStore() {
         return mBoxStore;
+    }
+
+    public static Application get() {
+        return mApplication;
     }
 }

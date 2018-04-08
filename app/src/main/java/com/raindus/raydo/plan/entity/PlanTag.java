@@ -40,6 +40,10 @@ public enum PlanTag {
         return mIcon;
     }
 
+    public String getContent(){
+        return mContent;
+    }
+
     /**
      * @return 日历标记
      */

@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.WeekView;
 import com.raindus.raydo.R;
+import com.raindus.raydo.common.Utils;
 
 /**
  * Created by Raindus on 2018/3/31.
@@ -57,7 +58,7 @@ public class PlanWeekView extends WeekView {
 
     public PlanWeekView(Context context) {
         super(context);
-        mTextPaint.setTextSize(dipToPx(context, 8));
+        mTextPaint.setTextSize(Utils.dipToPx(context, 8));
         mTextPaint.setColor(0xffffffff);
         mTextPaint.setAntiAlias(true);
         mTextPaint.setFakeBoldText(true);
@@ -84,14 +85,14 @@ public class PlanWeekView extends WeekView {
         mCurrentDayPaint.setColor(0xFFeaeaea);
 
 
-        mCircleRadius = dipToPx(getContext(), 7);
+        mCircleRadius = Utils.dipToPx(getContext(), 7);
 
-        mPadding = dipToPx(getContext(), 3);
+        mPadding = Utils.dipToPx(getContext(), 3);
 
-        mPointRadius = dipToPx(context, 2);
+        mPointRadius = Utils.dipToPx(context, 2);
 
         Paint.FontMetrics metrics = mSchemeBasicPaint.getFontMetrics();
-        mSchemeBaseLine = mCircleRadius - metrics.descent + (metrics.bottom - metrics.top) / 2 + dipToPx(getContext(), 1);
+        mSchemeBaseLine = mCircleRadius - metrics.descent + (metrics.bottom - metrics.top) / 2 + Utils.dipToPx(getContext(), 1);
     }
 
 
@@ -186,15 +187,4 @@ public class PlanWeekView extends WeekView {
         }
     }
 
-    /**
-     * dp转px
-     *
-     * @param context context
-     * @param dpValue dp
-     * @return px
-     */
-    private static int dipToPx(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
 }

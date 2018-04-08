@@ -35,6 +35,11 @@ public class ObjectBox {
             return getBox(application).put(entity);
         }
 
+        // 删除
+        public static void delete(Application application, PlanEntity... entity) {
+            getBox(application).remove(entity);
+        }
+
         // 关键字搜索
         public static List<PlanEntity> queryKeyword(Application application, String... keywords) {
             QueryBuilder<PlanEntity> query = getBox(application).query();

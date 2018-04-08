@@ -120,7 +120,8 @@
             android:id="@+id/view_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_top_shadow">
+            android:background="@drawable/background_top_shadow"
+            android:fillViewport="true">
 
             <FrameLayout
                 android:layout_width="match_parent"
