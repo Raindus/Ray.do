@@ -183,6 +183,12 @@ public class PlanTime {
         }
     }
 
+    // 生成新对象
+    public PlanTime clone() {
+        return new PlanTime(mStartTime.getTime(), mRemind.getType(), mLastRemindTime,
+                mRepeat.getType(), mLastRepeatTime, mRepeat.getContent(), mRepeat.getCloseRepeatTime());
+    }
+
     // utils...
     private Date getDate(int year, int month, int day, int hour, int min) {
         return new Date(year - 1900, month - 1, day, hour, min);

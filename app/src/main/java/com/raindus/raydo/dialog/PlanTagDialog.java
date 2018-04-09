@@ -107,7 +107,6 @@ public class PlanTagDialog extends BaseDialog {
                 mOnTagCallback.onCallback(PlanTag.None);
                 break;
             case R.id.tag_negative:
-                mOnTagCallback.onCallback(mInitTag);
                 break;
         }
         dismiss();

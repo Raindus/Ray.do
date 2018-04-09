@@ -1,19 +1,35 @@
 package com.raindus.raydo.plan;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.raindus.raydo.R;
 import com.raindus.raydo.RaydoApplication;
 import com.raindus.raydo.common.DateUtils;
 import com.raindus.raydo.dao.ObjectBox;
+import com.raindus.raydo.dialog.PlanContentDialog;
 import com.raindus.raydo.dialog.PlanDetailDialog;
+import com.raindus.raydo.dialog.PlanPriorityDialog;
+import com.raindus.raydo.dialog.PlanStatusDialog;
+import com.raindus.raydo.dialog.PlanTagDialog;
+import com.raindus.raydo.dialog.PlanTimeDialog;
 import com.raindus.raydo.plan.entity.PlanEntity;
+import com.raindus.raydo.plan.entity.PlanPriority;
+import com.raindus.raydo.plan.entity.PlanStatus;
+import com.raindus.raydo.plan.entity.PlanTag;
+import com.raindus.raydo.plan.entity.PlanTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,7 +162,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onPlanItemLongClick(View view, int position) {
-            //TODO
+            mLongClickPosition = position;
         }
     };
 
@@ -175,6 +191,115 @@ public class PlanAdapter extends RecyclerView.Adapter {
             mIvTag = itemView.findViewById(R.id.item_plan_tag);
             mTvDetail = itemView.findViewById(R.id.item_plan_detail);
             mTvTime = itemView.findViewById(R.id.item_plan_time);
+
+            itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                @Override
+                public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                    ((Activity) mContext).getMenuInflater().inflate(R.menu.menu_plan_item, menu);
+                    menu.setHeaderTitle("更新");
+                    menu.getItem(0).setOnMenuItemClickListener(mOnMenuItemClickListener);
+                    menu.getItem(1).setOnMenuItemClickListener(mOnMenuItemClickListener);
+                    menu.getItem(2).setOnMenuItemClickListener(mOnMenuItemClickListener);
+                    menu.getItem(3).setOnMenuItemClickListener(mOnMenuItemClickListener);
+                    menu.getItem(4).setOnMenuItemClickListener(mOnMenuItemClickListener);
+                }
+            });
         }
+    }
+
+    private int mLongClickPosition = -1;
+    private MenuItem.OnMenuItemClickListener mOnMenuItemClickListener = new MenuItem.OnMenuItemClickListener() {
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_plan_time:
+                    updatePlanTime();
+                    break;
+                case R.id.menu_plan_status:
+                    updatePlanStatus();
+                    break;
+                case R.id.menu_plan_priority:
+                    updatePlanPriority();
+                    break;
+                case R.id.menu_plan_tag:
+                    updatePlanTag();
+                    break;
+                case R.id.menu_plan_detail:
+                    updatePlanDetail();
+                    break;
+            }
+            return false;
+        }
+    };
+
+    private void updatePlan() {
+        ObjectBox.PlanEntityBox.put(RaydoApplication.get(), (PlanEntity) mData.get(mLongClickPosition));
+        notifyItemChanged(mLongClickPosition);
+        toast("计划已更新");
+    }
+
+    private void updatePlanTime() {
+        PlanTimeDialog timeDialog = new PlanTimeDialog(mContext, ((PlanEntity) mData.get(mLongClickPosition)).getTime().clone());
+        timeDialog.setOnPlanTimeCallback(new PlanTimeDialog.OnPlanTimeCallback() {
+            @Override
+            public void onPlanTime(PlanTime planTime) {
+                ((PlanEntity) mData.get(mLongClickPosition)).setTime(planTime);
+                updatePlan();
+            }
+        });
+        timeDialog.show();
+    }
+
+    private void updatePlanStatus() {
+        PlanStatusDialog statusDialog = new PlanStatusDialog(mContext, ((PlanEntity) mData.get(mLongClickPosition)).getStatus());
+        statusDialog.setOnStatusCallback(new PlanStatusDialog.OnStatusCallback() {
+            @Override
+            public void onCallback(PlanStatus status) {
+                ((PlanEntity) mData.get(mLongClickPosition)).setStatus(status);
+                updatePlan();
+            }
+        });
+        statusDialog.show();
+    }
+
+    private void updatePlanPriority() {
+        PlanPriorityDialog priorityDialog = new PlanPriorityDialog(mContext, ((PlanEntity) mData.get(mLongClickPosition)).getPriority());
+        priorityDialog.setOnPriorityCallback(new PlanPriorityDialog.OnPriorityCallback() {
+            @Override
+            public void onCallback(PlanPriority priority) {
+                ((PlanEntity) mData.get(mLongClickPosition)).setPriority(priority);
+                updatePlan();
+            }
+        });
+        priorityDialog.show();
+    }
+
+    private void updatePlanTag() {
+        PlanTagDialog tagDialog = new PlanTagDialog(mContext, ((PlanEntity) mData.get(mLongClickPosition)).getTag());
+        tagDialog.setOnTagCallback(new PlanTagDialog.OnTagCallback() {
+            @Override
+            public void onCallback(PlanTag tag) {
+                ((PlanEntity) mData.get(mLongClickPosition)).setTag(tag);
+                updatePlan();
+            }
+        });
+        tagDialog.show();
+    }
+
+    private void updatePlanDetail() {
+        PlanContentDialog contentDialog = new PlanContentDialog(mContext, ((PlanEntity) mData.get(mLongClickPosition)).detail);
+        contentDialog.setOnContentCallback(new PlanContentDialog.OnContentCallback() {
+            @Override
+            public void onCallback(String content) {
+                ((PlanEntity) mData.get(mLongClickPosition)).detail = content;
+                updatePlan();
+            }
+        });
+        contentDialog.show();
+    }
+
+    private void toast(String s) {
+        Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
     }
 }

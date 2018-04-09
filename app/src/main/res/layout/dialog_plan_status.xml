@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="330dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:text="状态"
+        android:textColor="@android:color/black"
+        android:textSize="20dp" />
+
+    <RelativeLayout
+        android:id="@+id/status_rl_completed"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/plan_status_completed"
+            android:tint="@color/dandongshi" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="70dp"
+            android:gravity="center"
+            android:text="已完成"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <RadioButton
+            android:id="@+id/status_rb_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:background="@null"
+            android:clickable="false" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/status_rl_completing"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/plan_status_completing"
+            android:tint="@color/dandongshi" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="70dp"
+            android:gravity="center"
+            android:text="进行中"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <RadioButton
+            android:id="@+id/status_rb_completing"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:background="@null"
+            android:clickable="false" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/status_rl_uncompleted"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/plan_status_uncompleted"
+            android:tint="@color/dandongshi" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="70dp"
+            android:gravity="center"
+            android:text="未完成"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <RadioButton
+            android:id="@+id/status_rb_uncompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:background="@null"
+            android:clickable="false" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/status_negative"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_marginVertical="5dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/dandongshi"
+        android:textSize="14dp" />
+
+</LinearLayout>

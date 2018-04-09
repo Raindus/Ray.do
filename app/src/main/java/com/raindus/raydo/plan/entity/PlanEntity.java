@@ -113,10 +113,18 @@ public class PlanEntity {
         closeRepeatTime = mTime.getRepeat().getCloseRepeatTime();
     }
 
+    public void setPriority(PlanPriority priority) {
+        mPriority = priority;
+    }
+
     public PlanPriority getPriority() {
         if (mPriority == null)
             mPriority = PlanPriority.getPriority(priority);
         return mPriority;
+    }
+
+    public void setStatus(PlanStatus status) {
+        mStatus = status;
     }
 
     public PlanStatus getStatus() {
@@ -125,10 +133,18 @@ public class PlanEntity {
         return mStatus;
     }
 
+    public void setTag(PlanTag tag) {
+        mTag = tag;
+    }
+
     public PlanTag getTag() {
         if (mTag == null)
             mTag = PlanTag.getTag(tag);
         return mTag;
+    }
+
+    public void setTime(PlanTime time) {
+        mTime = time;
     }
 
     public PlanTime getTime() {

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="330dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:text="详情"
+        android:textColor="@android:color/black"
+        android:textSize="20dp" />
+
+
+    <EditText
+        android:id="@+id/content_et_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:background="@drawable/background_round_inside_shadow"
+        android:gravity="start"
+        android:maxLength="1024"
+        android:maxLines="8"
+        android:minLines="3"
+        android:padding="12dp"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/dandongshi_light"
+        android:scrollbars="vertical"
+        android:textColor="@android:color/black"
+        android:textSize="16dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/plan_content_negative"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/plan_content_positive"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/dandongshi"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/plan_content_positive"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/dandongshi"
+            android:textSize="14dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

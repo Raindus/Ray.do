@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_plan_time"
+        android:title="时间/提醒/重复" />
 
     <item
-        android:id="@+id/menu_plan_item_delete"
-        android:title="删除" />
+        android:id="@+id/menu_plan_status"
+        android:title="状态" />
 
+    <item
+        android:id="@+id/menu_plan_priority"
+        android:title="优先级" />
+
+    <item
+        android:id="@+id/menu_plan_tag"
+        android:title="标签" />
+
+    <item
+        android:id="@+id/menu_plan_detail"
+        android:title="详细" />
 </menu>

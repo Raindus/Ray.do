@@ -134,8 +134,10 @@ public class PlanWeekView extends WeekView {
 
         if (calendar.isCurrentDay() && !isSelected) {
             canvas.drawCircle(cx, cy, mRadius, mCurrentDayPaint);
-            mPointPaint.setColor(getResources().getColor(R.color.dandongshi));
-            canvas.drawCircle(x + mItemWidth / 2, mItemHeight - 3 * mPadding, mPointRadius, mPointPaint);
+            if (hasScheme) {
+                mPointPaint.setColor(getResources().getColor(R.color.dandongshi));
+                canvas.drawCircle(x + mItemWidth / 2, mItemHeight - 3 * mPadding, mPointRadius, mPointPaint);
+            }
         }
 
         if (hasScheme) {

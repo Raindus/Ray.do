@@ -80,7 +80,6 @@ public class PlanPriorityDialog extends BaseDialog {
                 mOnPriorityCallback.onCallback(PlanPriority.None);
                 break;
             case R.id.priority_negative:
-                mOnPriorityCallback.onCallback(mInitPriority);
                 break;
         }
         dismiss();
