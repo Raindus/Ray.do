@@ -3,7 +3,6 @@ package com.raindus.raydo.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Fragment;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -11,7 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.raindus.raydo.R;
 import com.raindus.raydo.fragment.ClockFragment;

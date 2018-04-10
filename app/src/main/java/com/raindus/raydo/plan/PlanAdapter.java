@@ -3,11 +3,8 @@ package com.raindus.raydo.plan;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -233,8 +230,11 @@ public class PlanAdapter extends RecyclerView.Adapter {
         }
     };
 
-    private void updatePlan() {
-        ObjectBox.PlanEntityBox.put(RaydoApplication.get(), (PlanEntity) mData.get(mLongClickPosition));
+    private void updatePlan(boolean remind) {
+        if (remind)
+            ObjectBox.PlanEntityBox.putAndRemind(RaydoApplication.get(), (PlanEntity) mData.get(mLongClickPosition));
+        else
+            ObjectBox.PlanEntityBox.put(RaydoApplication.get(), (PlanEntity) mData.get(mLongClickPosition));
         notifyItemChanged(mLongClickPosition);
         toast("计划已更新");
     }
@@ -245,7 +245,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
             @Override
             public void onPlanTime(PlanTime planTime) {
                 ((PlanEntity) mData.get(mLongClickPosition)).setTime(planTime);
-                updatePlan();
+                updatePlan(true);
             }
         });
         timeDialog.show();
@@ -257,7 +257,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
             @Override
             public void onCallback(PlanStatus status) {
                 ((PlanEntity) mData.get(mLongClickPosition)).setStatus(status);
-                updatePlan();
+                updatePlan(false);
             }
         });
         statusDialog.show();
@@ -269,7 +269,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
             @Override
             public void onCallback(PlanPriority priority) {
                 ((PlanEntity) mData.get(mLongClickPosition)).setPriority(priority);
-                updatePlan();
+                updatePlan(false);
             }
         });
         priorityDialog.show();
@@ -281,7 +281,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
             @Override
             public void onCallback(PlanTag tag) {
                 ((PlanEntity) mData.get(mLongClickPosition)).setTag(tag);
-                updatePlan();
+                updatePlan(false);
             }
         });
         tagDialog.show();
@@ -293,7 +293,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
             @Override
             public void onCallback(String content) {
                 ((PlanEntity) mData.get(mLongClickPosition)).detail = content;
-                updatePlan();
+                updatePlan(false);
             }
         });
         contentDialog.show();

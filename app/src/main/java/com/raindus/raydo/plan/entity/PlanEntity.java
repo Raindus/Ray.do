@@ -56,11 +56,11 @@ public class PlanEntity {
     /**
      * 提醒
      */
-    int remindType;
+    public int remindType;
     /**
      * 最近一次提醒时间
      */
-    long lastRemindTime;
+    public long lastRemindTime;
 
     /**
      * 重复
@@ -73,11 +73,11 @@ public class PlanEntity {
     /**
      * 最近一次重复时间
      */
-    long lastRepeatTime;
+    public long lastRepeatTime;
     /**
      * 重复结束日
      */
-    long closeRepeatTime;
+    public long closeRepeatTime;
 
     /**
      * 集合时间-重复-提醒 功能
@@ -86,7 +86,6 @@ public class PlanEntity {
     PlanTime mTime;
 
     public PlanEntity() {
-
     }
 
     // 新建计划。
@@ -106,11 +105,20 @@ public class PlanEntity {
         tag = mTag.getType();
         startTime = mTime.getStartTime();
         remindType = mTime.getRemind().getType();
-        lastRemindTime = mTime.getLastRemindTime();
         repeatType = mTime.getRepeat().getType();
         repeatContent = mTime.getRepeat().getContent();
         lastRepeatTime = mTime.getLastRepeatTime();
+        lastRemindTime = mTime.getLastRemindTime();
         closeRepeatTime = mTime.getRepeat().getCloseRepeatTime();
+    }
+
+    public void refreshRemind() {
+        lastRepeatTime = getTime().getLastRepeatTime();
+        lastRemindTime = getTime().getLastRemindTime();
+    }
+
+    public void refreshRepeat() {
+        lastRepeatTime = getTime().getLastRepeatTime();
     }
 
     public void setPriority(PlanPriority priority) {

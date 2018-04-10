@@ -1,6 +1,5 @@
 package com.raindus.raydo.dao;
 
-import android.app.Activity;
 import android.app.Application;
 
 import com.raindus.raydo.RaydoApplication;
@@ -8,7 +7,10 @@ import com.raindus.raydo.common.DateUtils;
 import com.raindus.raydo.plan.PlanSort;
 import com.raindus.raydo.plan.entity.PlanEntity;
 import com.raindus.raydo.plan.entity.PlanEntity_;
+import com.raindus.raydo.plan.entity.PlanRemind;
+import com.raindus.raydo.plan.entity.PlanRepeat;
 import com.raindus.raydo.plan.entity.PlanStatus;
+import com.raindus.raydo.plan.job.PlanJob;
 
 import java.util.Date;
 import java.util.List;
@@ -33,6 +35,29 @@ public class ObjectBox {
         public static long put(Application application, PlanEntity entity) {
             entity.refresh();
             return getBox(application).put(entity);
+        }
+
+        // 添加 or 更新
+        public static void put(Application application, List<PlanEntity> entities) {
+            getBox(application).put(entities);
+        }
+
+        // 添加 or 更新 并检查任务提醒
+        public static long putAndRemind(Application application, PlanEntity entity) {
+            entity.refresh();
+            long id = getBox(application).put(entity);
+
+            if (entity.remindType != PlanRemind.NONE.getType()) {
+                Date cur = new Date();
+                // 明天截至日期
+                long endTime = DateUtils.getDateTime(cur.getYear() + 1900,
+                        cur.getMonth() + 1, cur.getDate() + 1, false);
+
+                // 是否需要检查任务提醒
+                if (entity.lastRemindTime != -1 && entity.lastRemindTime < endTime)
+                    PlanJob.scheduleNextPlanRemindJob();
+            }
+            return id;
         }
 
         // 删除
@@ -122,6 +147,36 @@ public class ObjectBox {
             }
         }
 
+        // 需要提醒
+        public static List<PlanEntity> queryRemind(Application application) {
+            QueryBuilder<PlanEntity> query = getBox(application).query();
+            return query.notEqual(PlanEntity_.remindType, PlanRemind.NONE.getType())
+                    .build().find();
+        }
+
+        // 在time之前的提醒任务
+        public static List<PlanEntity> queryByRemindTime(Application application, long time) {
+
+            QueryBuilder<PlanEntity> query = getBox(application).query();
+            return query.notEqual(PlanEntity_.remindType, PlanRemind.NONE.getType())
+                    .and()
+                    .less(PlanEntity_.lastRemindTime, time)
+                    .order(PlanEntity_.lastRemindTime)
+                    .build().find();
+        }
+
+        public static List<PlanEntity> queryByID(Application application, long... ids) {
+            QueryBuilder<PlanEntity> query = getBox(application).query();
+            return query.in(PlanEntity_.id, ids)
+                    .build().find();
+        }
+
+        // 需要重复
+        public static List<PlanEntity> queryRepeat(Application application) {
+            QueryBuilder<PlanEntity> query = getBox(application).query();
+            return query.notEqual(PlanEntity_.repeatType, PlanRepeat.NONE.getType())
+                    .build().find();
+        }
     }
 
 

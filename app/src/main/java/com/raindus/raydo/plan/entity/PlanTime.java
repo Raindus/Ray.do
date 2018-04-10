@@ -73,8 +73,12 @@ public class PlanTime {
     }
 
     public long getLastRemindTime() {
-        if (mRemind != PlanRemind.NONE && mLastRemindTime == -1)
+        Date cur = new Date();
+        if (mRemind != PlanRemind.NONE && mLastRemindTime <= cur.getTime())
             calculateLastRemindTime();
+        else if (mRemind == PlanRemind.NONE)
+            mLastRemindTime = -1;
+
         return mLastRemindTime;
     }
 
@@ -111,8 +115,11 @@ public class PlanTime {
     }
 
     public long getLastRepeatTime() {
-        if (mRepeat != PlanRepeat.NONE && mLastRepeatTime == -1)
+        Date cur = new Date();
+        if (mRepeat != PlanRepeat.NONE && mLastRepeatTime <= cur.getTime())
             calculateLastRepeatTime();
+        else if (mRepeat == PlanRepeat.NONE)
+            mLastRepeatTime = -1;
         return mLastRepeatTime;
     }
 
