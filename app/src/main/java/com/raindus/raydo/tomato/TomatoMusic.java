@@ -112,13 +112,12 @@ public class TomatoMusic {
         mIsMusicStop = true;
         if (mTomatoPlayer.isPlaying())
             mTomatoPlayer.reset();
-
-        mTomatoPlayer.release();
     }
 
     public void onDestroy() {
         stopRingtone();
         stopTomatoMusic();
+        mTomatoPlayer.release();
         mHandlerThread.quit();
     }
 

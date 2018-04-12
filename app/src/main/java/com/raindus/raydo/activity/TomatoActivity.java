@@ -2,6 +2,7 @@ package com.raindus.raydo.activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,10 +12,13 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import com.raindus.raydo.R;
 import com.raindus.raydo.tomato.TomatoLayer;
@@ -33,8 +37,14 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
     // 蒙层
     private ViewPager mVpMaskLayer;
     private TomatoLayerAdapter mLayerAdapter;
+    private int mPosition = 0;
     // 音乐
     private TomatoMusic mTomatoMusic;
+    // control
+    private ImageButton mIBtnLight;
+    private boolean mLightOn = false;
+    private ImageButton mIBtnMusic;
+    private boolean mMusicOn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +68,48 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
         mVpMaskLayer.addOnPageChangeListener(mContainerView.mOnPageChangeListener);
 
         mTomatoMusic = new TomatoMusic(this);
+
+        mIBtnLight = findViewById(R.id.tomato_light);
+        mIBtnLight.setOnClickListener(this);
+        mIBtnMusic = findViewById(R.id.tomato_music);
+        mIBtnMusic.setOnClickListener(this);
     }
 
     // -------
     // 蒙层切换
     @Override
     public void onLayerSelected(int position) {
+        mPosition = position;
         mTomatoMusic.playTomatoMusic(position);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tomato_light:
+                if (mLightOn) {
+                    mIBtnLight.setColorFilter(getResources().getColor(R.color.light_black_transparent));
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                } else {
+                    mIBtnLight.setColorFilter(Color.WHITE);
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    toast("屏幕已常亮");
+                }
+                mLightOn = !mLightOn;
+                break;
+            case R.id.tomato_music:
+                if (mMusicOn) {
+                    mIBtnMusic.setColorFilter(getResources().getColor(R.color.light_black_transparent));
+                    mTomatoMusic.stopTomatoMusic();
+                } else {
+                    mIBtnMusic.clearColorFilter();
+                    mTomatoMusic.restartTomatoMusic(mPosition);
+                }
+                mMusicOn = !mMusicOn;
+                break;
+        }
+    }
+
 
     // -----------------------------------//
     // 过渡动画 //
