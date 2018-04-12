@@ -18,6 +18,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.raindus.raydo.R;
 import com.raindus.raydo.activity.QueryActivity;
+import com.raindus.raydo.common.Utils;
 import com.raindus.raydo.plan.PlanAdapter;
 import com.raindus.raydo.plan.PlanSort;
 import com.raindus.raydo.plan.PlanSortDelegate;
@@ -197,7 +198,7 @@ public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapte
     @Override
     public boolean onLongClick(View v) {
         if (v.getId() == R.id.plan_more) {
-            getView().findViewById(R.id.plan_more).showContextMenu(0f, 100f);//todo DP2PX
+            getView().findViewById(R.id.plan_more).showContextMenu(0f, Utils.dipToPx(getContext(), 36));
             return true;
         }
         return super.onLongClick(v);

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tomato_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/w_background">
+
+    <Button
+        android:id="@+id/tomato_begin"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:foreground="@drawable/background_circle"
+        android:stateListAnimator="@null"
+        android:transitionName="@string/tomato_transition_name" />
+
+    <com.raindus.raydo.ui.ScrollRelativeLayout
+        android:id="@+id/tomato_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dandongshi"
+        android:visibility="invisible">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/tomato_mask_layer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+        </android.support.v4.view.ViewPager>
+
+
+    </com.raindus.raydo.ui.ScrollRelativeLayout>
+
+
+</FrameLayout>

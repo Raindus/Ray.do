@@ -12,6 +12,19 @@
 
     <color name="light_transparent">#30ffffff</color>
 
+    <!-- 番茄白噪音蒙层 - raydo -->
+    <color name="tomato_raydo">#10ffffff</color>
+    <!-- 番茄白噪音蒙层 - coffee -->
+    <color name="tomato_coffee">#802f2f35</color>
+    <!-- 番茄白噪音蒙层 - rain -->
+    <color name="tomato_rain">#302775b6</color>
+    <!-- 番茄白噪音蒙层 - ocean -->
+    <color name="tomato_ocean">#80144a74</color>
+    <!-- 番茄白噪音蒙层 - forest -->
+    <color name="tomato_forest">#505dbe8a</color>
+    <!-- 番茄白噪音蒙层 - meditation -->
+    <color name="tomato_meditation">#50a3578f</color>
+
     <!-- 标签 - 运动 -->
     <color name="tag_sport">#fe5756</color>
     <!-- 标签 - 工作 -->

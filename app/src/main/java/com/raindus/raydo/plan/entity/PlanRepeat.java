@@ -275,27 +275,6 @@ public enum PlanRepeat {
         return false;
     }
 
-    //TODO sql 中的字符串解析成content
-    private void parseContent(String content) {
-        if (TextUtils.isEmpty(content))
-            return;
-
-        switch (this) {
-            case NONE:
-                break;
-            case EVERY_DAY:
-                break;
-            case EVERY_WEEK://begin-0,end-6
-                break;
-            case EVERY_MONTH://begin-1,end-31
-                break;
-            case EVERY_YEAR:
-                break;
-            case EVERY_INTERVAL:
-                break;
-        }
-    }
-
     public static PlanRepeat getRepeat(int type, String content, long endTime) {
         PlanRepeat repeat;
         switch (type) {

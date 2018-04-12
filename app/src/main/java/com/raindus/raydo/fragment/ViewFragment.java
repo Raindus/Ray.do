@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.raindus.raydo.R;
+import com.raindus.raydo.common.Utils;
 import com.raindus.raydo.dao.ObjectBox;
 import com.raindus.raydo.plan.PlanAdapter;
 import com.raindus.raydo.plan.PlanSort;
@@ -224,7 +225,7 @@ public class ViewFragment extends BaseFragment implements CalendarView.OnDateSel
     @Override
     public boolean onLongClick(View v) {
         if (v.getId() == R.id.view_more) {
-            getView().findViewById(R.id.view_more).showContextMenu(0f, 100f);//todo DP2PX
+            getView().findViewById(R.id.view_more).showContextMenu(0f, Utils.dipToPx(getContext(), 36));
             return true;
         }
         return super.onLongClick(v);

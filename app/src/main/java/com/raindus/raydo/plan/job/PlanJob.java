@@ -60,6 +60,9 @@ public class PlanJob extends Job {
         ObjectBox.PlanEntityBox.put(RaydoApplication.get(), list);
     }
 
+    // TOdo jobschedule 超过100 闪退
+    // TODO 重复 - 提醒 存在问题 后面不提醒？可能是job的问题
+
     // 获取最近一次提醒任务。
     public static void scheduleNextPlanRemindJob() {
         Date cur = new Date();
