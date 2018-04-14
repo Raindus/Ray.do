@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.raindus.raydo.R;
+import com.raindus.raydo.dao.ObjectBox;
 
 /**
  * Created by Raindus on 2018/4/13.
@@ -108,8 +109,8 @@ public class TomatoDelegate implements View.OnClickListener {
     }
 
     public void onStart() {
-        //TODO 参数
-        mTomato = new TomatoEntity(25, 5, 15, 4);
+        mTomato = new TomatoEntity(TomatoParam.getTomatoTime(), TomatoParam.getShortRestTime(),
+                TomatoParam.getLongRestTime(), TomatoParam.getLongRestIntervalTimes());
         mCurStatus = STATUS_TOMATO;
         mCurTotalTime = mTomato.tomatoTime * 60;
         mTiming = 0;
@@ -138,7 +139,12 @@ public class TomatoDelegate implements View.OnClickListener {
     }
 
     private void onQuit() {
-        // TODO 存储
+        mOnTomatoListener.onQuit();
+    }
+
+    public void saveTomato() {
+        if (mTomato != null && mTomato.tomatoNum > 0)
+            ObjectBox.TomatoEntityBox.put(mTomato);
     }
 
     private Handler mHandler = new Handler() {
@@ -170,6 +176,8 @@ public class TomatoDelegate implements View.OnClickListener {
         void onStatusChanged(int status);
 
         void onTiming(String time, float fraction);
+
+        void onQuit();
     }
 
     // 空实现
@@ -186,6 +194,11 @@ public class TomatoDelegate implements View.OnClickListener {
 
         @Override
         public void onTiming(String time, float fraction) {
+
+        }
+
+        @Override
+        public void onQuit() {
 
         }
     };

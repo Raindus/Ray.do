@@ -12,6 +12,7 @@ import com.raindus.raydo.plan.entity.PlanRepeat;
 import com.raindus.raydo.plan.entity.PlanStatus;
 import com.raindus.raydo.plan.job.PlanJob;
 import com.raindus.raydo.tomato.TomatoEntity;
+import com.raindus.raydo.tomato.TomatoEntity_;
 
 import java.util.Date;
 import java.util.List;
@@ -191,9 +192,13 @@ public class ObjectBox {
             return getBox().put(entity);
         }
 
-        public static List<TomatoEntity> query() {
+        public static List<TomatoEntity> queryToday() {
             QueryBuilder<TomatoEntity> query = getBox().query();
-            return query.build().find();
+
+            long startTime = DateUtils.getTodayTime(true);
+            long endTime = DateUtils.getTodayTime(false);
+
+            return query.between(TomatoEntity_.startTime, startTime, endTime).build().find();
         }
 
     }

@@ -22,9 +22,6 @@ import com.raindus.raydo.common.Utils;
 
 public class TomatoClockView extends View {
 
-    private int mWidth;
-    private int mHeight;
-
     // 圆心坐标
     private float cx, cy;
     // 时钟半径
@@ -37,9 +34,7 @@ public class TomatoClockView extends View {
     private PathMeasure mClockPathMeasure;
     // 时钟文字
     private Paint mClockTextPaint;
-    private float mStartX;
     private float mBaseLine;
-
 
     private boolean mIsMusicPlay = true;
 
@@ -65,6 +60,7 @@ public class TomatoClockView extends View {
         mClockTextPaint = new Paint();
         mClockTextPaint.setAntiAlias(true);
         mClockTextPaint.setTypeface(Typeface.SANS_SERIF);
+        mClockTextPaint.setTextAlign(Paint.Align.CENTER);
         mClockTextPaint.setTextSize(Utils.dipToPx(getContext(), 48));
         mClockTextPaint.setColor(Color.WHITE);
     }
@@ -87,8 +83,7 @@ public class TomatoClockView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mWidth = w;
-        mHeight = h;
+
         cx = (float) w / 2f;
         cy = (float) h / 2f;
         mClockRadius = Math.min(cx, cy) * (5f / 7f);
@@ -99,7 +94,6 @@ public class TomatoClockView extends View {
                 -90, 360);
         mClockPathMeasure = new PathMeasure(mClockPath, true);
 
-        mStartX = cx - Utils.dipToPx(getContext(), 56);
         mBaseLine = cy + Utils.dipToPx(getContext(), 20);
 
         MusicRadius = Math.min(cx, cy) * (2f / 7f);
@@ -117,7 +111,7 @@ public class TomatoClockView extends View {
         if (success)
             canvas.drawPath(tempClockPath, mClockPaint);
 
-        canvas.drawText(mClockTime, mStartX, mBaseLine, mClockTextPaint);
+        canvas.drawText(mClockTime, cx, mBaseLine, mClockTextPaint);
 
         if (mIsMusicPlay) {
             for (int i = 0; i < MUSIC_ANIM_NUM; i++) {

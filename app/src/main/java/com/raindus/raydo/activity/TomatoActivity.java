@@ -189,6 +189,11 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
         public void onTiming(String time, float fraction) {
             mClock.onTiming(time, fraction);
         }
+
+        @Override
+        public void onQuit() {
+            onBackPressed();
+        }
     };
 
 
@@ -314,6 +319,8 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
     // 退出事件
     @Override
     public void onBackPressed() {
+        // 保存番茄数据
+        mTomatoDelegate.saveTomato();
         containerVisible(false);
     }
 
@@ -325,7 +332,6 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
     private Context getContext() {
         return this;
     }
-
 
 
 }
