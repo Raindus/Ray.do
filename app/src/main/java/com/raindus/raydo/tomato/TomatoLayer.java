@@ -14,7 +14,18 @@ public class TomatoLayer {
             R.color.tomato_forest, R.color.tomato_ocean,
             R.color.tomato_meditation, R.color.tomato_coffee};
 
+
+    public static final String[] MUSIC_DESCRIBE = {"Ray.do", "雨天", "森林", "海洋", "冥想", "咖啡"};
+
     public interface OnLayerChangerListener {
         void onLayerSelected(int position);
+    }
+
+    public interface OnLayerScrolledListener {
+        void onLayerScrolled(int position, float positionOffset);
+    }
+
+    public interface OnLayerStaticListener {
+        void onLayerStatic(boolean isStatic);
     }
 }

@@ -7,25 +7,29 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.raindus.raydo.R;
+import com.raindus.raydo.tomato.TomatoDelegate;
 import com.raindus.raydo.tomato.TomatoLayer;
 import com.raindus.raydo.tomato.TomatoLayerAdapter;
 import com.raindus.raydo.tomato.TomatoMusic;
+import com.raindus.raydo.ui.NavBarView;
 import com.raindus.raydo.ui.ScrollRelativeLayout;
 import com.raindus.raydo.ui.TomatoAnim;
+import com.raindus.raydo.ui.TomatoClockView;
 
 public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerChangerListener {
 
@@ -41,10 +45,17 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
     // 音乐
     private TomatoMusic mTomatoMusic;
     // control
+    private TomatoClockView mClock;
+    private NavBarView mNavBar;
+
+    private TextView mTvTitle;
+
     private ImageButton mIBtnLight;
     private boolean mLightOn = false;
     private ImageButton mIBtnMusic;
     private boolean mMusicOn = true;
+
+    private TomatoDelegate mTomatoDelegate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +80,54 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
 
         mTomatoMusic = new TomatoMusic(this);
 
+        mClock = findViewById(R.id.tomato_clock);
+        mNavBar = findViewById(R.id.tomato_nav_bar);
+        mContainerView.setOnLayerScrolledListener(mNavBar.mOnLayerScrolledListener);
+        mContainerView.setOnLayerStaticListener(mNavBar.mOnLayerStaticListener);
+
+        mTvTitle = findViewById(R.id.tomato_title);
+
         mIBtnLight = findViewById(R.id.tomato_light);
         mIBtnLight.setOnClickListener(this);
         mIBtnMusic = findViewById(R.id.tomato_music);
         mIBtnMusic.setOnClickListener(this);
+
+        mTomatoDelegate = new TomatoDelegate(getWindow());
+        mTomatoDelegate.setOnTomatoListener(mOnTomatoListener);
     }
+
+    // -----------------------------------//
+    // 标题 - (蒙层切换 - 状态切换)//
+
+    private void switchTitle(final String title, final int color, boolean sendMsg) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
+                animation.setDuration(300);
+                mTvTitle.setText(title);
+                mTvTitle.setTextColor(color);
+                mTvTitle.startAnimation(animation);
+            }
+        });
+        if (sendMsg) {
+            if (mHandler.hasMessages(MSG_RECOVER))
+                mHandler.removeMessages(MSG_RECOVER);
+            mHandler.sendEmptyMessageDelayed(MSG_RECOVER, RECOVER_TIME);
+        }
+    }
+
+    private static final long RECOVER_TIME = 3_000L;
+    private static final int MSG_RECOVER = 1;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == MSG_RECOVER) {
+                switchTitle(getText(R.string.app_name).toString(), Color.WHITE, false);
+            }
+        }
+    };
 
     // -------
     // 蒙层切换
@@ -81,6 +135,9 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
     public void onLayerSelected(int position) {
         mPosition = position;
         mTomatoMusic.playTomatoMusic(position);
+
+        switchTitle(TomatoLayer.MUSIC_DESCRIBE[position],
+                getResources().getColor(R.color.mid_transparent), true);
     }
 
     @Override
@@ -88,7 +145,7 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
         switch (v.getId()) {
             case R.id.tomato_light:
                 if (mLightOn) {
-                    mIBtnLight.setColorFilter(getResources().getColor(R.color.light_black_transparent));
+                    mIBtnLight.setColorFilter(getResources().getColor(R.color.mid_transparent));
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 } else {
                     mIBtnLight.setColorFilter(Color.WHITE);
@@ -99,16 +156,40 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
                 break;
             case R.id.tomato_music:
                 if (mMusicOn) {
-                    mIBtnMusic.setColorFilter(getResources().getColor(R.color.light_black_transparent));
+                    mIBtnMusic.setColorFilter(getResources().getColor(R.color.mid_transparent));
                     mTomatoMusic.stopTomatoMusic();
+                    mClock.stopMusic();
                 } else {
-                    mIBtnMusic.clearColorFilter();
+                    mIBtnMusic.setColorFilter(Color.WHITE);
                     mTomatoMusic.restartTomatoMusic(mPosition);
+                    mClock.playMusic();
                 }
                 mMusicOn = !mMusicOn;
                 break;
         }
     }
+
+    // -----------------------------------//
+    // 番茄钟 //
+
+    private TomatoDelegate.OnTomatoListener mOnTomatoListener = new TomatoDelegate.OnTomatoListener() {
+        @Override
+        public void onStart(String time, int status) {
+            mClock.startTiming(time, status);
+        }
+
+        @Override
+        public void onStatusChanged(int status) {
+            mTomatoMusic.playRingtone();
+            switchTitle(TomatoDelegate.STATUS_DESCRIBE[status],
+                    getResources().getColor(R.color.mid_transparent), true);
+        }
+
+        @Override
+        public void onTiming(String time, float fraction) {
+            mClock.onTiming(time, fraction);
+        }
+    };
 
 
     // -----------------------------------//
@@ -124,7 +205,10 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
                     animation.setDuration(300);
                     mContainerView.setVisibility(View.VISIBLE);
                     mContainerView.startAnimation(animation);
+                    // 音乐，动画准备
                     mTomatoMusic.playTomatoMusic(0);
+                    mClock.playMusic();
+                    mTomatoDelegate.onStart();
                 } else {
                     Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
                     animation.setDuration(300);
@@ -241,4 +325,7 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
     private Context getContext() {
         return this;
     }
+
+
+
 }

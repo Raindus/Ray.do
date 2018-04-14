@@ -62,9 +62,45 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:5049460722437421448",
+      "lastPropertyId": "7:3292096503727645354",
+      "name": "TomatoEntity",
+      "properties": [
+        {
+          "id": "1:4197030951816127935",
+          "name": "id"
+        },
+        {
+          "id": "2:1020517107324813677",
+          "name": "startTime"
+        },
+        {
+          "id": "3:809174220772149655",
+          "name": "tomatoTime"
+        },
+        {
+          "id": "4:7800546994170976558",
+          "name": "shortRestTime"
+        },
+        {
+          "id": "5:869161497812898901",
+          "name": "longRestTime"
+        },
+        {
+          "id": "6:6578998737334667106",
+          "name": "longRestIntervalNum"
+        },
+        {
+          "id": "7:3292096503727645354",
+          "name": "tomatoNum"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:5272778145509091761",
+  "lastEntityId": "2:5049460722437421448",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

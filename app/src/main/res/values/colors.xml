@@ -11,10 +11,11 @@
     <color name="qianzonghui">#e1dbcd</color>
 
     <color name="light_transparent">#30ffffff</color>
+    <color name="mid_transparent">#e2e1e4</color>
     <color name="light_black_transparent">#30000000</color>
 
     <!-- 番茄白噪音蒙层 - raydo -->
-    <color name="tomato_raydo">#10ffffff</color>
+    <color name="tomato_raydo">#00ffffff</color>
     <!-- 番茄白噪音蒙层 - coffee -->
     <color name="tomato_coffee">#802f2f35</color>
     <!-- 番茄白噪音蒙层 - rain -->

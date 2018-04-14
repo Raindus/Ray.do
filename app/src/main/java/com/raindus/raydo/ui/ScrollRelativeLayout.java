@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.RelativeLayout;
 
 import com.raindus.raydo.R;
@@ -123,11 +124,25 @@ public class ScrollRelativeLayout extends RelativeLayout {
         mOnLayerChangerListener = listener;
     }
 
+    private TomatoLayer.OnLayerScrolledListener mOnLayerScrolledListener;
+
+    public void setOnLayerScrolledListener(TomatoLayer.OnLayerScrolledListener listener) {
+        mOnLayerScrolledListener = listener;
+    }
+
+    private TomatoLayer.OnLayerStaticListener mOnLayerStaticListener;
+
+    public void setOnLayerStaticListener(TomatoLayer.OnLayerStaticListener listener) {
+        mOnLayerStaticListener = listener;
+    }
+
     // 跟随viewpager滚动
     public ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             setSrcRect(position, positionOffset);
+            if (mOnLayerScrolledListener != null)
+                mOnLayerScrolledListener.onLayerScrolled(position, positionOffset);
         }
 
         @Override
@@ -138,7 +153,13 @@ public class ScrollRelativeLayout extends RelativeLayout {
 
         @Override
         public void onPageScrollStateChanged(int state) {
+            if (mOnLayerStaticListener == null)
+                return;
 
+            if (state == ViewPager.SCROLL_STATE_IDLE) //静止
+                mOnLayerStaticListener.onLayerStatic(true);
+            else if (state == ViewPager.SCROLL_STATE_DRAGGING)// 开始
+                mOnLayerStaticListener.onLayerStatic(false);
         }
     };
 

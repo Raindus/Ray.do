@@ -22,8 +22,6 @@ public class TomatoMusic {
     private static final String[] MUSIC_PATH = {"tomato_raydo.mp3", "tomato_rain.ogg",
             "tomato_forest.ogg", "tomato_ocean.ogg", "tomato_meditation.ogg", "tomato_coffee.ogg"};
 
-    public static final String[] MUSIC_DESCRIBE = {"Ray.do", "雨天", "森林", "海洋", "冥想", "咖啡"};
-
     private Context mContext;
 
     private boolean mIsMusicStop = false;

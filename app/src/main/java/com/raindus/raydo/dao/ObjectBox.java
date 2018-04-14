@@ -11,6 +11,7 @@ import com.raindus.raydo.plan.entity.PlanRemind;
 import com.raindus.raydo.plan.entity.PlanRepeat;
 import com.raindus.raydo.plan.entity.PlanStatus;
 import com.raindus.raydo.plan.job.PlanJob;
+import com.raindus.raydo.tomato.TomatoEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -179,5 +180,22 @@ public class ObjectBox {
         }
     }
 
+    public static class TomatoEntityBox {
+        // 获取操作实例
+        public static Box<TomatoEntity> getBox() {
+            return ((RaydoApplication) RaydoApplication.get()).getBoxStore().boxFor(TomatoEntity.class);
+        }
+
+        // 添加 or 更新
+        public static long put(TomatoEntity entity) {
+            return getBox().put(entity);
+        }
+
+        public static List<TomatoEntity> query() {
+            QueryBuilder<TomatoEntity> query = getBox().query();
+            return query.build().find();
+        }
+
+    }
 
 }
