@@ -97,7 +97,7 @@ public class PlanRemindJob extends Job {
         }
 
         Notification notification = new NotificationCompat.Builder(getContext(), TAG)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setTicker(ticker)
                 .setContentTitle(title)
                 .setContentText(content)

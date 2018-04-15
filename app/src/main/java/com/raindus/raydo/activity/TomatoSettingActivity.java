@@ -1,6 +1,7 @@
 package com.raindus.raydo.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -33,6 +34,9 @@ public class TomatoSettingActivity extends BaseActivity implements SeekBar.OnSee
     }
 
     private void initView() {
+
+        findViewById(R.id.setting_back).setOnClickListener(this);
+
         mTvTarget = findViewById(R.id.setting_tv_tomato_target);
         mTvTomatoTime = findViewById(R.id.setting_tv_tomato_time);
         mTvShortTime = findViewById(R.id.setting_tv_short_rest);
@@ -156,5 +160,11 @@ public class TomatoSettingActivity extends BaseActivity implements SeekBar.OnSee
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.setting_back)
+            onBackPressed();
     }
 }
