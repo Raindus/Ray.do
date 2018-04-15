@@ -120,7 +120,8 @@ public class NewPlanActivity extends BaseActivity {
                 mPriority, mTag, PlanStatus.getDefault(), mPlanTime);
 
         // 存入数据库
-        ObjectBox.PlanEntityBox.putAndRemind(getApplication(), entity);
+        ObjectBox.PlanEntityBox.putAndRemind(entity);
+        entity.creteRepeatPlanEntity();
         finish();
     }
 

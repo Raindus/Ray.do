@@ -171,6 +171,10 @@ public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapte
         mPlanSort.refresh();
     }
 
+    public void refreshWeather(){
+        mLocation.activateLocation(getActivity().getApplicationContext());
+    }
+
     @Override
     public void onPause() {
         super.onPause();

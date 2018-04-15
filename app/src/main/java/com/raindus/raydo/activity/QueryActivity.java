@@ -83,7 +83,7 @@ public class QueryActivity extends BaseActivity implements PlanAdapter.PlanAdapt
 
             String text = s.toString().trim();
             mQuerySplit = text.split(" ");
-            List<PlanEntity> list = ObjectBox.PlanEntityBox.queryKeyword(getApplication(), mQuerySplit);
+            List<PlanEntity> list = ObjectBox.PlanEntityBox.queryKeyword(mQuerySplit);
 
             if (list == null)
                 mPlanAdapter.setPlanData(null);
@@ -123,7 +123,7 @@ public class QueryActivity extends BaseActivity implements PlanAdapter.PlanAdapt
     @Override
     public void onPlanDeleted() {
         toast("计划已删除");
-        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryKeyword(getApplication(), mQuerySplit);
+        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryKeyword(mQuerySplit);
         if (list == null)
             mPlanAdapter.setPlanData(null);
         else

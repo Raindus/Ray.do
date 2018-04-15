@@ -15,6 +15,7 @@ import com.raindus.raydo.plan.entity.PlanEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 更新计划 提醒/重复 时间
@@ -24,6 +25,8 @@ import java.util.List;
 public class PlanJob extends Job {
 
     public static final String TAG = "plan_tag";
+
+    // TODO jobschedule 超过100 闪退
 
     // 半天执行一次
     public static void schedulePlanJob() {
@@ -38,30 +41,18 @@ public class PlanJob extends Job {
     @Override
     protected Result onRunJob(@NonNull Params params) {
 
-        // 更新重复
+        // 更新向下重复
         updateRepeat();
-        // 更新提醒
-        updateRemind();
         scheduleNextPlanRemindJob();
         return Result.SUCCESS;
     }
 
     private void updateRepeat() {
-        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryRepeat(RaydoApplication.get());
-        for (PlanEntity entity : list)
-            entity.refreshRepeat();
-        ObjectBox.PlanEntityBox.put(RaydoApplication.get(), list);
+        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryRepeat();
+        for (PlanEntity entity : list) {
+            entity.creteRepeatPlanEntity();
+        }
     }
-
-    private void updateRemind() {
-        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryRemind(RaydoApplication.get());
-        for (PlanEntity entity : list)
-            entity.refreshRemind();
-        ObjectBox.PlanEntityBox.put(RaydoApplication.get(), list);
-    }
-
-    // TOdo jobschedule 超过100 闪退
-    // TODO 重复 - 提醒 存在问题 后面不提醒？可能是job的问题
 
     // 获取最近一次提醒任务。
     public static void scheduleNextPlanRemindJob() {
@@ -71,7 +62,7 @@ public class PlanJob extends Job {
                 cur.getMonth() + 1, cur.getDate() + 1, false);
 
         // 今明两天需要提醒的计划,已按提醒时间升序排序
-        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryByRemindTime(RaydoApplication.get(), endTime);
+        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryByRemindTime(endTime);
         if (list == null || list.size() == 0)
             return;
 
@@ -79,15 +70,15 @@ public class PlanJob extends Job {
         long remindTime = -1;
 
         for (PlanEntity entity : list) {
-            entity.refreshRemind();
-            if (entity.lastRemindTime < cur.getTime())
+
+            if (entity.remindTime < cur.getTime())
                 continue;
 
             if (remindTime == -1) {
-                remindTime = entity.lastRemindTime;
+                remindTime = entity.remindTime;
                 ids.add(entity.id);
                 continue;
-            } else if (entity.lastRemindTime < remindTime + DateUtils.ONE_HOUR) {
+            } else if (entity.remindTime < remindTime + DateUtils.ONE_HOUR) {
                 ids.add(entity.id);
                 continue;
             } else {
@@ -107,8 +98,6 @@ public class PlanJob extends Job {
         if (exact <= 0)
             return;
 
-        //JobManager.instance().cancelAllForTag(PlanRemindJob.TAG);
-        // TODO 并不能覆盖之前的任务，和预期的不一致
         new JobRequest.Builder(PlanRemindJob.TAG)
                 .setExact(exact)// 提醒时间
                 .setExtras(remindPlan)

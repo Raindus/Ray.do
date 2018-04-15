@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:5272778145509091761",
-      "lastPropertyId": "13:1084302580621885536",
+      "lastPropertyId": "17:3929499236637412105",
       "name": "PlanEntity",
       "properties": [
         {
@@ -41,10 +41,6 @@
           "name": "remindType"
         },
         {
-          "id": "9:6066765572277324369",
-          "name": "lastRemindTime"
-        },
-        {
           "id": "10:8061851509223867775",
           "name": "repeatType"
         },
@@ -53,12 +49,24 @@
           "name": "repeatContent"
         },
         {
-          "id": "12:9019210252631961984",
-          "name": "lastRepeatTime"
-        },
-        {
           "id": "13:1084302580621885536",
           "name": "closeRepeatTime"
+        },
+        {
+          "id": "14:1708152848704718197",
+          "name": "fromId"
+        },
+        {
+          "id": "15:663080879980147844",
+          "name": "bindId"
+        },
+        {
+          "id": "16:3127100406742111561",
+          "name": "remindTime"
+        },
+        {
+          "id": "17:3929499236637412105",
+          "name": "repeatTime"
         }
       ],
       "relations": []
@@ -108,7 +116,10 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    6066765572277324369,
+    9019210252631961984
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

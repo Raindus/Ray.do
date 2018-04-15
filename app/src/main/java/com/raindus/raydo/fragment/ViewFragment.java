@@ -84,7 +84,6 @@ public class ViewFragment extends BaseFragment implements CalendarView.OnDateSel
         mCalendarView.setOnMonthChangeListener(this);
         ((TextView) view.findViewById(R.id.view_tv_today)).setText(mCalendarView.getCurDay() + "");
         view.findViewById(R.id.view_today).setOnClickListener(this);
-        refreshSchemes(mCalendarView.getCurYear(), mCalendarView.getCurMonth());
     }
 
     @Override
@@ -94,6 +93,7 @@ public class ViewFragment extends BaseFragment implements CalendarView.OnDateSel
         mPlanSort.refresh();
         refreshSchemes(mPlanSort.getYear(), mPlanSort.getMonth());
         mCalendarView.update();
+        ;
     }
 
     @Override
@@ -125,10 +125,9 @@ public class ViewFragment extends BaseFragment implements CalendarView.OnDateSel
         return super.onContextItemSelected(item);
     }
 
-    // 更新日历上的标记，暂时只标记开始日 or 重复当日 中的一个
-    // TODO 中间的重复日暂不标记
+    // 更新日历上的标记
     private void refreshSchemes(int year, int month) {
-        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryThirdMonth(getActivity().getApplication(), year, month);
+        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryThirdMonth(year, month);
         if (list == null || list.size() == 0)
             return;
 
@@ -139,13 +138,8 @@ public class ViewFragment extends BaseFragment implements CalendarView.OnDateSel
         int num = -1;
         PlanTag tag = PlanTag.None;
 
-        Date cur = new Date();
         for (PlanEntity entity : list) {
-            Date date;
-            if (entity.getTime().getStartTime() < cur.getTime() || entity.getTime().getLastRepeatTime() == -1)
-                date = new Date(entity.getTime().getStartTime());
-            else
-                date = new Date(entity.getTime().getLastRepeatTime());
+            Date date = new Date(entity.getTime().getStartTime());
 
             if (num == -1) {
                 y = date.getYear() + 1900;
@@ -242,6 +236,8 @@ public class ViewFragment extends BaseFragment implements CalendarView.OnDateSel
     @Override
     public void onPlanDeleted() {
         toast("计划已删除");
+
+        //TODO 该控件有待改善，标记无法及时更新...
         mPlanSort.refresh();
         refreshSchemes(mPlanSort.getYear(), mPlanSort.getMonth());
         mCalendarView.update();

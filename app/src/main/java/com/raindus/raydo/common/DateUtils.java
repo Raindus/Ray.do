@@ -113,56 +113,41 @@ public class DateUtils {
     /**
      * @return 跳跃至每周X的时间
      */
-    public static long jumpToEveryWeek(Date start, Date cur, Set<Integer> week) {
+    public static long jumpToEveryWeek(Date start, Set<Integer> week) {
         int nextDay = -1;
         int jumpDay;
-        long curTime = new Date(cur.getYear(), cur.getMonth(), cur.getDate(), start.getHours(), start.getMinutes()).getTime();
-
-        if (week.contains(cur.getDay())) {//当天
-            if (cur.getHours() < start.getHours() ||
-                    (cur.getHours() == start.getHours()
-                            && cur.getMinutes() < start.getMinutes()))
-                return curTime;
-        }
 
         for (int day : week) {
             if (nextDay == -1) {
                 nextDay = day;
                 continue;
             }
-            if (day > cur.getDay()) {
+            if (day > start.getDay()) {
                 nextDay = day;
                 break;
             }
         }
 
-        if (nextDay > cur.getDay())
-            jumpDay = nextDay - cur.getDay();
+        if (nextDay > start.getDay())
+            jumpDay = nextDay - start.getDay();
         else
-            jumpDay = 7 + nextDay - cur.getDay();
+            jumpDay = 7 + nextDay - start.getDay();
 
-        return curTime + jumpDay * ONE_DAY;
+        return start.getTime() + jumpDay * ONE_DAY;
     }
 
     /**
      * @return 跳跃至每月X的时间 1-31
      */
-    public static long jumpToEveryMonth(Date start, Date cur, Set<Integer> month) {
+    public static long jumpToEveryMonth(Date start, Set<Integer> month) {
         int nextDay = -1;
-
-        if (month.contains(cur.getDate())) {//当天
-            if (cur.getHours() < start.getHours() ||
-                    (cur.getHours() == start.getHours()
-                            && cur.getMinutes() < start.getMinutes()))
-                return new Date(cur.getYear(), cur.getMonth(), cur.getDate(), start.getHours(), start.getMinutes()).getTime();
-        }
 
         for (int day : month) {
             if (nextDay == -1) {
                 nextDay = day;
                 continue;
             }
-            if (day > cur.getDate()) {
+            if (day > start.getDate()) {
                 nextDay = day;
                 break;
             }
@@ -170,20 +155,20 @@ public class DateUtils {
 
         int y;
         int m;
-        if (nextDay > cur.getDate()) {
-            int lastDay = getDaysOfMonth(cur.getYear() + 1900, cur.getMonth() + 1);
+        if (nextDay > start.getDate()) {
+            int lastDay = getDaysOfMonth(start.getYear() + 1900, start.getMonth() + 1);
             if (nextDay > lastDay) {
                 nextDay = lastDay;
             }
-            y = cur.getYear();
-            m = cur.getMonth();
+            y = start.getYear();
+            m = start.getMonth();
         } else {
-            if (cur.getMonth() == 11) {//12月
-                y = cur.getYear() + 1;
+            if (start.getMonth() == 11) {//12月
+                y = start.getYear() + 1;
                 m = 0;
             } else {
-                y = cur.getYear();
-                m = cur.getMonth() + 1;
+                y = start.getYear();
+                m = start.getMonth() + 1;
             }
             int lastDay = getDaysOfMonth(y + 1900, m + 1);
             if (nextDay > lastDay) {
@@ -299,6 +284,10 @@ public class DateUtils {
                 return isLeapYear ? 29 : 28;
         }
         return -1;
+    }
+
+    public static boolean isHappen(long time) {
+        return new Date().getTime() >= time;
     }
 
     // true = begin; false = end

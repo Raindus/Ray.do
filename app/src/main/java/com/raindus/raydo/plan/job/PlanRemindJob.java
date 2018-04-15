@@ -39,7 +39,7 @@ public class PlanRemindJob extends Job {
         long[] remindIDs = remindPlan.getLongArray("IDs");
         // long remindTime = remindPlan.getLong("remindTime", -1);
 
-        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryByID(RaydoApplication.get(), remindIDs);
+        List<PlanEntity> list = ObjectBox.PlanEntityBox.queryByID(remindIDs);
         if (list != null && list.size() > 0) {
             String ticker = String.format(TICKER, list.size());
             String title;
@@ -77,10 +77,6 @@ public class PlanRemindJob extends Job {
             }
             notifyPlan(ticker, title, content.toString());
         }
-        // 更新该计划
-        for (PlanEntity entity : list)
-            entity.refreshRemind();
-        ObjectBox.PlanEntityBox.put(RaydoApplication.get(), list);
 
         // 计算下一次通知时间
         PlanJob.scheduleNextPlanRemindJob();

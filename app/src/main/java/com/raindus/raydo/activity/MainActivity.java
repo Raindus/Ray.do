@@ -230,6 +230,7 @@ public class MainActivity extends BaseActivity {
                 ActivityCompat.requestPermissions(this, PERMISSION_PHONE, PERMISSION_CODE_PHONE);
                 break;
             case PERMISSION_CODE_PHONE:
+                ((PlanFragment) mFmPlan).refreshWeather();
                 break;
         }
     }

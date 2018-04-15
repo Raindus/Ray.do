@@ -80,11 +80,11 @@ public class PlanSortDelegate {
         List<PlanEntity> list = null;
 
         if (mToday)
-            list = ObjectBox.PlanEntityBox.queryAll(mApplication, true, mShowComplected);
+            list = ObjectBox.PlanEntityBox.queryAll(true, mShowComplected);
         else if (mYear == -1 || mMonth == -1 || mDate == -1)
             list = null;
         else
-            list = ObjectBox.PlanEntityBox.queryDate(mApplication, mYear, mMonth, mDate, mShowComplected);
+            list = ObjectBox.PlanEntityBox.queryDate(mYear, mMonth, mDate, mShowComplected);
 
         mAdapter.setPlanData(sortByType(list));
     }

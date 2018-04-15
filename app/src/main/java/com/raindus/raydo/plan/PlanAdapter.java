@@ -149,7 +149,8 @@ public class PlanAdapter extends RecyclerView.Adapter {
             dialog.setOnPlanDeleteCallback(new PlanDetailDialog.OnPlanDeleteCallback() {
                 @Override
                 public void onDelete() {
-                    ObjectBox.PlanEntityBox.delete(RaydoApplication.get(), (PlanEntity) mData.get(position));
+                    ((PlanEntity) mData.get(position)).deleteRepeatPlanEntity();
+                    ObjectBox.PlanEntityBox.delete((PlanEntity) mData.get(position));
                     if (mPlanAdapterListener != null)
                         mPlanAdapterListener.onPlanDeleted();
                 }
@@ -209,6 +210,13 @@ public class PlanAdapter extends RecyclerView.Adapter {
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
+            if (DateUtils.isHappen(((PlanEntity) mData.get(mLongClickPosition)).getTime().getStartTime())) {
+                if (item.getItemId() != R.id.menu_plan_status) {
+                    toast("该计划已不可编辑");
+                    return false;
+                }
+            }
+
             switch (item.getItemId()) {
                 case R.id.menu_plan_time:
                     updatePlanTime();
@@ -232,9 +240,9 @@ public class PlanAdapter extends RecyclerView.Adapter {
 
     private void updatePlan(boolean remind) {
         if (remind)
-            ObjectBox.PlanEntityBox.putAndRemind(RaydoApplication.get(), (PlanEntity) mData.get(mLongClickPosition));
+            ObjectBox.PlanEntityBox.putAndRemind((PlanEntity) mData.get(mLongClickPosition));
         else
-            ObjectBox.PlanEntityBox.put(RaydoApplication.get(), (PlanEntity) mData.get(mLongClickPosition));
+            ObjectBox.PlanEntityBox.put((PlanEntity) mData.get(mLongClickPosition));
         notifyItemChanged(mLongClickPosition);
         toast("计划已更新");
     }
@@ -245,6 +253,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
             @Override
             public void onPlanTime(PlanTime planTime) {
                 ((PlanEntity) mData.get(mLongClickPosition)).setTime(planTime);
+                ((PlanEntity) mData.get(mLongClickPosition)).updateRepeatPlanEntity(0);
                 updatePlan(true);
             }
         });
@@ -269,6 +278,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
             @Override
             public void onCallback(PlanPriority priority) {
                 ((PlanEntity) mData.get(mLongClickPosition)).setPriority(priority);
+                ((PlanEntity) mData.get(mLongClickPosition)).updateRepeatPlanEntity(1);
                 updatePlan(false);
             }
         });
@@ -281,6 +291,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
             @Override
             public void onCallback(PlanTag tag) {
                 ((PlanEntity) mData.get(mLongClickPosition)).setTag(tag);
+                ((PlanEntity) mData.get(mLongClickPosition)).updateRepeatPlanEntity(2);
                 updatePlan(false);
             }
         });
@@ -293,6 +304,7 @@ public class PlanAdapter extends RecyclerView.Adapter {
             @Override
             public void onCallback(String content) {
                 ((PlanEntity) mData.get(mLongClickPosition)).detail = content;
+                ((PlanEntity) mData.get(mLongClickPosition)).updateRepeatPlanEntity(3);
                 updatePlan(false);
             }
         });
