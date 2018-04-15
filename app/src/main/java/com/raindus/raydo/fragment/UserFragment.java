@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.raindus.raydo.R;
+import com.raindus.raydo.activity.TomatoSettingActivity;
 
 /**
  * Created by Raindus on 2018/3/4.
@@ -49,6 +50,7 @@ public class UserFragment extends BaseFragment {
             case R.id.user_focus_report:
                 break;
             case R.id.user_tomato_setting:
+                overlay(TomatoSettingActivity.class);
                 break;
         }
     }

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/w_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/titlebar_bottom_shadow">
+
+        <ImageButton
+            android:id="@+id/setting_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:src="@drawable/ic_action_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:gravity="center"
+            android:text="番茄钟"
+            android:textColor="@android:color/white"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:text="今日专注目标"
+            android:textColor="@android:color/black"
+            android:textSize="16dp" />
+
+        <SeekBar
+            android:id="@+id/setting_tomato_target"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="16dp"
+            android:max="570"
+            android:progress="30" />
+
+        <TextView
+            android:id="@+id/setting_tv_tomato_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="16dp"
+            android:text="1时"
+            android:textColor="@color/tomato_coffee"
+            android:textSize="14dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:text="专注时长"
+            android:textColor="@android:color/black"
+            android:textSize="16dp" />
+
+        <SeekBar
+            android:id="@+id/setting_tomato_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="16dp"
+            android:max="115"
+            android:progress="20" />
+
+        <TextView
+            android:id="@+id/setting_tv_tomato_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="16dp"
+            android:text="25分"
+            android:textColor="@color/tomato_coffee"
+            android:textSize="14dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_marginTop="3dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:text="短休息时长"
+            android:textColor="@android:color/black"
+            android:textSize="16dp" />
+
+        <SeekBar
+            android:id="@+id/setting_short_rest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="16dp"
+            android:max="29"
+            android:progress="4" />
+
+        <TextView
+            android:id="@+id/setting_tv_short_rest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="16dp"
+            android:text="5分"
+            android:textColor="@color/tomato_coffee"
+            android:textSize="14dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_marginTop="3dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:text="长休息时长"
+            android:textColor="@android:color/black"
+            android:textSize="16dp" />
+
+        <SeekBar
+            android:id="@+id/setting_long_rest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="16dp"
+            android:max="55"
+            android:progress="10" />
+
+        <TextView
+            android:id="@+id/setting_tv_long_rest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="16dp"
+            android:text="15分"
+            android:textColor="@color/tomato_coffee"
+            android:textSize="14dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_marginTop="3dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:text="长休息间隔"
+            android:textColor="@android:color/black"
+            android:textSize="16dp" />
+
+        <SeekBar
+            android:id="@+id/setting_long_interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="16dp"
+            android:max="9"
+            android:progress="2" />
+
+        <TextView
+            android:id="@+id/setting_tv_long_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="16dp"
+            android:text="3个"
+            android:textColor="@color/tomato_coffee"
+            android:textSize="14dp" />
+    </RelativeLayout>
+</LinearLayout>
