@@ -3,13 +3,21 @@ package com.raindus.raydo.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.raindus.raydo.R;
 import com.raindus.raydo.fragment.ClockFragment;
@@ -29,6 +37,7 @@ public class MainActivity extends BaseActivity {
     private final String[] PERMISSION_PHONE = {Manifest.permission.READ_PHONE_STATE};
 
     //---
+    private LinearLayout mLlNavBar;
     private ImageButton mIBtnPlan;
     private ImageButton mIBtnView;
     private ImageButton mIBtnNew;
@@ -59,6 +68,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
+        mLlNavBar = findViewById(R.id.main_nav_bar);
         mIBtnPlan = findViewById(R.id.main_action_plan);
         mIBtnPlan.setOnClickListener(this);
         mIBtnView = findViewById(R.id.main_action_view);
@@ -127,6 +137,15 @@ public class MainActivity extends BaseActivity {
         if (view.getId() == R.id.main_action_new) {
             overlay(NewPlanActivity.class);
             return;
+        }
+
+        if (view.getId() == R.id.main_action_user) {//释放状态栏空间
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            if (mHandler.hasMessages(NAV_BAR))
+                mHandler.removeMessages(NAV_BAR);
+            navBarVisible(false);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
         changeNavBarRes();
@@ -213,5 +232,53 @@ public class MainActivity extends BaseActivity {
             case PERMISSION_CODE_PHONE:
                 break;
         }
+    }
+
+    // 导航条出现/消失动画
+    private void navBarVisible(final boolean show) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (show) {
+                    Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
+                    animation.setDuration(200);
+                    mLlNavBar.setVisibility(View.VISIBLE);
+                    mLlNavBar.startAnimation(animation);
+                } else {
+                    Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
+                    animation.setDuration(200);
+                    mLlNavBar.setVisibility(View.INVISIBLE);
+                    mLlNavBar.startAnimation(animation);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mActiveIndex == R.id.main_action_user) {
+            if (mLlNavBar.getVisibility() == View.INVISIBLE) {
+                navBarVisible(true);
+                mHandler.sendEmptyMessageDelayed(NAV_BAR, 2000);
+                return;
+            }
+        }
+        super.onBackPressed();
+    }
+
+    private static final int NAV_BAR = 1;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == NAV_BAR && mActiveIndex == R.id.main_action_user
+                    && mLlNavBar.getVisibility() == View.VISIBLE) {
+                navBarVisible(false);
+            }
+        }
+    };
+
+    public Context getContext() {
+        return this;
     }
 }
