@@ -129,4 +129,9 @@ public class QueryActivity extends BaseActivity implements PlanAdapter.PlanAdapt
         else
             mPlanAdapter.setPlanData(Arrays.asList(list.toArray(new Object[0])));
     }
+
+    @Override
+    public void onPlanUpdate() {
+
+    }
 }

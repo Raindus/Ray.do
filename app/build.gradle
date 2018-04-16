@@ -42,8 +42,8 @@ dependencies {
     compile 'com.amap.api:search:latest.integration'
     compile 'com.amap.api:location:latest.integration'
 
-    compile(name: 'calendarview-release', ext: 'aar')
-    //compile 'com.haibin:calendarview:3.2.7'
+    compile(name: 'calendarview-debug', ext: 'aar')
+    //compile 'com.haibin:calendarview:3.2.8'
 
     compile 'com.evernote:android-job:1.2.5'
 }

@@ -129,6 +129,8 @@ public class PlanAdapter extends RecyclerView.Adapter {
         void onDataChanged(int itemCount);
 
         void onPlanDeleted();
+
+        void onPlanUpdate();
     }
 
     public void setOnPlanItemListener(OnPlanItemListener listener) {
@@ -245,6 +247,8 @@ public class PlanAdapter extends RecyclerView.Adapter {
             ObjectBox.PlanEntityBox.put((PlanEntity) mData.get(mLongClickPosition));
         notifyItemChanged(mLongClickPosition);
         toast("计划已更新");
+        if (mPlanAdapterListener != null)
+            mPlanAdapterListener.onPlanUpdate();
     }
 
     private void updatePlanTime() {

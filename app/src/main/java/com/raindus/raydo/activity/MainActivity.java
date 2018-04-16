@@ -282,4 +282,14 @@ public class MainActivity extends BaseActivity {
     public Context getContext() {
         return this;
     }
+
+    // plan to update
+
+    public void plan2UpdateView() {
+        ((ViewFragment) mFmView).onRefresh();
+    }
+
+    public void view2UpdatePlan() {
+        ((PlanFragment) mFmPlan).onRefresh();
+    }
 }

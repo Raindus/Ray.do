@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.raindus.raydo.R;
+import com.raindus.raydo.activity.MainActivity;
 import com.raindus.raydo.activity.QueryActivity;
 import com.raindus.raydo.common.Utils;
 import com.raindus.raydo.plan.PlanAdapter;
@@ -219,6 +220,16 @@ public class PlanFragment extends BaseFragment implements PlanAdapter.PlanAdapte
     @Override
     public void onPlanDeleted() {
         toast("计划已删除");
+        mPlanSort.refresh();
+        ((MainActivity)getActivity()).plan2UpdateView();
+    }
+
+    @Override
+    public void onPlanUpdate() {
+        ((MainActivity)getActivity()).plan2UpdateView();
+    }
+
+    public void onRefresh(){
         mPlanSort.refresh();
     }
 }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.raindus.raydo.R;
+import com.raindus.raydo.activity.MainActivity;
 import com.raindus.raydo.common.Utils;
 import com.raindus.raydo.dao.ObjectBox;
 import com.raindus.raydo.plan.PlanAdapter;
@@ -90,10 +91,13 @@ public class ViewFragment extends BaseFragment implements CalendarView.OnDateSel
     public void onResume() {
         super.onResume();
 
+        onRefresh();
+    }
+
+    public void onRefresh() {
         mPlanSort.refresh();
+        mCalendarView.clearSchemeDate();
         refreshSchemes(mPlanSort.getYear(), mPlanSort.getMonth());
-        mCalendarView.update();
-        ;
     }
 
     @Override
@@ -236,11 +240,13 @@ public class ViewFragment extends BaseFragment implements CalendarView.OnDateSel
     @Override
     public void onPlanDeleted() {
         toast("计划已删除");
+        onRefresh();
+        ((MainActivity) getActivity()).view2UpdatePlan();
+    }
 
-        //TODO 该控件有待改善，标记无法及时更新...
-        mPlanSort.refresh();
-        refreshSchemes(mPlanSort.getYear(), mPlanSort.getMonth());
-        mCalendarView.update();
+    @Override
+    public void onPlanUpdate() {
+        ((MainActivity) getActivity()).view2UpdatePlan();
     }
 
 }
