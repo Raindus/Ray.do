@@ -1,10 +1,7 @@
 package com.raindus.raydo.dao;
 
-import android.app.Application;
-
 import com.raindus.raydo.RaydoApplication;
 import com.raindus.raydo.common.DateUtils;
-import com.raindus.raydo.plan.PlanSort;
 import com.raindus.raydo.plan.entity.PlanEntity;
 import com.raindus.raydo.plan.entity.PlanEntity_;
 import com.raindus.raydo.plan.entity.PlanRemind;

@@ -73,7 +73,7 @@
     },
     {
       "id": "2:5049460722437421448",
-      "lastPropertyId": "7:3292096503727645354",
+      "lastPropertyId": "8:8649456913348550852",
       "name": "TomatoEntity",
       "properties": [
         {
@@ -103,6 +103,10 @@
         {
           "id": "7:3292096503727645354",
           "name": "tomatoNum"
+        },
+        {
+          "id": "8:8649456913348550852",
+          "name": "endTime"
         }
       ],
       "relations": []

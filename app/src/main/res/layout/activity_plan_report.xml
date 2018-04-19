@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/w_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/titlebar_bottom_shadow">
+
+        <ImageButton
+            android:id="@+id/report_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:src="@drawable/ic_action_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:gravity="center"
+            android:text="计划报告"
+            android:textColor="@android:color/white"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</LinearLayout>

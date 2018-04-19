@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/w_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/titlebar_bottom_shadow">
+
+        <ImageButton
+            android:id="@+id/report_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:src="@drawable/ic_action_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:gravity="center"
+            android:text="专注报告"
+            android:textColor="@android:color/white"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@android:color/white"
+                android:paddingVertical="6dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tomato_report_tv_today_focus"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="26dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="今日专注次数"
+                        android:textColor="@color/tomato_coffee"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tomato_report_tv_week_focus"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="26dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="本周专注次数"
+                        android:textColor="@color/tomato_coffee"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tomato_report_tv_total_focus"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="26dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="总专注次数"
+                        android:textColor="@color/tomato_coffee"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@android:color/white"
+                android:paddingVertical="6dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tomato_report_tv_today_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="26dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="今日番茄收成"
+                        android:textColor="@color/tomato_coffee"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tomato_report_tv_week_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="26dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="本周番茄收成"
+                        android:textColor="@color/tomato_coffee"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tomato_report_tv_total_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="26dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="总番茄收成"
+                        android:textColor="@color/tomato_coffee"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@android:color/white"
+                android:paddingBottom="8dp"
+                android:paddingTop="6dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tomato_report_tv_today_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="0.0"
+                        android:textColor="@android:color/black"
+                        android:textSize="26dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="今日专注时长(h)"
+                        android:textColor="@color/tomato_coffee"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tomato_report_tv_week_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="0.0"
+                        android:textColor="@android:color/black"
+                        android:textSize="26dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="本周专注时长(h)"
+                        android:textColor="@color/tomato_coffee"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tomato_report_tv_total_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="0.0"
+                        android:textColor="@android:color/black"
+                        android:textSize="26dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="总专注时长(h)"
+                        android:textColor="@color/tomato_coffee"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:gravity="center_vertical"
+                        android:text="本周最佳工作日"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tomato_report_tv_best_workday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="暂无数据"
+                            android:textColor="@color/dandongshi"
+                            android:textSize="22dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tomato_report_tv_best_workday_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="0"
+                            android:textColor="@color/dandongshi"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/tomato_report_tv_best_workday_over"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="18dp"
+                            android:text="比平均值高出0%"
+                            android:textColor="@color/tomato_coffee"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+
+                    <com.raindus.raydo.ui.BarChartView
+                        android:id="@+id/tomato_report_bc_week"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:mode="week" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:gravity="center_vertical"
+                        android:text="本周最佳工作时段"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/tomato_report_tv_best_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        android:gravity="center_vertical"
+                        android:text="00:00-24:00"
+                        android:textColor="@color/dandongshi"
+                        android:textSize="16dp" />
+
+                </RelativeLayout>
+
+                <com.raindus.raydo.ui.BarChartView
+                    android:id="@+id/tomato_report_bc_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:mode="time" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:gravity="center_vertical"
+                        android:text="最近专注次数"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+
+                    <LinearLayout
+                        android:layout_width="106dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/tomato_report_btn_focus_day"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:text="天"
+                            android:textColor="@color/dandongshi"
+                            android:textSize="14dp" />
+
+                        <Button
+                            android:id="@+id/tomato_report_btn_focus_week"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:text="周"
+                            android:textColor="@color/tomato_coffee"
+                            android:textSize="14dp" />
+
+                        <Button
+                            android:id="@+id/tomato_report_btn_focus_month"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:text="月"
+                            android:textColor="@color/tomato_coffee"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <com.raindus.raydo.ui.LineChartView
+                    android:id="@+id/tomato_report_lc_focus"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:gravity="center_vertical"
+                        android:text="最近番茄收成"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+
+                    <LinearLayout
+                        android:layout_width="106dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/tomato_report_btn_crop_day"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:text="天"
+                            android:textColor="@color/dandongshi"
+                            android:textSize="14dp" />
+
+                        <Button
+                            android:id="@+id/tomato_report_btn_crop_week"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:text="周"
+                            android:textColor="@color/tomato_coffee"
+                            android:textSize="14dp" />
+
+                        <Button
+                            android:id="@+id/tomato_report_btn_crop_month"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:text="月"
+                            android:textColor="@color/tomato_coffee"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <com.raindus.raydo.ui.LineChartView
+                    android:id="@+id/tomato_report_lc_crop"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:gravity="center_vertical"
+                        android:text="最近专注时长"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+
+                    <LinearLayout
+                        android:layout_width="106dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/tomato_report_btn_time_day"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:text="天"
+                            android:textColor="@color/dandongshi"
+                            android:textSize="14dp" />
+
+                        <Button
+                            android:id="@+id/tomato_report_btn_time_week"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:text="周"
+                            android:textColor="@color/tomato_coffee"
+                            android:textSize="14dp" />
+
+                        <Button
+                            android:id="@+id/tomato_report_btn_time_month"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?android:selectableItemBackgroundBorderless"
+                            android:text="月"
+                            android:textColor="@color/tomato_coffee"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <com.raindus.raydo.ui.LineChartView
+                    android:id="@+id/tomato_report_lc_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

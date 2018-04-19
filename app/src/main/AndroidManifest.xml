@@ -56,6 +56,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.TomatoReportActivity" />
+        <activity android:name=".activity.PlanReportActivity"></activity>
     </application>
 
 </manifest>

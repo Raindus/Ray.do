@@ -172,6 +172,19 @@ public class TomatoActivity extends BaseActivity implements TomatoLayer.OnLayerC
     // -----------------------------------//
     // 番茄钟 //
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTomatoDelegate.onContinue();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mTomatoDelegate.onPause();
+    }
+
     private TomatoDelegate.OnTomatoListener mOnTomatoListener = new TomatoDelegate.OnTomatoListener() {
         @Override
         public void onStart(String time, int status) {

@@ -21,6 +21,11 @@ public class TomatoEntity {
     public long startTime;
 
     /**
+     * 结束时间 与 开始时间组成工作时段
+     */
+    public long endTime;
+
+    /**
      * 番茄钟时长，单位min
      */
     public int tomatoTime;

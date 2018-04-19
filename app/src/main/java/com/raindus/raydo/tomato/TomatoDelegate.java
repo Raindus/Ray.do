@@ -2,6 +2,7 @@ package com.raindus.raydo.tomato;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -9,6 +10,8 @@ import android.widget.LinearLayout;
 
 import com.raindus.raydo.R;
 import com.raindus.raydo.dao.ObjectBox;
+
+import java.util.Date;
 
 /**
  * Created by Raindus on 2018/4/13.
@@ -90,8 +93,8 @@ public class TomatoDelegate implements View.OnClickListener {
     }
 
     private void nextStatus() {
-        mTomato.tomatoNum++;
         if (mCurStatus == STATUS_TOMATO) {
+            mTomato.tomatoNum++;
             if (mTomato.tomatoNum % mTomato.longRestIntervalNum == 0) {
                 mCurStatus = STATUS_LONG_REST;
                 mCurTotalTime = mTomato.longRestTime * 60;
@@ -129,13 +132,16 @@ public class TomatoDelegate implements View.OnClickListener {
         mHandler.sendEmptyMessageDelayed(MSG_TIMING, TIME_TIMING * 3);
     }
 
-    private void onPause() {
-        if (mHandler.hasMessages(MSG_TIMING))
+    public void onPause() {
+        if (mHandler != null && mHandler.hasMessages(MSG_TIMING))
             mHandler.removeMessages(MSG_TIMING);
     }
 
-    private void onContinue() {
-        mHandler.sendEmptyMessageDelayed(MSG_TIMING, TIME_TIMING);
+    public void onContinue() {
+        if (mTomato == null)
+            return;
+        if (!mHandler.hasMessages(MSG_TIMING))
+            mHandler.sendEmptyMessageDelayed(MSG_TIMING, TIME_TIMING);
     }
 
     private void onQuit() {
@@ -143,8 +149,14 @@ public class TomatoDelegate implements View.OnClickListener {
     }
 
     public void saveTomato() {
-        if (mTomato != null && mTomato.tomatoNum > 0)
+        // 退出计时
+        mHandler.removeMessages(MSG_TIMING);
+        mHandler = null;
+
+        if (mTomato != null && mTomato.tomatoNum > 0) {
+            mTomato.endTime = new Date().getTime();
             ObjectBox.TomatoEntityBox.put(mTomato);
+        }
     }
 
     private Handler mHandler = new Handler() {

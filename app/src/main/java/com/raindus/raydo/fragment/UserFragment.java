@@ -12,7 +12,10 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.raindus.raydo.R;
+import com.raindus.raydo.activity.PlanReportActivity;
+import com.raindus.raydo.activity.TomatoReportActivity;
 import com.raindus.raydo.activity.TomatoSettingActivity;
+import com.raindus.raydo.dialog.PlanRepeatDialog;
 
 /**
  * Created by Raindus on 2018/3/4.
@@ -46,8 +49,10 @@ public class UserFragment extends BaseFragment {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.user_plan_report:
+                overlay(PlanReportActivity.class);
                 break;
             case R.id.user_focus_report:
+                overlay(TomatoReportActivity.class);
                 break;
             case R.id.user_tomato_setting:
                 overlay(TomatoSettingActivity.class);
