@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by Raindus on 2018/4/7.
  */
@@ -31,5 +33,17 @@ public class Utils {
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels;
+    }
+
+    public static String getFloatOnePoint(float t, boolean isMin) {
+        final DecimalFormat FloatValueFormat = new DecimalFormat("0.0");
+        if (isMin)
+            t /= 60f;
+        return FloatValueFormat.format(t);
+    }
+
+    public static String getFloatNoPoint(float t) {
+        final DecimalFormat FloatValueFormat = new DecimalFormat("0");
+        return FloatValueFormat.format(t);
     }
 }

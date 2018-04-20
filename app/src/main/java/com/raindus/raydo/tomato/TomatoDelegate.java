@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.raindus.raydo.R;
 import com.raindus.raydo.dao.ObjectBox;
+import com.raindus.raydo.report.entity.TomatoReportEntity;
 
 import java.util.Date;
 
@@ -156,6 +157,7 @@ public class TomatoDelegate implements View.OnClickListener {
         if (mTomato != null && mTomato.tomatoNum > 0) {
             mTomato.endTime = new Date().getTime();
             ObjectBox.TomatoEntityBox.put(mTomato);
+            TomatoReportEntity.update(mTomato);
         }
     }
 

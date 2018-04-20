@@ -579,7 +579,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="16dp"
                         android:gravity="center_vertical"
-                        android:text="最近专注时长"
+                        android:text="最近专注时长(h)"
                         android:textColor="@android:color/black"
                         android:textSize="14dp" />
 

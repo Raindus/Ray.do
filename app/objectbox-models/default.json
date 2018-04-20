@@ -110,9 +110,85 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "3:7405324749484573382",
+      "lastPropertyId": "9:467576206128536839",
+      "name": "PlanReportEntity",
+      "properties": [
+        {
+          "id": "1:4009851933640508789",
+          "name": "id"
+        },
+        {
+          "id": "2:5563110995293810689",
+          "name": "type"
+        },
+        {
+          "id": "3:1769361941676718195",
+          "name": "date"
+        },
+        {
+          "id": "4:5548180360939051455",
+          "name": "planNumber"
+        },
+        {
+          "id": "5:3622253755405025176",
+          "name": "completedNum"
+        },
+        {
+          "id": "6:7974121826357189249",
+          "name": "completingNum"
+        },
+        {
+          "id": "7:6611224854756736404",
+          "name": "unCompletedNum"
+        },
+        {
+          "id": "8:6781342012356548331",
+          "name": "periodSpread"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:7383261020585289878",
+      "lastPropertyId": "7:559129603305205486",
+      "name": "TomatoReportEntity",
+      "properties": [
+        {
+          "id": "1:6109665933122320390",
+          "name": "id"
+        },
+        {
+          "id": "2:1912672523311399168",
+          "name": "type"
+        },
+        {
+          "id": "3:7611442900770896191",
+          "name": "date"
+        },
+        {
+          "id": "4:3785543093709205247",
+          "name": "focusTimes"
+        },
+        {
+          "id": "5:7388601990963714568",
+          "name": "tomatoNum"
+        },
+        {
+          "id": "6:8264746283670635989",
+          "name": "focusTime"
+        },
+        {
+          "id": "7:559129603305205486",
+          "name": "periodSpread"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "2:5049460722437421448",
+  "lastEntityId": "4:7383261020585289878",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
@@ -122,7 +198,8 @@
   "retiredIndexUids": [],
   "retiredPropertyUids": [
     6066765572277324369,
-    9019210252631961984
+    9019210252631961984,
+    467576206128536839
   ],
   "retiredRelationUids": [],
   "version": 1

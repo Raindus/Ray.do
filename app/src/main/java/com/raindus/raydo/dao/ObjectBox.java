@@ -8,9 +8,14 @@ import com.raindus.raydo.plan.entity.PlanRemind;
 import com.raindus.raydo.plan.entity.PlanRepeat;
 import com.raindus.raydo.plan.entity.PlanStatus;
 import com.raindus.raydo.plan.job.PlanJob;
+import com.raindus.raydo.report.entity.PlanReportEntity;
+import com.raindus.raydo.report.entity.ReportType;
+import com.raindus.raydo.report.entity.TomatoReportEntity;
+import com.raindus.raydo.report.entity.TomatoReportEntity_;
 import com.raindus.raydo.tomato.TomatoEntity;
 import com.raindus.raydo.tomato.TomatoEntity_;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -160,6 +165,14 @@ public class ObjectBox {
         }
     }
 
+    public static class PlanReportEntityBox {
+
+        public static Box<PlanReportEntity> getBox() {
+            return ((RaydoApplication) RaydoApplication.get()).getBoxStore().boxFor(PlanReportEntity.class);
+        }
+
+    }
+
     public static class TomatoEntityBox {
         // 获取操作实例
         public static Box<TomatoEntity> getBox() {
@@ -171,6 +184,7 @@ public class ObjectBox {
             return getBox().put(entity);
         }
 
+        // 查询今天的番茄钟
         public static List<TomatoEntity> queryToday() {
             QueryBuilder<TomatoEntity> query = getBox().query();
 
@@ -178,6 +192,107 @@ public class ObjectBox {
             long endTime = DateUtils.getTodayTime(false);
 
             return query.between(TomatoEntity_.startTime, startTime, endTime).build().find();
+        }
+
+    }
+
+    public static class TomatoReportEntityBox {
+
+        public static Box<TomatoReportEntity> getBox() {
+            return ((RaydoApplication) RaydoApplication.get()).getBoxStore().boxFor(TomatoReportEntity.class);
+        }
+
+        // 添加 or 更新
+        public static long put(TomatoReportEntity entity) {
+            return getBox().put(entity);
+        }
+
+        // 天 - 周 - 月 - 日
+        public static List<TomatoReportEntity> queryNeedUpdateNow() {
+            Date cur = new Date();
+            List<TomatoReportEntity> list = new ArrayList<>();
+            List<TomatoReportEntity> temp;
+
+            // 当天
+            temp = getBox().query()
+                    .equal(TomatoReportEntity_.type, ReportType.DAY.getType())
+                    .between(TomatoReportEntity_.date, ReportType.DAY.getNowAgo(cur), cur.getTime())
+                    .build().find();
+            if (temp == null || temp.size() == 0)
+                list.add(new TomatoReportEntity(ReportType.DAY, cur.getTime()));
+            else
+                list.add(temp.get(0));
+
+            // 当周
+            temp = getBox().query()
+                    .equal(TomatoReportEntity_.type, ReportType.WEEK.getType())
+                    .between(TomatoReportEntity_.date, ReportType.WEEK.getNowAgo(cur), cur.getTime())
+                    .build().find();
+            if (temp == null || temp.size() == 0)
+                list.add(new TomatoReportEntity(ReportType.WEEK, cur.getTime()));
+            else
+                list.add(temp.get(0));
+
+            // 当月
+            temp = getBox().query()
+                    .equal(TomatoReportEntity_.type, ReportType.MONTH.getType())
+                    .between(TomatoReportEntity_.date, ReportType.MONTH.getNowAgo(cur), cur.getTime())
+                    .build().find();
+            if (temp == null || temp.size() == 0)
+                list.add(new TomatoReportEntity(ReportType.MONTH, cur.getTime()));
+            else
+                list.add(temp.get(0));
+
+            list.add(queryAll());
+            return list;
+        }
+
+        // 最近7天，以排序,最近一天在上面
+        public static List<TomatoReportEntity> queryLatelySevenDate() {
+            Date cur = new Date();
+
+            return getBox().query()
+                    .equal(TomatoReportEntity_.type, ReportType.DAY.getType())
+                    .between(TomatoReportEntity_.date, ReportType.DAY.getSevenAgo(cur), cur.getTime())
+                    .orderDesc(TomatoReportEntity_.date)
+                    .build().find();
+        }
+
+        // 最近7周，以排序,最近一周在上面
+        public static List<TomatoReportEntity> queryLatelySevenWeek() {
+            Date cur = new Date();
+
+            return getBox().query()
+                    .equal(TomatoReportEntity_.type, ReportType.WEEK.getType())
+                    .between(TomatoReportEntity_.date, ReportType.WEEK.getSevenAgo(cur), cur.getTime())
+                    .orderDesc(TomatoReportEntity_.date)
+                    .build().find();
+        }
+
+        // 最近7个月，以排序,最近一月在上面
+        public static List<TomatoReportEntity> queryLatelySevenMonth() {
+            Date cur = new Date();
+
+            return getBox().query()
+                    .equal(TomatoReportEntity_.type, ReportType.MONTH.getType())
+                    .between(TomatoReportEntity_.date, ReportType.MONTH.getSevenAgo(cur), cur.getTime())
+                    .orderDesc(TomatoReportEntity_.date)
+                    .build().find();
+
+
+        }
+
+        // type = all 只有一个
+        public static TomatoReportEntity queryAll() {
+            List<TomatoReportEntity> list =
+                    getBox().query()
+                            .equal(TomatoReportEntity_.type, ReportType.ALL.getType())
+                            .build().find();
+
+            if (list == null || list.size() == 0)
+                return new TomatoReportEntity(ReportType.ALL, new Date().getTime());
+            else
+                return list.get(0);
         }
 
     }

@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 public class LineChartView extends View {
 
-    private final DecimalFormat FloatValueFormat = new DecimalFormat(".0");
+    private final DecimalFormat FloatValueFormat = new DecimalFormat("0.0");
     private final DecimalFormat IntValueFormat = new DecimalFormat("");
     private boolean mIsFloat = true;
 
